@@ -1,0 +1,2707 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EV Campaign — Hitung dan Laporkan Kebutuhan di Kotamu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --indigo:#3A4780;
+  --indigo-dark:#2B3563;
+  --indigo-tint:#EEF0F9;
+  --leaf:#2E7D5F;
+  --leaf-tint:#E9F3EF;
+  --brick:#BE5340;
+  --brick-tint:#FAEDEA;
+  --ink:#1B1F2E;
+  --gray:#6A6F80;
+  --gray-light:#9AA0AE;
+  --line:#E3E5EC;
+  --white:#FFFFFF;
+  --mist:#F6F7FA;
+  --font:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  --maxw:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;font-family:var(--font);font-size:17px;line-height:1.7;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.narrow{max-width:640px}
+
+h1{font-size:clamp(34px,5.2vw,56px);font-weight:800;line-height:1.08;letter-spacing:-.03em;margin:0 0 18px}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:800;line-height:1.15;letter-spacing:-.022em;margin:0 0 14px}
+h3{font-size:18px;font-weight:600;letter-spacing:-.01em;margin:0 0 8px}
+p{margin:0 0 16px;max-width:62ch}
+.small{font-size:15px;color:var(--gray);line-height:1.65}
+.tiny{font-size:13.5px;color:var(--gray)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:30px;height:72px}
+.logo{font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.logo em{font-style:normal;color:var(--indigo)}
+.menu{display:flex;gap:28px;margin-left:auto;align-items:center}
+.menu a{color:var(--gray);text-decoration:none;font-size:15px;font-weight:500}
+.menu a:hover{color:var(--ink)}
+.menu a.current{color:var(--indigo);font-weight:600}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:10px;width:44px;height:42px;font-size:17px;cursor:pointer;color:var(--ink)}
+@media(max-width:840px){
+  .burger{display:block}
+  .menu{display:none;position:absolute;top:72px;left:0;right:0;background:var(--white);flex-direction:column;align-items:stretch;gap:0;padding:6px 24px 18px;border-bottom:1px solid var(--line)}
+  .menu.open{display:flex}
+  .menu a{padding:15px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .menu .btn{margin-top:14px}
+}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--font);font-size:16px;font-weight:600;letter-spacing:-.01em;
+  border:none;border-radius:12px;cursor:pointer;padding:15px 26px;min-height:52px;text-decoration:none}
+.btn-block{display:flex;width:100%}
+.btn-fill{background:var(--indigo);color:#fff}
+.btn-fill:hover{background:var(--indigo-dark)}
+.btn-outline{background:var(--white);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn-outline:hover{box-shadow:inset 0 0 0 1.5px var(--gray-light)}
+.btn-plain{background:none;border:none;color:var(--indigo);font-weight:600;font-size:15px;cursor:pointer;font-family:var(--font);padding:12px 0}
+.btn:disabled{background:var(--line);color:var(--gray-light);cursor:not-allowed;box-shadow:none}
+:focus-visible{outline:2.5px solid var(--indigo);outline-offset:3px;border-radius:6px}
+.row{display:flex;flex-wrap:wrap;gap:12px}
+.row .btn{flex:1 1 200px}
+.hint{font-size:14px;color:var(--gray);margin:10px 0 0}
+
+/* screens */
+.screen{display:none}
+.screen.active{display:block}
+.sec{padding:72px 0}
+.sec-mist{background:var(--mist)}
+.hr{height:1px;background:var(--line);border:0;margin:0}
+
+/* hero */
+.hero{padding:64px 0 76px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+.hero p.lead{font-size:19px;color:var(--gray);max-width:44ch}
+
+/* calculator panel */
+.panel{background:var(--mist);border-radius:20px;padding:28px}
+.panel-result{background:var(--indigo);color:#fff;border-radius:16px;padding:22px 24px;margin-top:22px}
+.panel-result .cap{font-size:13.5px;color:#C3C9EA;margin:0 0 2px}
+.amount{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1.1;font-variant-numeric:tabular-nums}
+
+/* forms */
+label{display:block;font-weight:600;font-size:14.5px;margin:16px 0 6px;letter-spacing:-.005em}
+input[type=text],input[type=number],input[type=password],input[type=email],select,textarea{
+  width:100%;min-height:50px;padding:13px 15px;font-family:var(--font);font-size:16px;color:var(--ink);
+  border:1.5px solid var(--line);border-radius:12px;background:var(--white)}
+input[type=text]:focus,input[type=number]:focus,input[type=password]:focus,input[type=email]:focus,select:focus,textarea:focus{border-color:var(--indigo);outline:none}
+textarea{min-height:88px;line-height:1.6;resize:vertical}
+.error{color:var(--brick);font-size:13.5px;font-weight:500;margin-top:6px}
+.error:empty{margin-top:0}
+
+.segment{display:flex;gap:8px;background:var(--white);padding:5px;border-radius:14px;border:1.5px solid var(--line)}
+.segment label{flex:1;margin:0;padding:12px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;font-size:15.5px;color:var(--gray)}
+.segment input{position:absolute;opacity:0;width:0;height:0}
+.segment label:has(input:checked){background:var(--indigo);color:#fff}
+
+.choice{display:block;border:1.5px solid var(--line);border-radius:14px;background:var(--white);
+  padding:18px;margin:0 0 12px;cursor:pointer;font-weight:600;font-size:16px}
+.choice:has(input:checked){border-color:var(--indigo);background:var(--indigo-tint)}
+.choice input{width:auto;min-height:0;margin-right:11px;accent-color:var(--indigo)}
+.choice .desc{display:block;font-size:14.5px;color:var(--gray);font-weight:400;margin:6px 0 0 27px}
+
+/* Chip pilihan cepat — sengaja diletakkan DI BAWAH kolom teks, target sentuh
+   besar & terpisah jelas satu sama lain. */
+.amount-presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.amount-chip{font-family:var(--font);font-size:13.5px;font-weight:600;color:var(--indigo);
+  background:var(--indigo-tint);border:1.5px solid transparent;border-radius:999px;
+  padding:8px 14px;min-height:38px;cursor:pointer;-webkit-appearance:none;appearance:none}
+.amount-chip:hover{border-color:var(--indigo)}
+.amount-chip.active{background:var(--indigo);color:#fff}
+
+/* big numbers */
+.big-number{font-size:clamp(52px,9vw,80px);font-weight:800;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
+.c-brick{color:var(--brick)}
+.c-leaf{color:var(--leaf)}
+.c-indigo{color:var(--indigo)}
+
+.pair{display:none;grid-template-columns:1fr 1fr;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0}
+@media(max-width:560px){.pair{grid-template-columns:1fr}}
+.pair>div{border-radius:16px;padding:22px}
+.pair .fuel{background:var(--brick-tint)}
+.pair .electric{background:var(--leaf-tint)}
+.pair .cap{font-size:14px;color:var(--gray);margin:0 0 6px}
+.pair .value{font-size:29px;font-weight:800;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+
+.info{background:var(--mist);border-radius:14px;padding:18px 20px;font-size:15px;line-height:1.65;color:var(--gray);margin:26px 0;max-width:62ch}
+.info strong{color:var(--ink);font-weight:600}
+
+/* steps */
+.steps{display:flex;gap:7px;margin:0 0 10px}
+.steps span{flex:1;height:4px;background:var(--line);border-radius:2px}
+.steps span.on{background:var(--indigo)}
+.step-text{font-size:14px;color:var(--gray);font-weight:500;margin:0 0 26px}
+
+/* map */
+.map{position:relative;height:360px;margin-top:14px;cursor:crosshair;border-radius:16px;overflow:hidden;
+  border:1.5px solid var(--line);background:#EEF0EA;touch-action:manipulation}
+.map svg.basemap{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:block}
+.map-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
+  color:var(--ink);font-size:15px;font-weight:600;padding:26px;pointer-events:none;
+  background:rgba(255,255,255,.72)}
+.map-tag{position:absolute;right:9px;bottom:9px;background:rgba(255,255,255,.9);color:var(--gray);
+  font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:6px;pointer-events:none;letter-spacing:.02em}
+.pin-shadow{position:absolute;width:30px;height:30px;border-radius:50%;background:rgba(58,71,128,.18);
+  transform:translate(-15px,-11px);pointer-events:none}
+.pin{position:absolute;width:30px;height:30px;background:var(--indigo);color:#fff;border-radius:50%;
+  transform:translate(-15px,-15px);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
+  box-shadow:0 0 0 3px #fff,0 2px 6px rgba(27,31,46,.3);z-index:2}
+
+/* tables */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:20px 0}
+.scroll table{margin:0;min-width:440px}
+table{border-collapse:collapse;width:100%;font-size:16px;margin:20px 0}
+th,td{border-bottom:1px solid var(--line);padding:15px 8px;text-align:left;vertical-align:top}
+th{font-weight:600;font-size:13.5px;color:var(--gray-light);letter-spacing:.01em}
+
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:36px;margin-top:36px}
+.num{width:30px;height:30px;border-radius:9px;background:var(--indigo-tint);color:var(--indigo);
+  display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin-bottom:12px}
+
+/* ── dashboard ── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0 8px}
+.stat{background:var(--mist);border-radius:16px;padding:20px}
+.stat-value{font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--indigo)}
+.stat-label{font-size:14px;color:var(--gray);margin-top:4px;line-height:1.4}
+
+.filter{display:flex;gap:8px;background:var(--mist);padding:5px;border-radius:14px;margin:32px 0 8px;flex-wrap:wrap}
+.filter button{flex:1 1 130px;border:none;background:none;border-radius:10px;padding:12px 10px;
+  font-family:var(--font);font-size:14.5px;font-weight:600;color:var(--gray);cursor:pointer;min-height:44px}
+.filter button.on{background:var(--white);color:var(--indigo);box-shadow:0 1px 2px rgba(27,31,46,.08)}
+
+.bar-row{display:block;text-decoration:none;color:inherit;padding:14px 4px;border-bottom:1px solid var(--line)}
+.bar-row:hover .bar-name{color:var(--indigo)}
+.bar-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
+.bar-name{font-weight:600;font-size:16px}
+.bar-value{font-weight:800;font-size:19px;font-variant-numeric:tabular-nums;color:var(--indigo);white-space:nowrap}
+.bar-track{height:9px;background:var(--line);border-radius:5px;overflow:hidden;display:flex}
+.bar-fill{height:100%}
+.fill-charge{background:var(--indigo)}
+.fill-transit{background:var(--leaf)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--gray);margin:16px 0 4px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+.trend{display:flex;align-items:flex-end;gap:6px;height:130px;margin:20px 0 8px}
+.trend div{flex:1;background:var(--indigo-tint);border-radius:4px 4px 0 0;position:relative;min-height:4px}
+.trend div:last-child{background:var(--indigo)}
+.trend-labels{display:flex;gap:6px;font-size:12px;color:var(--gray-light)}
+.trend-labels span{flex:1;text-align:center}
+
+footer{border-top:1px solid var(--line);padding:44px 0;font-size:15px;color:var(--gray)}
+footer a{color:var(--gray);text-decoration:none;margin-right:24px}
+footer a:hover{color:var(--ink)}
+
+/* ── admin panel shell — deliberately NOT the marketing visual language ── */
+body.admin-mode{background:var(--mist)}
+.admin-sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:240px;
+  background:#1D2340;color:#B7BCDA;
+  display:none;flex-direction:column;padding:22px 16px;z-index:70;overflow-y:auto;
+}
+body.admin-mode .admin-sidebar{display:flex}
+.admin-sidebar .brand{display:flex;align-items:baseline;gap:7px;color:#fff;font-weight:800;font-size:16px;letter-spacing:-.01em;padding:6px 10px 24px}
+.admin-sidebar .brand b{color:rgba(255,255,255,.5);font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}
+.admin-nav{display:flex;flex-direction:column;gap:2px;flex:1}
+.admin-nav a{display:flex;align-items:center;gap:10px;color:#B7BCDA;text-decoration:none;font-size:14.5px;font-weight:500;padding:10px 12px;border-radius:9px}
+.admin-nav a:hover{background:rgba(255,255,255,.07);color:#fff}
+.admin-nav a.current{background:var(--indigo);color:#fff;font-weight:700}
+.admin-divider{height:1px;background:rgba(255,255,255,.12);margin:14px 6px}
+.admin-sidebar .exit{color:#8A90B4;text-decoration:none;font-size:13.5px;font-weight:600;padding:10px 12px;display:flex;align-items:center;gap:8px;border-radius:9px}
+.admin-sidebar .exit:hover{color:#fff;background:rgba(255,255,255,.07)}
+
+body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
+.admin-content{
+  padding:38px 44px;max-width:960px;
+  background:var(--white);border:1.5px solid var(--line);border-radius:20px;
+  box-shadow:0 1px 3px rgba(27,31,46,.04);
+}
+.admin-topbar{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:26px}
+.admin-topbar h2{margin:0 0 4px}
+.admin-topbar p.small{margin:0}
+.admin-back{font-size:13.5px;font-weight:600;color:var(--gray);text-decoration:none;display:inline-flex;align-items:center;gap:5px;margin-bottom:14px}
+.admin-back:hover{color:var(--indigo)}
+
+.badge{display:inline-flex;align-items:center;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.01em;white-space:nowrap}
+.badge-pending{background:#FBEFDD;color:#9A6A1E}
+.badge-approved{background:var(--leaf-tint);color:var(--leaf)}
+.badge-rejected{background:var(--brick-tint);color:var(--brick)}
+
+.admin-table-wrap{background:var(--mist);border-radius:14px;overflow:hidden;padding:6px}
+.admin-table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--white);border-radius:10px;overflow:hidden}
+.admin-table th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-light);font-weight:700;padding:13px 16px;border-bottom:1.5px solid var(--line);background:var(--mist)}
+.admin-table td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+.admin-table tr:last-child td{border-bottom:none}
+.admin-table tr:hover td{background:var(--mist)}
+.admin-action{color:var(--indigo);font-weight:700;font-size:13px;text-decoration:none;padding:7px 13px;border-radius:8px;background:var(--indigo-tint);white-space:nowrap}
+.admin-action:hover{background:var(--indigo);color:#fff}
+.admin-card{background:var(--mist);border-radius:16px;padding:26px 28px}
+
+/* Mobile: sidebar bar horizontal (--> drawer) — top bar + hamburger + slide-in
+   panel + backdrop. Jauh lebih familiar buat pengguna admin di HP daripada
+   nav yang di-scroll horizontal. */
+.admin-topbar-mobile{display:none}
+.admin-sidebar-backdrop{display:none}
+
+@media(max-width:900px){
+  body.admin-mode .admin-topbar-mobile{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    background:#1D2340;color:#fff;padding:13px 16px;
+    position:sticky;top:0;z-index:65;
+  }
+  .admin-topbar-mobile .brand{color:#fff;font-weight:800;font-size:14.5px;display:flex;align-items:center;gap:7px;letter-spacing:-.01em}
+  .admin-topbar-mobile .brand b{background:var(--indigo);font-size:9px;font-weight:700;padding:3px 6px;border-radius:5px;letter-spacing:.04em}
+  .admin-hamburger{background:rgba(255,255,255,.14);border:none;color:#fff;width:38px;height:38px;
+    min-width:38px;border-radius:9px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .admin-topbar-mobile-spacer{width:38px}
+
+  .admin-sidebar{
+    width:78%;max-width:280px;
+    transform:translateX(-100%);transition:transform .22s ease;
+  }
+  body.admin-sidebar-open .admin-sidebar{transform:translateX(0)}
+  .admin-nav{flex-direction:column}
+  .admin-divider{display:block}
+  .admin-sidebar .exit{white-space:normal}
+
+  body.admin-mode main{margin-left:0;padding:14px}
+  .admin-content{padding:20px 16px;border-radius:16px}
+  .admin-content .admin-edit-grid{max-width:100%}
+
+  body.admin-mode.admin-sidebar-open .admin-sidebar-backdrop{
+    display:block;position:fixed;inset:0;background:rgba(15,17,35,.45);z-index:64;
+  }
+}
+
+.auth-shell{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--mist)}
+.auth-card{background:var(--white);border:1.5px solid var(--line);border-radius:20px;padding:36px 32px;max-width:400px;width:100%}
+.auth-card .brand{font-weight:800;font-size:18px;letter-spacing:-.01em;margin:0}
+.auth-card .brand em{font-style:normal;color:var(--indigo)}
+
+/* ── kelola form: live preview ── */
+.admin-edit-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;max-width:100%!important}
+@media(max-width:900px){.admin-edit-grid{grid-template-columns:minmax(0,1fr)}}
+.admin-edit-form,.preview-col{min-width:0}
+.preview-col{position:sticky;top:88px;background:var(--mist);border:1.5px solid var(--line);border-radius:16px;padding:20px;max-height:calc(100vh - 110px);overflow-y:auto}
+@media(max-width:900px){.preview-col{position:static;max-height:none}}
+
+/* Di mobile, form dan pratinjau ditumpuk kalau ditampilkan sekaligus —
+   scroll-nya jadi sangat panjang. Toggle ini biarkan admin lihat satu per
+   satu (Edit / Pratinjau) tanpa perlu grid dua kolom yang tidak muat. */
+.admin-mobile-toggle{display:none}
+@media(max-width:900px){
+  .admin-mobile-toggle{display:flex;gap:8px;background:var(--mist);padding:5px;border-radius:14px;margin-bottom:18px;position:sticky;top:64px;z-index:10}
+  .admin-mobile-toggle button{flex:1;border:none;background:none;padding:11px 10px;min-height:44px;border-radius:10px;
+    font-family:var(--font);font-weight:600;font-size:14px;color:var(--gray);cursor:pointer}
+  .admin-mobile-toggle button.on{background:var(--white);color:var(--indigo);box-shadow:0 1px 2px rgba(27,31,46,.08)}
+  .mobile-hide{display:none!important}
+}
+.preview-col h4{font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-light);margin:0 0 16px;font-weight:700}
+.preview-card{background:var(--white);border:1.5px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.preview-card:last-child{margin-bottom:0}
+.preview-tag{display:inline-block;font-size:11px;font-weight:700;color:var(--indigo);background:var(--indigo-tint);padding:3px 9px;border-radius:999px;margin-bottom:10px;letter-spacing:.03em}
+.preview-card h5{font-size:16px;font-weight:800;margin:0 0 6px;letter-spacing:-.01em}
+.preview-card p{font-size:14px;color:var(--gray);margin:0 0 8px;max-width:none}
+.preview-mini-btn{display:inline-block;font-size:13.5px;font-weight:600;background:var(--indigo);color:#fff;border-radius:8px;padding:8px 14px;margin-top:2px}
+.preview-mini-btn.outline{background:var(--white);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.preview-field-label{font-size:13.5px;font-weight:600;color:var(--ink);margin:12px 0 4px}
+.preview-field-input{border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;font-size:13.5px;color:var(--gray-light);background:var(--white)}
+.preview-choice{border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--white);margin-top:8px}
+.preview-choice b{font-size:14.5px}
+.preview-muted{font-size:12.5px;color:var(--gray-light);font-style:italic;margin-top:10px}
+
+/* ── tablet ── */
+@media(max-width:768px){
+  body{font-size:16.5px}
+  .sec{padding:52px 0}
+  .hero{padding:40px 0 52px}
+  .panel{padding:22px;border-radius:18px}
+  .grid3{gap:30px;margin-top:28px}
+  h2{margin-bottom:12px}
+}
+
+/* ── phone ── */
+@media(max-width:560px){
+  .wrap{padding:0 18px}
+  .sec{padding:40px 0}
+  .hero{padding:28px 0 40px}
+  .panel{padding:18px;border-radius:16px}
+  .nav-inner{height:64px;padding:0 18px;gap:14px}
+  .menu{top:64px;padding:4px 18px 16px}
+  .logo{font-size:18px}
+
+  .row{gap:10px}
+  .row .btn{flex:1 1 100%}
+
+  .map{height:300px}
+  .map-empty{font-size:14.5px;padding:20px}
+  .pin{width:34px;height:34px;transform:translate(-17px,-17px);font-size:15px}
+
+  .pair>div{padding:18px}
+  .pair .value{font-size:26px}
+  .panel-result{padding:18px 20px}
+  .amount{font-size:34px}
+
+  .choice{padding:16px}
+  .choice .desc{margin-left:0;margin-top:8px}
+
+  .stat{padding:16px}
+  .stat-value{font-size:27px}
+  .trend{height:100px;gap:4px}
+  .trend-labels{gap:4px;font-size:11px}
+
+  th,td{padding:13px 6px;font-size:15.5px}
+  .info{padding:16px;font-size:14.5px}
+  footer a{display:inline-block;margin:0 20px 10px 0}
+}
+
+@media(max-width:360px){
+  .wrap{padding:0 14px}
+  .segment label{font-size:14.5px;padding:11px 6px}
+}
+
+@media(prefers-reduced-motion:no-preference){
+  .screen.active{animation:fadein .2s ease-out}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .bar-fill,.trend div{transition:width .25s ease,height .25s ease}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo" onclick="openScreen('Campaign');return false">EV<em>Campaign</em></a>
+    <button class="burger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <nav class="menu" id="menu">
+      <a href="#" data-screen="home" onclick="openScreen('home');return false">Hitung BBM-mu</a>
+      <a href="#" data-screen="dashboard" onclick="openScreen('dashboard');return false">Lihat laporan</a>
+      <a href="#" data-screen="Campaign" onclick="openScreen('Campaign');return false">Campaign</a>
+      <button class="btn btn-fill" style="padding:12px 20px;min-height:44px;font-size:15px" onclick="openScreen('reportCity')">Lapor Rutemu</button>
+    </nav>
+  </div>
+</header>
+
+<div class="admin-topbar-mobile">
+  <button class="admin-hamburger" onclick="toggleAdminSidebar()" aria-label="Buka menu admin">☰</button>
+  <span class="brand"><span id="adminMobileTitle">Admin</span></span>
+  <span class="admin-topbar-mobile-spacer"></span>
+</div>
+<div class="admin-sidebar-backdrop" onclick="toggleAdminSidebar(false)"></div>
+
+<aside class="admin-sidebar" id="adminSidebar">
+  <p class="brand">EVCampaign <b>Admin</b></p>
+  <nav class="admin-nav" id="adminNav">
+    <a href="#" data-admin="adminDashboard" onclick="openScreen('adminDashboard');return false">📊 Dashboard Analitik</a>
+    <a href="#" data-admin="adminList" onclick="openScreen('adminList');return false">📋 Laporan masuk</a>
+    <a href="#" data-admin="adminManageForms" onclick="openScreen('adminManageForms');return false">🛠️ Kelola Form</a>
+    <a href="#" data-admin="adminExport" onclick="openScreen('adminExport');return false">⬇️ Ekspor data</a>
+    <div class="admin-divider"></div>
+  </nav>
+  <a href="#" class="exit" onclick="openScreen('Campaign');return false">↩ Ke situs publik</a>
+  <a href="#" class="exit" onclick="openScreen('adminLogin');return false">⎋ Keluar</a>
+</aside>
+
+<main>
+
+<!-- Campaign -->
+<section class="screen active" id="Campaign">
+  <div class="hero"><div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="small" style="margin-bottom:10px">Campaign Kendaraan & Transportasi Listrik</p>
+        <h1>Kendaraan listrik butuh lebih dari sekadar kendaraan baru.</h1>
+        <p class="lead">Kamu juga butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) dan transportasi umum yang layak untuk kebutuhan sehari-hari. Di sini, kamu bisa menghitung pengeluaran BBM-mu dan melaporkan lokasi yang perlu mendapat perhatian.</p>
+        <div class="row" style="margin-top:24px">
+          <button class="btn btn-fill" onclick="openScreen('home')">Hitung BBM-mu</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h3 id="campaignPanelTitle">Kemajuan pelaporan warga</h3>
+        <div id="CampaignCounter" class="stat-grid" style="display:none;margin:2px 0 16px"></div>
+        <p class="small" id="campaignPanelFallback">Tandai lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.</p>
+        <button class="btn-plain" onclick="openScreen('reportCity')" style="padding:0">Lapor lokasimu →</button>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- Slot "setelah hero" untuk Blok Penghitung Laporan — cuma tampil kalau
+       admin memilih posisi ini DAN blok sedang diaktifkan. -->
+  <div class="sec" id="counterSlotAfterHero" style="display:none"><div class="wrap narrow">
+    <h3 id="counterAfterHeroTitle" style="margin-bottom:14px"></h3>
+    <div class="stat-grid" id="counterAfterHeroStats"></div>
+  </div></div>
+
+  <div class="sec sec-mist"><div class="wrap">
+    <h2>Yang bisa kamu lakukan</h2>
+    <div class="grid3">
+      <div><div class="num">1</div><h3>Hitung BBM-mu</h3><p class="small">Masukkan pengeluaran dan kebiasaan berkendara untuk melihat perkiraan biaya BBM per bulan dan per tahun.</p><button class="btn-plain" onclick="openScreen('home')">Buka kalkulator →</button></div>
+      <div><div class="num">2</div><h3>Lapor Rutemu</h3><p class="small">Tandai lokasi yang menurutmu perlu SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik.</p><button class="btn-plain" onclick="openScreen('reportCity')">Buat laporan →</button></div>
+      <div><div class="num">3</div><h3>Lihat laporan</h3><p class="small">Lihat laporan yang sudah lolos pengecekan dan bagaimana kebutuhan tersebar di berbagai kota.</p><button class="btn-plain" onclick="openScreen('dashboard')">Lihat data →</button></div>
+    </div>
+  </div></div>
+
+  <!-- Slot "bawah halaman" untuk Blok Penghitung Laporan — sama seperti di
+       atas, cuma tampil kalau posisi ini yang dipilih admin. -->
+  <div class="sec" id="counterSlotBottom" style="display:none"><div class="wrap narrow">
+    <h3 id="counterBottomTitle" style="margin-bottom:14px"></h3>
+    <div class="stat-grid" id="counterBottomStats"></div>
+  </div></div>
+</section>
+
+<!-- home -->
+<section class="screen" id="home">
+  <div class="hero"><div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <h1>Berapa biaya bensinmu sebulan?</h1>
+        <p class="lead">Masukkan kebiasaan berkendaramu. Lihat kira-kira berapa biaya bensin yang kamu keluarkan.</p>
+        <p class="tiny">Hasilnya bisa dilihat juga dalam hitungan setahun.</p>
+      </div>
+
+      <div class="panel">
+        <label for="fuelSpend" id="fuelSpendLabel">Sekali isi bensin, biasanya berapa rupiah?</label>
+        <input type="text" id="fuelSpend" inputmode="numeric" placeholder="Contoh: 50.000" oninput="handleFuelSpendInput()" onblur="formatFuelSpendDisplay()">
+        <div class="amount-presets" id="fuelSpendPresets" role="group" aria-label="Pilihan cepat jumlah"></div>
+        <p class="error" id="fuelSpendError" role="alert"></p>
+
+        <label for="fuelFreq" id="fuelFreqLabel">Seberapa sering kamu biasanya isi bensin?</label>
+        <select id="fuelFreq" onchange="clearErr('fuelFreq')">
+          <option value="">Pilih salah satu</option>
+          <option value="harian" id="fuelFreqOptHarian">Harian</option>
+          <option value="mingguan" id="fuelFreqOptMingguan">Mingguan</option>
+          <option value="dua_mingguan" id="fuelFreqOptDuaMingguan">Dua Minggu Sekali</option>
+          <option value="bulanan" id="fuelFreqOptBulanan">Bulanan</option>
+        </select>
+        <p class="error" id="fuelFreqError" role="alert"></p>
+
+        <label for="dailyRoute" id="dailyRouteLabel">Dalam sehari, kira-kira berapa kilometer jarak yang kamu tempuh?</label>
+        <input type="number" id="dailyRoute" inputmode="numeric" placeholder="Contoh: 25" min="0" oninput="clearErr('dailyRoute')">
+        <p class="error" id="dailyRouteError" role="alert"></p>
+
+        <label class="choice" style="margin-top:6px">
+          <input type="checkbox" id="calcConsent">
+          <span id="calcConsentLabel">Simpan hasil perhitungan ini untuk keperluan riset (opsional)</span>
+          <span class="desc" id="calcConsentDesc">Jika tidak dicentang, kamu tetap bisa melihat hasilnya — datanya saja yang tidak akan disimpan.</span>
+        </label>
+
+        <button class="btn btn-fill btn-block" id="calcButton" onclick="calculate()" style="margin-top:8px">Lihat hasil perhitungan</button>
+      </div>
+    </div>
+  </div></div>
+
+  <hr class="hr">
+
+  <div class="sec"><div class="wrap">
+    <h2>Lalu, apa hubungannya dengan kendaraan listrik?</h2>
+    <p class="small" style="max-width:52ch">Biaya bukan satu-satunya pertimbangan. Bagi banyak orang, pertanyaan berikutnya adalah: mau isi daya di mana?</p>
+
+    <div class="grid3">
+      <div>
+        <div class="num">1</div>
+        <h3>Tandai lokasi yang kamu butuhkan</h3>
+        <p class="small">Ada tempat yang menurutmu perlu SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di peta.</p>
+      </div>
+      <div>
+        <div class="num">2</div>
+        <h3>Kami periksa dulu</h3>
+        <p class="small">Laporan akan diperiksa sebelum masuk ke data yang ditampilkan.</p>
+      </div>
+      <div>
+        <div class="num">3</div>
+        <h3>Gabungkan dengan laporan lain</h3>
+        <p class="small">Laporanmu akan digabungkan dengan laporan orang lain di area yang sama.</p>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="sec sec-mist"><div class="wrap narrow">
+    <h2>Belum mau menghitung? Tidak masalah.</h2>
+    <p class="small">Kamu bisa langsung melaporkan lokasi yang menurutmu perlu mendapat perhatian.</p>
+    <div class="row" style="margin-top:22px">
+      <button class="btn btn-fill" onclick="openScreen('reportCity')">Lapor Rutemu</button>
+      <button class="btn btn-outline" onclick="openScreen('dashboard')">Lihat laporan</button>
+    </div>
+  </div></div>
+</section>
+
+<!-- result -->
+<section class="screen" id="result"><div class="sec"><div class="wrap narrow">
+  <p class="small" style="margin-bottom:6px" id="resultCaption">Perkiraan pengeluaran bensinmu dalam setahun</p>
+  <div class="big-number c-brick" id="yearAmount">Rp 0</div>
+  <p class="small" style="margin-top:12px">atau sekitar <strong id="monthAmount">Rp 0</strong> per bulan</p>
+
+  <h2 style="margin-top:52px">Kalau pakai kendaraan listrik</h2>
+  <div class="pair">
+    <div class="fuel"><p class="cap">Bensin · setahun</p><div class="value c-brick" id="fuelYearAmount">Rp 0</div></div>
+    <div class="electric"><p class="cap">Listrik · setahun</p><div class="value c-leaf" id="electricYearAmount">Rp 0</div></div>
+  </div>
+
+  <div class="info"><strong>Catatan</strong> Perhitungan ini masih menggunakan angka contoh. Sumber harga, tarif, dan asumsi perhitungan akan dicantumkan di sini.</div>
+
+  <div class="row" style="margin-top:8px">
+    <button class="btn btn-fill" onclick="openScreen('reportCity')">Laporkan lokasi yang butuh pengisian daya</button>
+    <button class="btn btn-outline" onclick="openScreen('share')">Bagikan hasil</button>
+  </div>
+  <button class="btn-plain" onclick="openScreen('home')">Ubah hitungan</button>
+</div></div></section>
+
+<!-- share -->
+<section class="screen" id="share"><div class="sec"><div class="wrap narrow">
+  <h2>Bagikan hasilmu</h2>
+  <div style="background:var(--indigo);color:#fff;border-radius:20px;padding:44px 30px;margin:22px 0">
+    <p style="color:#C3C9EA;font-size:14px;margin:0 0 6px">Biaya bensin saya setahun</p>
+    <div class="big-number" id="shareAmount">Rp 0</div>
+    <p style="color:#C3C9EA;font-size:14px;margin:16px 0 0">evCampaign.go.id</p>
+  </div>
+  <p class="tiny">Hasil ini nantinya bisa dibagikan sebagai gambar.</p>
+
+  <div class="row" style="margin-top:20px">
+    <button class="btn btn-fill" onclick="alert('Bagikan hasil lewat WhatsApp')">Bagikan lewat WhatsApp</button>
+    <button class="btn btn-outline" onclick="alert('Bagikan hasil ke Instagram Story')">Instagram Story</button>
+  </div>
+  <button class="btn-plain" onclick="openScreen('result')">Kembali ke hitungan</button>
+</div></div></section>
+
+<!-- reportCity -->
+<section class="screen" id="reportCity"><div class="sec"><div class="wrap narrow">
+  <p class="small" style="margin-bottom:28px" id="laporIntro">Ada lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di sini. Laporanmu membantu kami memetakan kebutuhan di kotamu.</p>
+  <div class="steps"><span class="on"></span><span></span><span></span><span></span></div>
+  <p class="step-text">Langkah 1 dari 4</p>
+
+  <h2 id="cityQuestionText">Kamu paling sering berkendara di kota mana?</h2>
+  <p class="small" id="cityHelpText">Pilih kota tempat kamu paling sering berkendara.</p>
+
+  <button class="btn btn-outline btn-block" id="useLocationBtn" onclick="alert('Izinkan akses lokasi untuk menemukan kota secara otomatis. Kamu tetap bisa memilih kota secara manual jika tidak memberikan izin.')" style="margin-top:20px">Gunakan lokasi saya</button>
+
+  <label for="cityInput" id="cityInputLabelText">Atau masukkan nama kota</label>
+  <input type="text" id="cityInput" placeholder="Contoh: Bekasi" oninput="checkCity()" autocomplete="off">
+
+  <button class="btn btn-fill btn-block" id="cityButton" onclick="openScreen('reportCategoryChoice')" disabled style="margin-top:26px">Lanjut</button>
+  <p class="hint" id="cityHint">Masukkan nama kota terlebih dahulu untuk melanjutkan.</p>
+</div></div></section>
+
+<!-- reportCategoryChoice -->
+<section class="screen" id="reportCategoryChoice"><div class="sec"><div class="wrap narrow">
+  <div class="steps"><span class="on"></span><span class="on"></span><span></span><span></span></div>
+  <p class="step-text">Langkah 2 dari 4</p>
+
+  <h2 id="categoryQuestionText">Apa yang ingin kamu laporkan?</h2>
+  <p class="small" id="categoryHelpText">Pilih salah satu — pertanyaan berikutnya akan menyesuaikan dengan pilihanmu.</p>
+
+  <label class="choice">
+    <input type="radio" name="reportCat" value="bbm" onchange="clearErr('categoryChoice')"><span id="catLabel_bbm">BBM</span>
+    <span class="desc" id="catDesc_bbm">Perkiraan biaya bensin per bulan dan rute yang biasa kamu lewati.</span>
+  </label>
+  <label class="choice">
+    <input type="radio" name="reportCat" value="kondisi" onchange="clearErr('categoryChoice')"><span id="catLabel_kondisi">Kondisi udara</span>
+    <span class="desc" id="catDesc_kondisi">Tandai lokasinya dan tambahkan foto.</span>
+  </label>
+  <label class="choice">
+    <input type="radio" name="reportCat" value="akses" onchange="clearErr('categoryChoice')"><span id="catLabel_akses">Akses kendaraan listrik</span>
+    <span class="desc" id="catDesc_akses">Apakah motor listrik bisa dibeli atau diservis di sekitar sini? Kamu juga bisa mencantumkan lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat.</span>
+  </label>
+  <label class="choice">
+    <input type="radio" name="reportCat" value="transum" onchange="clearErr('categoryChoice')"><span id="catLabel_transum">Transportasi umum</span>
+    <span class="desc" id="catDesc_transum">Tandai lokasi yang menurutmu perlu rute atau pemberhentian transportasi umum listrik.</span>
+  </label>
+  <p class="error" id="categoryChoiceError" role="alert"></p>
+
+  <button class="btn btn-fill btn-block" onclick="chooseCategory()" style="margin-top:8px"><span id="categoryButtonLabel">Lanjut</span></button>
+  <button class="btn-plain" onclick="openScreen('reportCity')">Ganti kota</button>
+</div></div></section>
+
+<!-- reportDetail -->
+<section class="screen" id="reportDetail"><div class="sec"><div class="wrap narrow">
+  <div class="steps"><span class="on"></span><span class="on"></span><span class="on"></span><span></span></div>
+  <p class="step-text">Langkah 3 dari 4</p>
+  <h2 id="detailTitle">Detail laporan</h2>
+  <p class="small" id="detailHelp"></p>
+
+  <!-- kategori: BBM -->
+  <div id="bbmFields" style="display:none">
+    <label for="bbmSpend" id="bbmSpendLabel">Perkiraan biaya bensin per bulan (Rp)</label>
+    <input type="number" id="bbmSpend" inputmode="numeric" min="0" oninput="clearErr('bbmSpend')">
+    <p class="error" id="bbmSpendError" role="alert"></p>
+
+    <label for="routeStart" id="routeStartLabel">Mulai dari mana?</label>
+    <input type="text" id="routeStart" placeholder="Contoh: Rumah, Jl. Mawar" oninput="clearErr('routeStart')">
+    <p class="error" id="routeStartError" role="alert"></p>
+
+    <label for="routeEnd" id="routeEndLabel">Sampai di mana?</label>
+    <input type="text" id="routeEnd" placeholder="Contoh: Kantor, Jl. Melati" oninput="clearErr('routeEnd')">
+    <p class="error" id="routeEndError" role="alert"></p>
+  </div>
+
+  <!-- peta bersama untuk kategori berbasis titik: kondisi udara, akses EV, transum -->
+  <div id="mapSection" style="display:none">
+    <p class="small" id="mapInstruction">Tandai lokasinya di peta.</p>
+    <button class="btn btn-outline btn-block" id="useMyLocationPinBtn" onclick="useMyLocationForPin()" style="margin-bottom:14px">📍 Gunakan lokasi saya</button>
+    <div class="map" id="map" onclick="addPin(event)">
+      <svg class="basemap" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="600" height="360" fill="#EEF0EA"/>
+        <path d="M0 250 C 90 232, 150 268, 236 250 S 400 214, 600 236 L600 268 C 400 246, 330 300, 236 282 S 90 264, 0 282 Z" fill="#D6E3EC"/>
+        <rect x="36" y="42" width="96" height="72" rx="6" fill="#DDE8D6"/>
+        <rect x="428" y="286" width="132" height="58" rx="6" fill="#DDE8D6"/>
+        <g fill="#E4E6E0">
+          <rect x="36" y="140" width="74" height="46" rx="3"/><rect x="120" y="140" width="58" height="46" rx="3"/>
+          <rect x="196" y="42" width="70" height="72" rx="3"/><rect x="278" y="42" width="86" height="72" rx="3"/>
+          <rect x="376" y="42" width="62" height="34" rx="3"/><rect x="376" y="86" width="62" height="28" rx="3"/>
+          <rect x="452" y="42" width="108" height="72" rx="3"/>
+          <rect x="196" y="140" width="70" height="46" rx="3"/><rect x="278" y="140" width="86" height="46" rx="3"/>
+          <rect x="376" y="140" width="62" height="46" rx="3"/><rect x="452" y="140" width="108" height="46" rx="3"/>
+          <rect x="36" y="200" width="74" height="34" rx="3"/><rect x="120" y="200" width="58" height="34" rx="3"/>
+          <rect x="196" y="200" width="70" height="34" rx="3"/><rect x="278" y="200" width="86" height="34" rx="3"/>
+          <rect x="376" y="200" width="62" height="34" rx="3"/><rect x="452" y="200" width="108" height="34" rx="3"/>
+          <rect x="36" y="298" width="74" height="46" rx="3"/><rect x="120" y="298" width="58" height="46" rx="3"/>
+          <rect x="196" y="298" width="70" height="46" rx="3"/><rect x="278" y="298" width="86" height="46" rx="3"/>
+        </g>
+        <g stroke="#DCDFD8" stroke-width="15" stroke-linecap="round" fill="none">
+          <path d="M0 127 H600"/><path d="M0 193 H600"/><path d="M0 291 H600"/>
+          <path d="M186 0 V360"/><path d="M366 0 V360"/>
+        </g>
+        <g stroke="#FFFFFF" stroke-width="11" stroke-linecap="round" fill="none">
+          <path d="M0 127 H600"/><path d="M0 193 H600"/><path d="M0 291 H600"/>
+          <path d="M186 0 V360"/><path d="M366 0 V360"/>
+        </g>
+        <g stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" fill="none" opacity=".95">
+          <path d="M114 0 V360"/><path d="M270 0 V360"/><path d="M444 0 V360"/>
+          <path d="M0 76 H600"/><path d="M0 241 H600"/>
+        </g>
+        <g stroke="#E7C86A" stroke-width="9" stroke-linecap="round" fill="none">
+          <path d="M0 20 L 168 20 L 240 92 L 600 92"/>
+        </g>
+        <g stroke="#FFFFFF" stroke-width="1.6" stroke-dasharray="7 7" fill="none" opacity=".85">
+          <path d="M0 20 L 168 20 L 240 92 L 600 92"/>
+        </g>
+        <g font-family="system-ui,sans-serif" font-size="9.5" fill="#8A8F87" font-weight="600">
+          <text x="44" y="66">Taman Kota</text>
+          <text x="436" y="308">Lapangan</text>
+          <text x="196" y="122" >Jl. Utama</text>
+          <text x="196" y="188">Jl. Raya Selatan</text>
+          <text x="252" y="264" fill="#7C99AC">Sungai</text>
+        </g>
+      </svg>
+      <div class="map-empty" id="mapEmpty">Klik peta untuk menandai lokasi</div>
+      <span class="map-tag">Peta contoh</span>
+    </div>
+    <p class="tiny">Peta ini hanya contoh. Pada versi produksi, lokasi akan disesuaikan dengan kota yang kamu pilih.</p>
+    <p style="font-weight:600;margin-top:18px" id="pinCount">Belum ada lokasi</p>
+    <button class="btn btn-outline" id="undoButton" onclick="undoPin()" disabled>Hapus lokasi</button>
+    <p class="error" id="pinError" role="alert"></p>
+  </div>
+
+  <!-- kategori: Kondisi udara (tambahan setelah peta) -->
+  <div id="kondisiFields" style="display:none;margin-top:22px">
+    <label for="kondisiPhoto" id="kondisiPhotoLabel">Foto di lokasi ini</label>
+    <input type="file" id="kondisiPhoto" accept="image/*" onchange="handlePhotoSelect()">
+    <p class="error" id="kondisiPhotoError" role="alert"></p>
+    <img id="kondisiPhotoPreview" alt="Pratinjau foto" style="display:none;max-width:100%;border-radius:12px;margin-top:10px">
+    <p class="tiny" id="kondisiPhotoSizeNote" style="display:none;margin-top:6px"></p>
+    <p class="tiny">Waktu pengambilan foto akan dicatat saat laporan dikirim. Foto akan dicek sebelum ditampilkan di data publik.</p>
+  </div>
+
+  <!-- kategori: Akses kendaraan listrik (tambahan setelah peta) -->
+  <div id="aksesFields" style="display:none;margin-top:22px">
+    <label id="aksesAvailLabel">Apakah motor listrik bisa dibeli dan diservis di sekitar sini?</label>
+    <div class="segment" role="radiogroup" aria-labelledby="aksesAvailLabel">
+      <label><input type="radio" name="aksesAvail" value="ya" onchange="clearErr('aksesAvail')"><span id="aksesAvailYesLabel">Bisa</span></label>
+      <label><input type="radio" name="aksesAvail" value="tidak" onchange="clearErr('aksesAvail')"><span id="aksesAvailNoLabel">Belum bisa</span></label>
+    </div>
+    <p class="error" id="aksesAvailError" role="alert"></p>
+
+    <label for="aksesCharging" id="aksesChargingLabel">Lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat (jika tahu)</label>
+    <input type="text" id="aksesCharging" placeholder="Contoh: SPKLU, mall, bengkel">
+  </div>
+
+  <!-- kategori: Transportasi umum (tambahan setelah peta) -->
+  <div id="transumFields" style="display:none;margin-top:22px">
+    <label for="transumNote" id="transumNoteLabel">Ada alasan khusus mengapa lokasi ini penting? (Opsional)</label>
+    <textarea id="transumNote" maxlength="200" placeholder="Contoh: Banyak orang menunggu angkutan di sini setiap pagi."></textarea>
+  </div>
+
+  <button class="btn btn-fill btn-block" onclick="buildSummary()" style="margin-top:22px">Lanjut</button>
+  <button class="btn-plain" onclick="openScreen('reportCategoryChoice')">Ganti pilihan</button>
+</div></div></section>
+
+<!-- reportConfirm -->
+<section class="screen" id="reportConfirm"><div class="sec"><div class="wrap narrow">
+  <div class="steps"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div>
+  <p class="step-text">Langkah 4 dari 4</p>
+  <h2 id="confirmTitleText">Periksa kembali laporanmu</h2>
+  <table id="summaryTable"></table>
+
+  <label class="choice" style="margin-top:24px">
+    <input type="checkbox" id="consent" onchange="checkConsent()">
+    <span id="consentLabelText">Saya setuju laporan ini disimpan</span>
+    <span class="desc" id="consentDescText">Laporan ini digunakan untuk memetakan kebutuhan fasilitas kendaraan listrik. Kamu dapat meminta laporanmu dihapus kapan saja.</span>
+  </label>
+  <p class="tiny">Teks persetujuan final perlu ditinjau kembali sebelum digunakan.</p>
+
+  <button class="btn btn-fill btn-block" id="submitButton" onclick="submitReport()" disabled style="margin-top:16px">Kirim</button>
+  <p class="hint" id="submitHint">Setujui penyimpanan laporan terlebih dahulu untuk melanjutkan.</p>
+  <button class="btn-plain" onclick="openScreen('reportDetail')">Kembali dan ubah</button>
+</div></div></section>
+
+<!-- reportDone -->
+<section class="screen" id="reportDone"><div class="sec"><div class="wrap narrow">
+  <div class="big-number c-leaf">Terkirim</div>
+  <h2 style="margin-top:20px" id="doneTitleText">Terima kasih sudah ikut berkontribusi!</h2>
+  <p class="small" id="doneSubtitleText">Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.</p>
+  <div class="row" style="margin-top:24px">
+    <button class="btn btn-fill" onclick="openScreen('dashboard')">Lihat laporan di kotamu</button>
+    <button class="btn btn-outline" onclick="alert('Bagikan hasil')">Ajak orang lain ikut</button>
+  </div>
+</div></div></section>
+
+<!-- dashboard -->
+<section class="screen" id="dashboard"><div class="sec"><div class="wrap narrow">
+  <h2>Laporan yang masuk</h2>
+  <p class="small">Angka di bawah berasal dari laporan yang sudah lolos pengecekan.</p>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="stat-value" id="statTotal">0</div>
+      <div class="stat-label">lokasi dilaporkan</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="statCities">0</div>
+      <div class="stat-label">kota dengan laporan</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="statWeek">0</div>
+      <div class="stat-label">laporan minggu ini</div>
+    </div>
+  </div>
+
+  <div class="filter" role="tablist">
+    <button id="filterAll" class="on" onclick="setFilter('all')">Semua</button>
+    <button id="filterCharging" onclick="setFilter('charging')">Pengisian daya</button>
+    <button id="filterTransit" onclick="setFilter('transit')">Transportasi umum</button>
+  </div>
+  <p class="tiny" id="filterNote">Menampilkan semua laporan.</p>
+
+  <h3 style="margin-top:36px">Kota dengan laporan terbanyak</h3>
+  <div id="cityBars"></div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:var(--indigo)"></i> Pengisian daya</span>
+    <span><i class="dot" style="background:var(--leaf)"></i> Transportasi umum</span>
+  </div>
+
+  <h3 style="margin-top:44px">Laporan per minggu</h3>
+  <div class="trend" id="trendBars"></div>
+  <div class="trend-labels" id="trendLabels"></div>
+  <p class="tiny" style="margin-top:10px">Delapan minggu terakhir. Minggu terakhir masih berjalan.</p>
+
+  <div class="info">Data ini berasal dari laporan sukarela, bukan survei yang mewakili seluruh penduduk. Kota dengan kurang dari 25 laporan digabung sebagai "kota lainnya". <strong>Batas ini dapat diubah setelah data dianalisis.</strong></div>
+
+  <button class="btn btn-fill" onclick="openScreen('reportCity')">Lapor Rutemu</button>
+</div></div></section>
+
+<!-- cityDetail -->
+<section class="screen" id="cityDetail"><div class="sec"><div class="wrap narrow">
+  <button class="btn-plain" onclick="openScreen('dashboard')">← Kembali ke semua kota</button>
+  <h2 id="cityName">Jakarta</h2>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="stat-value" id="cityTotal">0</div>
+      <div class="stat-label">lokasi dilaporkan</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="cityShare">0%</div>
+      <div class="stat-label">dari seluruh laporan</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="cityWeek">0</div>
+      <div class="stat-label">laporan minggu ini</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:36px">Kebutuhan yang paling banyak dilaporkan</h3>
+  <div id="cityNeedBars"></div>
+
+  <h3 style="margin-top:44px">Jenis lokasi</h3>
+  <div id="cityPlaceBars"></div>
+
+  <div class="info">Jumlah laporan di satu kota bisa berubah cukup banyak ketika data masih sedikit. Persentase akan lebih stabil setelah laporan bertambah.</div>
+
+  <button class="btn btn-fill" onclick="openScreen('reportCity')">Lapor Rutemu</button>
+</div></div></section>
+
+<!-- about -->
+<section class="screen" id="about"><div class="sec"><div class="wrap narrow">
+  <h2>Tentang EV Campaign</h2>
+  <p class="small">Peralihan ke kendaraan listrik bukan cuma soal ganti kendaraan. Infrastruktur SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) dan transportasi di sekitar kita juga perlu ikut berkembang.</p>
+
+  <!--
+    Blok Penghitung Laporan — sesuai brief: harus default tersembunyi, bisa
+    dipindah-pindah posisinya di halaman, dan on/off + pilihan metrik + label
+    diatur admin tanpa developer. Di file statis ini togglenya disimulasikan
+    lewat REPORT_COUNTER_CONFIG.visible; di Wix produksi ini harus jadi field
+    CMS yang bisa diedit non-teknis, bukan nilai hardcode di kode.
+  -->
+  <div class="stat-grid" id="reportCounterBlock" style="display:none;margin:8px 0 32px">
+    <div class="stat">
+      <div class="stat-value" id="counterTotal">0</div>
+      <div class="stat-label" id="counterTotalLabel">lokasi dilaporkan</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="counterCities">0</div>
+      <div class="stat-label" id="counterCitiesLabel">kota dengan laporan</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:36px">Siapa di balik kampanye ini?</h3>
+  <p class="small">Informasi tentang penyelenggara, pendukung, dan kontak akan dicantumkan di sini.</p>
+
+  <h3 style="margin-top:28px">Dari mana angka kalkulator berasal?</h3>
+  <p class="small">Perhitungan menggunakan harga BBM, tarif listrik, konsumsi kendaraan, dan asumsi lain. Sumber data dan tanggal pembaruan akan dicantumkan di sini.</p>
+
+  <h3 style="margin-top:28px">Laporan ini digunakan untuk apa?</h3>
+  <p class="small">Laporan digunakan untuk memetakan kebutuhan fasilitas kendaraan listrik berdasarkan masukan masyarakat. Setiap laporan akan diperiksa terlebih dahulu sebelum masuk ke data publik.</p>
+</div></div></section>
+
+<!-- adminLogin -->
+<section class="screen" id="adminLogin">
+  <div class="auth-shell">
+    <div class="auth-card">
+      <p class="brand">EV<em>Campaign</em> · Admin</p>
+      <h2 style="margin-top:16px">Masuk admin</h2>
+      <p class="small">Masuk untuk meninjau laporan.</p>
+
+      <label for="username">Username</label>
+      <input type="text" id="username" autocomplete="off" placeholder="Masukkan nama pengguna">
+
+      <label for="password">Password</label>
+      <input type="password" id="password" autocomplete="off" placeholder="Masukkan kata sandi">
+
+      <button class="btn btn-fill btn-block" onclick="login()" style="margin-top:24px">Masuk</button>
+      <p class="hint" id="loginMessage"></p>
+
+      <div class="info"><strong>Prototype.</strong> Autentikasi dan perlindungan akses perlu diterapkan sebelum digunakan sebagai produk.</div>
+      <button class="btn-plain" onclick="openScreen('home')">Kembali ke halaman utama</button>
+    </div>
+  </div>
+</section>
+
+<!-- adminDashboard -->
+<section class="screen" id="adminDashboard"><div class="admin-content">
+  <div class="admin-topbar">
+    <div>
+      <h2>Dashboard Analitik</h2>
+      <p class="small">Ringkasan performa Hitung BBM-mu dan Lapor Rutemu — mulai dari kunjungan, penyelesaian form, hingga sebaran laporan.</p>
+    </div>
+  </div>
+
+  <div class="stat-grid" id="analyticsSummaryStats"></div>
+
+  <h3 style="margin-top:40px">Alur pengguna per halaman</h3>
+  <p class="small">Kunjungan, mulai mengisi, hingga selesai — termasuk persentase yang scroll sampai 75% halaman.</p>
+  <div id="analyticsFunnels"></div>
+
+  <h3 style="margin-top:40px">Distribusi kategori laporan</h3>
+  <p class="small">Kategori mana di Lapor Rutemu yang paling banyak dipakai.</p>
+  <div id="analyticsCategoryBars"></div>
+
+  <h3 style="margin-top:40px">Sebaran lokasi per kota</h3>
+  <p class="small">Apakah laporan menyebar ke banyak area, atau menumpuk di satu titik saja?</p>
+  <div id="analyticsGeoSpread"></div>
+
+  <h3 style="margin-top:40px">Riwayat pelapor</h3>
+  <div class="stat-grid" id="analyticsReporterStats"></div>
+
+  <h3 style="margin-top:40px">Laporan per minggu</h3>
+  <div class="trend" id="analyticsTrendBars"></div>
+  <div class="trend-labels" id="analyticsTrendLabels"></div>
+</div></section>
+
+<!-- adminList -->
+<section class="screen" id="adminList"><div class="admin-content">
+  <div class="admin-topbar">
+    <div>
+      <h2>Laporan masuk</h2>
+      <p class="small">Periksa laporan sebelum ditampilkan sebagai data publik.</p>
+    </div>
+    <div>
+      <label for="statusFilter" style="margin:0 0 6px">Status</label>
+      <select id="statusFilter" style="min-width:200px">
+        <option>Perlu ditinjau</option><option>Disetujui</option><option>Ditolak</option><option>Duplikat</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="admin-table-wrap"><div class="scroll"><table class="admin-table">
+    <tr><th>ID</th><th>Kota</th><th>Kategori</th><th>Status</th><th>Waktu</th><th></th></tr>
+    <tbody id="adminReportsTableBody"></tbody>
+  </table></div></div>
+</div></section>
+
+<!-- adminDetail -->
+<section class="screen" id="adminDetail"><div class="admin-content" style="max-width:640px">
+  <a href="#" class="admin-back" onclick="openScreen('adminList');return false">← Kembali ke daftar laporan</a>
+  <div class="admin-topbar">
+    <div>
+      <h2 id="adminDetailTitle">Detail laporan</h2>
+      <p class="small" id="adminDetailStatus"></p>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <table class="admin-table" style="margin:-8px -8px 0" id="adminDetailTable"></table>
+    <label for="rejectReason">Alasan penolakan (wajib diisi jika laporan ditolak)</label>
+    <textarea id="rejectReason"></textarea>
+    <div class="row" style="margin-top:16px">
+      <button class="btn btn-fill" onclick="alert('Laporan disetujui dan akan masuk ke data publik.')">Setujui</button>
+      <button class="btn btn-outline" onclick="alert('Laporan ditolak.')">Tolak</button>
+      <button class="btn btn-outline" onclick="alert('Laporan ditandai sebagai duplikat.')">Duplikat</button>
+      <button class="btn btn-outline" onclick="alert('Laporan ditandai sebagai spam.')">Spam</button>
+    </div>
+  </div>
+</div></section>
+
+<!-- adminExport -->
+<section class="screen" id="adminExport"><div class="admin-content" style="max-width:520px">
+  <a href="#" class="admin-back" onclick="openScreen('adminList');return false">← Kembali ke daftar laporan</a>
+  <div class="admin-topbar"><div><h2>Ekspor laporan</h2></div></div>
+  <div class="admin-card">
+    <label for="exportCity">Kota</label>
+    <select id="exportCity"><option>Semua kota</option><option>Jakarta</option></select>
+    <label for="exportStatus">Status</label>
+    <select id="exportStatus"><option>Laporan disetujui</option><option>Semua status</option></select>
+    <div class="row" style="margin-top:24px">
+      <button class="btn btn-fill" onclick="alert('Unduh CSV')">Unduh CSV</button>
+      <button class="btn btn-outline" onclick="alert('Unduh GeoJSON')">Unduh GeoJSON</button>
+    </div>
+  </div>
+</div></section>
+
+<!-- adminManageForms -->
+<section class="screen" id="adminManageForms"><div class="admin-content" style="max-width:100%">
+  <div class="admin-topbar">
+    <div>
+      <h2>Kelola Form</h2>
+    </div>
+  </div>
+
+  <div class="filter" role="tablist" style="max-width:640px">
+    <button id="formTabCalc" class="on" onclick="adminShowFormTab('calc')">Hitung BBM-mu</button>
+    <button id="formTabLapor" onclick="adminShowFormTab('lapor')">Lapor Rutemu</button>
+    <button id="formTabCampaign" onclick="adminShowFormTab('campaign')">Halaman Campaign</button>
+  </div>
+
+  <!-- ── Tab: Hitung BBM-mu ── -->
+  <div id="formPanelCalc" style="margin-top:28px" class="admin-edit-grid">
+   <div class="admin-mobile-toggle" role="tablist">
+     <button class="on" id="calcViewForm" onclick="setMobileEditView('calc','form')">Edit</button>
+     <button id="calcViewPreview" onclick="setMobileEditView('calc','preview')">Pratinjau</button>
+   </div>
+   <div class="admin-edit-form" id="calcFormCol">
+    <h3>Label kolom</h3>
+    <label for="cfgFuelLabel">Label kolom "Pengeluaran sekali beli"</label>
+    <input type="text" id="cfgFuelLabel" oninput="renderCalcPreview()">
+    <label for="cfgFreqLabel">Label kolom "Frekuensi pembelian"</label>
+    <input type="text" id="cfgFreqLabel" oninput="renderCalcPreview()">
+    <label for="cfgRouteLabel">Label kolom "Rute harian"</label>
+    <input type="text" id="cfgRouteLabel" oninput="renderCalcPreview()">
+
+    <h3 style="margin-top:32px">Opsi frekuensi &amp; nilai perhitungan</h3>
+    <p class="tiny">Nilai adalah perkiraan berapa kali isi bensin dalam sebulan. Dipakai untuk: pengeluaran bulanan = sekali beli × nilai ini.</p>
+    <div class="scroll"><table>
+      <tr><th>Opsi</th><th>Label</th><th>Kali per bulan</th></tr>
+      <tr><td>Harian</td><td><input type="text" id="cfgFreqLabelHarian" style="min-width:140px" oninput="renderCalcPreview()"></td><td><input type="number" id="cfgFreqValHarian" step="0.01" style="width:110px" oninput="renderCalcPreview()"></td></tr>
+      <tr><td>Mingguan</td><td><input type="text" id="cfgFreqLabelMingguan" style="min-width:140px" oninput="renderCalcPreview()"></td><td><input type="number" id="cfgFreqValMingguan" step="0.01" style="width:110px" oninput="renderCalcPreview()"></td></tr>
+      <tr><td>Dua mingguan</td><td><input type="text" id="cfgFreqLabelDuaMingguan" style="min-width:140px" oninput="renderCalcPreview()"></td><td><input type="number" id="cfgFreqValDuaMingguan" step="0.01" style="width:110px" oninput="renderCalcPreview()"></td></tr>
+      <tr><td>Bulanan</td><td><input type="text" id="cfgFreqLabelBulanan" style="min-width:140px" oninput="renderCalcPreview()"></td><td><input type="number" id="cfgFreqValBulanan" step="0.01" style="width:110px" oninput="renderCalcPreview()"></td></tr>
+    </table></div>
+
+    <h3 style="margin-top:32px">Persetujuan &amp; tombol</h3>
+    <label for="cfgConsentLabel">Teks persetujuan (checkbox)</label>
+    <input type="text" id="cfgConsentLabel" oninput="renderCalcPreview()">
+    <label for="cfgConsentDesc">Keterangan persetujuan</label>
+    <textarea id="cfgConsentDesc" oninput="renderCalcPreview()"></textarea>
+    <label for="cfgSubmitLabel">Label tombol kirim</label>
+    <input type="text" id="cfgSubmitLabel" oninput="renderCalcPreview()">
+    <label for="cfgResultLabel">Label hasil (mis. "pengeluaran bensinmu")</label>
+    <input type="text" id="cfgResultLabel" oninput="renderCalcPreview()">
+
+    <h3 style="margin-top:32px">Pesan validasi/kesalahan</h3>
+    <label for="cfgErrFuelSpend">Jika pengeluaran belum diisi</label>
+    <input type="text" id="cfgErrFuelSpend">
+    <label for="cfgErrFuelFreq">Jika frekuensi belum dipilih</label>
+    <input type="text" id="cfgErrFuelFreq">
+    <label for="cfgErrDailyRoute">Jika rute harian belum diisi</label>
+    <input type="text" id="cfgErrDailyRoute">
+
+    <button class="btn btn-fill" onclick="saveCalculatorConfig()" style="margin-top:20px">Simpan perubahan</button>
+    <p class="hint" id="calcSaveMsg"></p>
+   </div>
+   <div class="preview-col mobile-hide" id="calcPreviewCol">
+    <h4>Pratinjau langsung — Hitung BBM-mu</h4>
+    <div id="calcPreview"></div>
+   </div>
+  </div>
+
+  <!-- ── Tab: Lapor Rutemu ── -->
+  <div id="formPanelLapor" style="display:none;margin-top:28px" class="admin-edit-grid">
+   <div class="admin-mobile-toggle" role="tablist">
+     <button class="on" id="laporViewForm" onclick="setMobileEditView('lapor','form')">Edit</button>
+     <button id="laporViewPreview" onclick="setMobileEditView('lapor','preview')">Pratinjau</button>
+   </div>
+   <div class="admin-edit-form" id="laporFormCol">
+    <h3>Teks pembuka &amp; langkah kota</h3>
+    <label for="cfgLaporIntro">Paragraf pembuka (Langkah 1)</label>
+    <textarea id="cfgLaporIntro" oninput="renderLaporPreview()"></textarea>
+    <label for="cfgCityQuestion">Pertanyaan kota</label>
+    <input type="text" id="cfgCityQuestion" oninput="renderLaporPreview()">
+    <label for="cfgCityHelp">Teks bantuan kota</label>
+    <input type="text" id="cfgCityHelp" oninput="renderLaporPreview()">
+    <label for="cfgUseLocationLabel">Label tombol "Gunakan lokasi saya"</label>
+    <input type="text" id="cfgUseLocationLabel" oninput="renderLaporPreview()">
+    <label for="cfgCityInputLabel">Label kolom nama kota</label>
+    <input type="text" id="cfgCityInputLabel" oninput="renderLaporPreview()">
+    <label for="cfgCityButtonLabel">Label tombol lanjut (kota)</label>
+    <input type="text" id="cfgCityButtonLabel" oninput="renderLaporPreview()">
+    <label for="cfgCityHint">Pesan bantuan jika kota belum diisi</label>
+    <input type="text" id="cfgCityHint" oninput="renderLaporPreview()">
+
+    <h3 style="margin-top:32px">Segmen &amp; pertanyaan kategori (Langkah 2)</h3>
+    <label for="cfgCategoryQuestion">Pertanyaan kategori (CTA)</label>
+    <input type="text" id="cfgCategoryQuestion" oninput="renderLaporPreview()">
+    <label for="cfgCategoryHelp">Teks bantuan kategori</label>
+    <input type="text" id="cfgCategoryHelp" oninput="renderLaporPreview()">
+    <label for="cfgCategoryButtonLabel">Label tombol lanjut (kategori)</label>
+    <input type="text" id="cfgCategoryButtonLabel" oninput="renderLaporPreview()">
+
+    <label for="cfgLaporCategorySelect" style="margin-top:24px">Pilih kategori untuk diedit</label>
+    <select id="cfgLaporCategorySelect" onchange="adminLoadCategoryFields()">
+      <option value="bbm">BBM</option>
+      <option value="kondisi">Kondisi udara</option>
+      <option value="akses">Akses kendaraan listrik</option>
+      <option value="transum">Transportasi umum</option>
+    </select>
+
+    <label for="cfgCatLabel">Nama pilihan (label segmen)</label>
+    <input type="text" id="cfgCatLabel" oninput="renderLaporPreview()">
+    <label for="cfgCatDesc">Deskripsi singkat di bawah nama pilihan</label>
+    <textarea id="cfgCatDesc" oninput="renderLaporPreview()"></textarea>
+    <label for="cfgCatTitle">Judul halaman detail (Langkah 3)</label>
+    <input type="text" id="cfgCatTitle" oninput="renderLaporPreview()">
+    <label for="cfgCatHelp">Teks bantuan (tampil di bawah judul, Langkah 3)</label>
+    <input type="text" id="cfgCatHelp" oninput="renderLaporPreview()">
+    <div id="cfgCatMapInstructionWrap">
+      <label for="cfgCatMapInstruction">Instruksi di atas peta</label>
+      <input type="text" id="cfgCatMapInstruction" oninput="renderLaporPreview()">
+    </div>
+    <div id="cfgCatExtraFields"></div>
+
+    <button class="btn btn-outline" onclick="saveCategoryFields()" style="margin-top:16px">Simpan kategori ini</button>
+
+    <h3 style="margin-top:36px">Konfirmasi, persetujuan &amp; selesai (Langkah 4)</h3>
+    <label for="cfgConfirmTitle">Judul halaman konfirmasi</label>
+    <input type="text" id="cfgConfirmTitle" oninput="renderLaporPreview()">
+    <label for="cfgLaporConsentLabel">Teks persetujuan (checkbox)</label>
+    <input type="text" id="cfgLaporConsentLabel" oninput="renderLaporPreview()">
+    <label for="cfgLaporConsentDesc">Keterangan persetujuan</label>
+    <textarea id="cfgLaporConsentDesc" oninput="renderLaporPreview()"></textarea>
+    <label for="cfgLaporSubmitLabel">Label tombol kirim</label>
+    <input type="text" id="cfgLaporSubmitLabel" oninput="renderLaporPreview()">
+    <label for="cfgLaporSubmitHint">Pesan jika persetujuan belum dicentang</label>
+    <input type="text" id="cfgLaporSubmitHint">
+    <label for="cfgDoneTitle">Judul halaman "Terkirim"</label>
+    <input type="text" id="cfgDoneTitle" oninput="renderLaporPreview()">
+    <label for="cfgDoneSubtitle">Subjudul halaman "Terkirim"</label>
+    <input type="text" id="cfgDoneSubtitle" oninput="renderLaporPreview()">
+
+    <button class="btn btn-fill" onclick="saveLaporConfig()" style="margin-top:20px">Simpan perubahan</button>
+    <p class="hint" id="laporSaveMsg"></p>
+   </div>
+   <div class="preview-col mobile-hide" id="laporPreviewCol">
+    <h4>Pratinjau langsung — Lapor Rutemu</h4>
+    <div id="laporPreview"></div>
+   </div>
+  </div>
+
+  <!-- ── Tab: Halaman Campaign ── -->
+  <div id="formPanelCampaign" style="display:none;margin-top:28px" class="admin-edit-grid">
+   <div class="admin-mobile-toggle" role="tablist">
+     <button class="on" id="campaignViewForm" onclick="setMobileEditView('campaign','form')">Edit</button>
+     <button id="campaignViewPreview" onclick="setMobileEditView('campaign','preview')">Pratinjau</button>
+   </div>
+   <div class="admin-edit-form" id="campaignFormCol">
+    <h3>Blok Penghitung Laporan</h3>
+    <p class="small">Blok ini tampil di halaman Campaign dan halaman Tentang. Sesuai brief, defaultnya tersembunyi.</p>
+    <label class="choice">
+      <input type="checkbox" id="cfgCounterVisible" onchange="renderCampaignPreview()">
+      Tampilkan blok ini di halaman publik
+      <span class="desc">Kalau tidak dicentang, blok ini tetap tersembunyi walau metrik di bawah sudah diatur.</span>
+    </label>
+
+    <label for="cfgCounterPosition">Posisi blok di halaman Campaign</label>
+    <select id="cfgCounterPosition" onchange="renderCampaignPreview()">
+      <option value="hero">Di panel hero (atas, sebelah judul)</option>
+      <option value="afterHero">Full-width, tepat setelah hero</option>
+      <option value="bottom">Full-width, di bawah "Yang bisa kamu lakukan"</option>
+    </select>
+
+    <label for="cfgCounterTitle">Judul blok (saat aktif &amp; tampil)</label>
+    <input type="text" id="cfgCounterTitle" oninput="renderCampaignPreview()">
+
+    <h3 style="margin-top:28px">Kalau blok belum aktif / dipindah dari hero</h3>
+    <p class="tiny">Teks ini yang tampil di panel hero sebagai gantinya.</p>
+    <label for="cfgCounterFallbackTitle">Judul pengganti</label>
+    <input type="text" id="cfgCounterFallbackTitle" oninput="renderCampaignPreview()">
+    <label for="cfgCounterFallbackText">Teks ajakan pengganti</label>
+    <textarea id="cfgCounterFallbackText" oninput="renderCampaignPreview()"></textarea>
+
+    <label style="margin-top:20px">Metrik yang ditampilkan</label>
+    <label class="choice">
+      <input type="checkbox" id="cfgMetricTotal" onchange="renderCampaignPreview()">
+      Total lokasi dilaporkan
+    </label>
+    <label class="choice">
+      <input type="checkbox" id="cfgMetricCities" onchange="renderCampaignPreview()">
+      Jumlah kota dengan laporan
+    </label>
+    <label class="choice">
+      <input type="checkbox" id="cfgMetricWeek" onchange="renderCampaignPreview()">
+      Laporan minggu ini
+    </label>
+
+    <h3 style="margin-top:28px">Label metrik</h3>
+    <label for="cfgLabelTotal">Label untuk total lokasi</label>
+    <input type="text" id="cfgLabelTotal" oninput="renderCampaignPreview()">
+    <label for="cfgLabelCities">Label untuk jumlah kota</label>
+    <input type="text" id="cfgLabelCities" oninput="renderCampaignPreview()">
+    <label for="cfgLabelWeek">Label untuk laporan minggu ini</label>
+    <input type="text" id="cfgLabelWeek" oninput="renderCampaignPreview()">
+
+    <button class="btn btn-fill" onclick="saveCampaignCounterConfig()" style="margin-top:20px">Simpan perubahan</button>
+    <p class="hint" id="campaignSaveMsg"></p>
+   </div>
+   <div class="preview-col mobile-hide" id="campaignPreviewCol">
+    <h4>Pratinjau langsung — Halaman Campaign</h4>
+    <div id="campaignPreview"></div>
+   </div>
+  </div>
+
+  <div class="info" style="margin-top:36px"><strong>Prototype.</strong> Perubahan di sini disimpan sementara di halaman ini saja (untuk didemokan), tidak ke server. Di Wix produksi, ini perlu jadi field CMS sungguhan yang tersambung ke halaman publik.</div>
+</div></section>
+
+</main>
+
+<footer><div class="wrap">
+  <a href="#" onclick="openScreen('about');return false">Tentang</a>
+  <a href="#" onclick="openScreen('about');return false">Sumber data</a>
+  <a href="#" onclick="openScreen('about');return false">Privasi</a>
+  <a href="#" onclick="openScreen('adminLogin');return false">Masuk admin</a>
+</div></footer>
+
+<script>
+/* ── report counter block config (Laman kampanye) ── */
+// Admin non-teknis di produksi harus bisa ubah nilai-nilai ini lewat CMS,
+// bukan lewat kode. visible:false = default tersembunyi sesuai brief.
+var REPORT_COUNTER_CONFIG = {
+  visible: false,
+  position: 'hero',   // 'hero' | 'afterHero' | 'bottom' — ini yang bikin bloknya benar-benar "bisa dipindah" sesuai brief, bukan cuma dikunci di satu tempat
+  metrics: ['total', 'cities'],   // pilihan admin: 'total', 'cities', 'week'
+  labels: { total: 'lokasi dilaporkan', cities: 'kota dengan laporan', week: 'laporan minggu ini' },
+  title: 'Kemajuan pelaporan warga',                 // judul saat blok AKTIF & tampil
+  fallbackTitle: 'Ikut kasih tahu kebutuhannya',      // judul panel hero saat blok TIDAK tampil di hero
+  fallbackText: 'Tandai lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.'
+};
+
+function counterMetricValue(key){
+  if (key === 'total') return reportData.cities.reduce(function(s,c){ return s + c.charging + c.transit; }, 0);
+  if (key === 'cities') return reportData.cities.filter(function(c){ return c.name !== 'Kota lainnya'; }).length;
+  if (key === 'week') return reportData.cities.reduce(function(s,c){ return s + c.thisWeek; }, 0);
+  return 0;
+}
+
+function counterStatsHTML(){
+  return REPORT_COUNTER_CONFIG.metrics.map(function(key){
+    var value = counterMetricValue(key);
+    var label = REPORT_COUNTER_CONFIG.labels[key] || key;
+    return '<div class="stat"><div class="stat-value">' + value.toLocaleString('id-ID') + '</div><div class="stat-label">' + label + '</div></div>';
+  }).join('');
+}
+
+function renderReportCounterBlock(){
+  var block = document.getElementById('reportCounterBlock');
+  if (!block) return;
+  block.style.display = REPORT_COUNTER_CONFIG.visible ? 'grid' : 'none';
+  if (!REPORT_COUNTER_CONFIG.visible) return;
+  block.innerHTML = counterStatsHTML();
+}
+
+// Blok Penghitung Laporan di halaman Campaign — sesuai brief, ini harus
+// bisa "dipindah-pindah posisinya" oleh admin tanpa bantuan developer.
+// Disimulasikan di sini lewat 3 slot fisik yang sudah disiapkan di HTML
+// (hero / setelah-hero / bawah halaman); admin pilih salah satu di Kelola
+// Form, dan fungsi ini yang memindahkan kontennya ke slot yang aktif.
+// Kalau bloknya tidak tampil di hero (baik karena visible:false ATAU posisi
+// dipindah ke slot lain), panel hero jatuh balik ke ajakan biasa (fallback).
+function renderCampaignCounter(){
+  var heroTitle = document.getElementById('campaignPanelTitle');
+  var heroCounter = document.getElementById('CampaignCounter');
+  var heroFallback = document.getElementById('campaignPanelFallback');
+  var afterHeroSlot = document.getElementById('counterSlotAfterHero');
+  var bottomSlot = document.getElementById('counterSlotBottom');
+  if (!heroTitle) return;
+
+  if (afterHeroSlot) afterHeroSlot.style.display = 'none';
+  if (bottomSlot) bottomSlot.style.display = 'none';
+
+  var showInHero = REPORT_COUNTER_CONFIG.visible && REPORT_COUNTER_CONFIG.position === 'hero';
+  heroTitle.textContent = showInHero ? REPORT_COUNTER_CONFIG.title : REPORT_COUNTER_CONFIG.fallbackTitle;
+  heroCounter.style.display = showInHero ? 'grid' : 'none';
+  if (showInHero) heroCounter.innerHTML = counterStatsHTML();
+  heroFallback.style.display = showInHero ? 'none' : 'block';
+  heroFallback.textContent = REPORT_COUNTER_CONFIG.fallbackText;
+
+  if (REPORT_COUNTER_CONFIG.visible && REPORT_COUNTER_CONFIG.position === 'afterHero' && afterHeroSlot){
+    afterHeroSlot.style.display = 'block';
+    document.getElementById('counterAfterHeroTitle').textContent = REPORT_COUNTER_CONFIG.title;
+    document.getElementById('counterAfterHeroStats').innerHTML = counterStatsHTML();
+  }
+  if (REPORT_COUNTER_CONFIG.visible && REPORT_COUNTER_CONFIG.position === 'bottom' && bottomSlot){
+    bottomSlot.style.display = 'block';
+    document.getElementById('counterBottomTitle').textContent = REPORT_COUNTER_CONFIG.title;
+    document.getElementById('counterBottomStats').innerHTML = counterStatsHTML();
+  }
+}
+
+/* ── state ── */
+var pins = [];
+var strictMode = true;           // production-like validation is enabled by default
+var activeFilter = 'all';
+var activeCity = 'Jakarta';
+
+/* ── sample data (placeholder, bukan data riset) ── */
+var reportData = {
+  cities: [
+    { name: 'Jakarta',   charging: 836, transit: 368, thisWeek: 74, places: { Kantor: 402, Rumah: 356, Transit: 289, Lainnya: 157 } },
+    { name: 'Surabaya',  charging: 470, transit: 217, thisWeek: 41, places: { Kantor: 221, Rumah: 208, Transit: 168, Lainnya: 90 } },
+    { name: 'Bandung',   charging: 338, transit: 174, thisWeek: 33, places: { Kantor: 160, Rumah: 155, Transit: 128, Lainnya: 69 } },
+    { name: 'Bekasi',    charging: 291, transit: 142, thisWeek: 28, places: { Kantor: 140, Rumah: 128, Transit: 106, Lainnya: 59 } },
+    { name: 'Semarang',  charging: 186, transit: 97,  thisWeek: 19, places: { Kantor: 88,  Rumah: 84,  Transit: 71,  Lainnya: 40 } },
+    { name: 'Kota lainnya', charging: 1108, transit: 585, thisWeek: 96, places: {} }
+  ],
+  weekly: [212, 268, 301, 355, 402, 468, 521, 291]
+};
+
+/* ── navigation ── */
+function toggleMenu(){ document.getElementById('menu').classList.toggle('open'); }
+
+// Placeholder pelacakan. Di produksi sambungkan ke GA4/Meta Pixel/Wix Analytics.
+// Nama event dipisah per halaman fitur (bukan per urutan blok) sesuai syarat
+// brief bahwa pelacakan tidak boleh terpengaruh oleh pengurutan ulang blok.
+var scrolledDeep = {};
+function trackEvent(name, detail){
+  // Production hook: connect this function to GA4/Wix Analytics/approved
+  // Campaign analytics. Do not add IP, device location, or personal identifiers.
+  var payload = { event: name, page: document.querySelector('.screen.active')?.id || null };
+  if (detail) payload.detail = detail;
+  if (Array.isArray(window.dataLayer)) window.dataLayer.push(payload);
+  console.log('[track]', payload);
+}
+
+var ADMIN_SCREENS = ['adminDashboard', 'adminList', 'adminDetail', 'adminExport', 'adminManageForms'];
+var AUTH_SCREENS = ['adminLogin'];
+var ADMIN_SCREEN_LABELS = {
+  adminDashboard: 'Dashboard Analitik',
+  adminList: 'Laporan masuk',
+  adminDetail: 'Detail laporan',
+  adminExport: 'Ekspor laporan',
+  adminManageForms: 'Kelola Form'
+};
+
+// Drawer sidebar admin di mobile (<900px). Di desktop sidebar selalu
+// tampil jadi fungsi ini tidak berpengaruh secara visual di sana.
+function toggleAdminSidebar(forceState){
+  var isOpen = document.body.classList.contains('admin-sidebar-open');
+  var next = (typeof forceState === 'boolean') ? forceState : !isOpen;
+  document.body.classList.toggle('admin-sidebar-open', next);
+}
+
+function openScreen(id){
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.menu a').forEach(function(a){ a.classList.toggle('current', a.dataset.screen === id); });
+  document.getElementById('menu').classList.remove('open');
+  document.body.classList.remove('admin-sidebar-open'); // tutup drawer tiap pindah layar
+
+  // Panel admin punya bahasa visual sendiri (sidebar gelap, bukan nav/footer
+  // marketing publik) — brief tidak minta ini, tapi memisahkan chrome admin
+  // dari halaman kampanye publik supaya jelas ini bukan bagian yang dilihat
+  // pengunjung/reviewer iklan Meta.
+  var isAdmin = ADMIN_SCREENS.indexOf(id) > -1;
+  var isAuth = AUTH_SCREENS.indexOf(id) > -1;
+  document.querySelector('header.nav').style.display = (isAdmin || isAuth) ? 'none' : '';
+  document.querySelector('footer').style.display = (isAdmin || isAuth) ? 'none' : '';
+  document.body.classList.toggle('admin-mode', isAdmin);
+  if (isAdmin){
+    document.querySelectorAll('#adminNav a').forEach(function(a){
+      a.classList.toggle('current', a.dataset.admin === id);
+    });
+    var mobileTitle = document.getElementById('adminMobileTitle');
+    if (mobileTitle) mobileTitle.textContent = ADMIN_SCREEN_LABELS[id] || 'Admin';
+  }
+
+  if (id === 'dashboard') renderDashboard();
+  if (id === 'Campaign') renderCampaignCounter();
+  if (id === 'cityDetail') renderCityDetail();
+  if (id === 'about') renderReportCounterBlock();
+  if (id === 'adminManageForms') adminLoadFormConfig();
+  if (id === 'adminDashboard') renderAdminDashboard();
+  if (id === 'adminList') renderAdminReportsList();
+  if (id === 'adminDetail') renderAdminDetail(currentAdminDetailId);
+  trackEvent('page_view', { screen: id });
+  if (id === 'result') trackEvent('hasil_dilihat');
+  if (id === 'reportCity') trackEvent('lapor_rutemu_arrival');
+  window.scrollTo(0,0);
+}
+
+window.addEventListener('beforeunload', function(){
+  if (formStarted && document.getElementById('reportConfirm')?.classList.contains('active') === false && document.getElementById('reportDone')?.classList.contains('active') === false) {
+    trackEvent('lapor_rutemu_abandoned');
+  }
+});
+
+window.addEventListener('scroll', function(){
+  var active = document.querySelector('.screen.active');
+  if (!active || scrolledDeep[active.id]) return;
+  var depth = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+  if (depth >= 0.75){
+    scrolledDeep[active.id] = true;
+    trackEvent('scroll_75', { screen: active.id });
+  }
+});
+
+function setStrictMode(){
+  var box = document.getElementById('strictToggle');
+  strictMode = box ? box.checked : false;
+  checkCity(); refreshPins(); checkConsent();
+}
+
+/* ── calculator ──
+   Semua teks, opsi frekuensi + nilai perkalian per bulan, label hasil, dan
+   pesan error dikumpulkan di satu objek supaya di produksi bisa dipindah
+   jadi field CMS yang diedit admin Bahana tanpa developer (sesuai brief
+   "Manajemen Konten" utk Hitung BBM-mu). */
+var CALCULATOR_CONFIG = {
+  fuelLabel: 'Sekali isi bensin, biasanya berapa rupiah?',
+  freqLabel: 'Seberapa sering kamu biasanya isi bensin?',
+  routeLabel: 'Dalam sehari, kira-kira berapa kilometer jarak yang kamu tempuh?',
+  frequencyPerMonth: { harian: 30, mingguan: 4.33, dua_mingguan: 2.17, bulanan: 1 },
+  frequencyLabels: { harian: 'Harian', mingguan: 'Mingguan', dua_mingguan: 'Dua Minggu Sekali', bulanan: 'Bulanan' },
+  consentLabel: 'Simpan hasil perhitungan ini untuk keperluan riset (opsional)',
+  consentDesc: 'Jika tidak dicentang, kamu tetap bisa melihat hasilnya — datanya saja yang tidak akan disimpan.',
+  submitLabel: 'Lihat hasil perhitungan',
+  errors: {
+    fuelSpend: 'Masukkan perkiraan biaya sekali isi bensin.',
+    fuelFreq: 'Pilih seberapa sering kamu isi bensin.',
+    dailyRoute: 'Masukkan jarak yang kamu tempuh per hari.'
+  },
+  resultLabel: 'pengeluaran bensinmu',
+  // Nilai preset chip di bawah slider "Sekali beli BBM" — SENGAJA berupa
+  // angka rupiah eksplisit (bukan pecahan dari min/max slider) supaya tidak
+  // ikut rusak kalau rentang slider berubah lagi nanti. Realistis buat motor
+  // (tangki ±4-5L): sekali isi jarang lebih dari ~Rp100rb. Admin cukup ubah
+  // angka di array ini untuk mengatur nilai & jumlah chip-nya.
+  amountPresets: [20000, 50000, 100000, 150000]
+};
+
+// Menerapkan CALCULATOR_CONFIG ke DOM halaman "Hitung BBM-mu" yang sedang
+// tampil. Dipanggil saat load dan setiap kali admin menyimpan perubahan.
+function applyCalculatorConfig(){
+  var setText = function(id, value){ var el = document.getElementById(id); if (el) el.textContent = value; };
+  setText('fuelSpendLabel', CALCULATOR_CONFIG.fuelLabel);
+  setText('fuelFreqLabel', CALCULATOR_CONFIG.freqLabel);
+  setText('dailyRouteLabel', CALCULATOR_CONFIG.routeLabel);
+  setText('calcConsentLabel', CALCULATOR_CONFIG.consentLabel);
+  setText('calcConsentDesc', CALCULATOR_CONFIG.consentDesc);
+  setText('calcButton', CALCULATOR_CONFIG.submitLabel);
+  setText('fuelFreqOptHarian', CALCULATOR_CONFIG.frequencyLabels.harian);
+  setText('fuelFreqOptMingguan', CALCULATOR_CONFIG.frequencyLabels.mingguan);
+  setText('fuelFreqOptDuaMingguan', CALCULATOR_CONFIG.frequencyLabels.dua_mingguan);
+  setText('fuelFreqOptBulanan', CALCULATOR_CONFIG.frequencyLabels.bulanan);
+}
+
+// Daftar nilai preset — dipakai chip pilihan cepat di bawah kolom.
+function fuelSpendPresetValues(){
+  return CALCULATOR_CONFIG.amountPresets;
+}
+
+// Chip pilihan cepat di bawah kolom — target sentuh besar (min-height 38px),
+// langsung isi kolom teks (tidak ada slider lagi untuk disinkronkan).
+function renderFuelSpendPresets(){
+  var container = document.getElementById('fuelSpendPresets');
+  var field = document.getElementById('fuelSpend');
+  container.innerHTML = '';
+  fuelSpendPresetValues().forEach(function(val){
+    var chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'amount-chip';
+    chip.textContent = 'Rp ' + val.toLocaleString('id-ID');
+    chip.onclick = function(){
+      field.value = val.toLocaleString('id-ID');
+      handleFuelSpendInput();
+    };
+    container.appendChild(chip);
+  });
+  updateActivePreset();
+}
+
+// Menyorot chip yang cocok dengan angka yang sedang diketik, supaya
+// kelihatan mana preset yang lagi aktif tanpa perlu klik dua kali.
+function updateActivePreset(){
+  var current = parseThousands(document.getElementById('fuelSpend').value);
+  document.querySelectorAll('#fuelSpendPresets .amount-chip').forEach(function(chip){
+    var chipVal = parseThousands(chip.textContent);
+    chip.classList.toggle('active', chipVal === current && current > 0);
+  });
+}
+
+function clearErr(field){
+  document.getElementById(field + 'Error').textContent = '';
+}
+
+/* Angka Rupiah ditampilkan pakai pemisah ribuan (format id-ID, titik sebagai
+   pemisah), tapi disimpan/dihitung dari angka mentahnya lewat parseThousands. */
+function parseThousands(value){
+  return Number(String(value).replace(/\D/g, '')) || 0;
+}
+
+// Dipanggil tiap kali kolom "Pengeluaran sekali beli" diketik manual.
+function handleFuelSpendInput(){
+  updateActivePreset();
+  clearErr('fuelSpend');
+}
+
+function formatFuelSpendDisplay(){
+  var field = document.getElementById('fuelSpend');
+  var raw = parseThousands(field.value);
+  field.value = raw ? raw.toLocaleString('id-ID') : '';
+}
+
+function validateCalcForm(){
+  var ok = true;
+  var fuelSpend = parseThousands(document.getElementById('fuelSpend').value);
+  var fuelFreq = document.getElementById('fuelFreq').value;
+  var dailyRoute = document.getElementById('dailyRoute').value;
+
+  if (!fuelSpend || fuelSpend <= 0){
+    document.getElementById('fuelSpendError').textContent = CALCULATOR_CONFIG.errors.fuelSpend; ok = false;
+  }
+  if (!fuelFreq){
+    document.getElementById('fuelFreqError').textContent = CALCULATOR_CONFIG.errors.fuelFreq; ok = false;
+  }
+  if (!dailyRoute || Number(dailyRoute) <= 0){
+    document.getElementById('dailyRouteError').textContent = CALCULATOR_CONFIG.errors.dailyRoute; ok = false;
+  }
+  return ok;
+}
+
+function formatIDR(value){ return 'Rp ' + Math.round(value).toLocaleString('id-ID'); }
+
+function calcValues(){
+  // Sesuai brief: pengeluaran bulanan = sekali beli × frekuensi pembelian/bulan.
+  var fuelSpend = parseThousands(document.getElementById('fuelSpend').value);
+  var freq = document.getElementById('fuelFreq').value;
+  var monthly = fuelSpend * (CALCULATOR_CONFIG.frequencyPerMonth[freq] || 0);
+  return { monthly: monthly, yearly: monthly * 12 };
+}
+
+function calculate(){
+  if (strictMode && !validateCalcForm()) return;
+  if (!strictMode) validateCalcForm(); // tetap tampilkan pesan error, tapi tidak memblokir mode demo
+  var v = calcValues();
+  var consented = document.getElementById('calcConsent').checked;
+  var record = {
+    fuelSpend: parseThousands(document.getElementById('fuelSpend').value),
+    fuelFreq: document.getElementById('fuelFreq').value,
+    dailyRoute: Number(document.getElementById('dailyRoute').value),
+    monthly: Math.round(v.monthly),
+    yearly: Math.round(v.yearly),
+    consent: consented
+  };
+  // Hasil selalu ditampilkan. Data hasil perhitungan hanya dikirim sebagai
+  // record penelitian jika pengguna memberi consent eksplisit. Tanpa consent,
+  // tidak ada record yang dikirim/disimpan.
+  if (consented) {
+    trackEvent('kalkulator_selesai_consented', record);
+  } else {
+    trackEvent('kalkulator_selesai_anonymous');
+  }
+
+  document.getElementById('yearAmount').textContent = formatIDR(v.yearly);
+  document.getElementById('monthAmount').textContent = formatIDR(v.monthly);
+  document.getElementById('resultCaption').textContent = CALCULATOR_CONFIG.resultLabel;
+  document.getElementById('shareAmount').textContent = formatIDR(v.yearly);
+
+
+  openScreen('result');
+}
+
+/* ── report flow ──
+   4 kategori sesuai tabel brief. Label, teks bantuan, dan pesan di sini
+   perlu dipindah jadi field CMS non-teknis di produksi (syarat "Manajemen
+   Konten" Lapor Rutemu). */
+// Flag teknis per kategori (bukan hal yang perlu diedit non-teknis): apakah
+// kategori ini butuh peta dan/atau foto. Teks yang tampil ke pengguna semua
+// disimpan di LAPOR_CONFIG.categories supaya bisa diedit lewat "Kelola Form".
+var CATEGORY_META = {
+  bbm:      { needsMap: false },
+  kondisi:  { needsMap: true, needsPhoto: true },
+  akses:    { needsMap: true },
+  transum:  { needsMap: true }
+};
+
+// Semua teks yang tampil ke pengguna di alur Lapor Rutemu, dikumpulkan di
+// satu tempat supaya di produksi bisa dipindah jadi field CMS non-teknis
+// (syarat "Persyaratan Manajemen Konten Mutlak" di brief).
+var LAPOR_CONFIG = {
+  intro: 'Ada lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di sini. Laporanmu membantu kami memetakan kebutuhan di kotamu.',
+  cityQuestion: 'Kamu paling sering berkendara di kota mana?',
+  cityHelp: 'Pilih kota tempat kamu paling sering berkendara.',
+  useLocationLabel: 'Gunakan lokasi saya',
+  cityInputLabel: 'Atau masukkan nama kota',
+  cityButtonLabel: 'Lanjut',
+  cityHint: 'Masukkan nama kota terlebih dahulu untuk melanjutkan.',
+  categoryQuestion: 'Apa yang ingin kamu laporkan?',
+  categoryHelp: 'Pilih salah satu — pertanyaan berikutnya akan menyesuaikan dengan pilihanmu.',
+  categoryButtonLabel: 'Lanjut',
+  confirmTitle: 'Periksa kembali laporanmu',
+  consentLabel: 'Saya setuju laporan ini disimpan',
+  consentDesc: 'Laporan ini digunakan untuk memetakan kebutuhan fasilitas kendaraan listrik. Kamu dapat meminta laporanmu dihapus kapan saja.',
+  submitLabel: 'Kirim',
+  submitHint: 'Setujui penyimpanan laporan terlebih dahulu untuk melanjutkan.',
+  doneTitle: 'Terima kasih sudah ikut berkontribusi!',
+  doneSubtitle: 'Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.',
+  categories: {
+    bbm: {
+      label: 'BBM',
+      desc: 'Perkiraan biaya bensin per bulan dan rute yang biasa kamu lewati.',
+      title: 'Ceritakan rute yang biasa kamu lewati',
+      help: 'Perkiraan saja tidak apa-apa — tidak perlu struk atau catatan resmi.',
+      fields: { spendLabel: 'Perkiraan biaya bensin per bulan (Rp)', startLabel: 'Mulai dari mana?', endLabel: 'Sampai di mana?' }
+    },
+    kondisi: {
+      label: 'Kondisi udara',
+      desc: 'Tandai lokasinya dan tambahkan foto.',
+      title: 'Tandai lokasi dan tambahkan foto',
+      help: 'Ambil foto dari tempat kamu berdiri sekarang agar lokasinya akurat.',
+      mapInstruction: 'Tandai satu lokasi yang menurutmu perlu diperhatikan.',
+      fields: { photoLabel: 'Foto di lokasi ini' }
+    },
+    akses: {
+      label: 'Akses kendaraan listrik',
+      desc: 'Apakah motor listrik bisa dibeli atau diservis di sekitar sini? Kamu juga bisa mencantumkan lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat.',
+      title: 'Tandai lokasi dan isi detailnya',
+      help: 'Belum tahu lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat? Kolom ini boleh dikosongkan.',
+      mapInstruction: 'Tandai lokasi yang kamu maksud.',
+      fields: {
+        availLabel: 'Apakah motor listrik bisa dibeli dan diservis di sekitar sini?',
+        availYesLabel: 'Bisa',
+        availNoLabel: 'Belum bisa',
+        chargingLabel: 'Lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat (jika tahu)'
+      }
+    },
+    transum: {
+      label: 'Transportasi umum',
+      desc: 'Tandai lokasi yang menurutmu perlu rute atau pemberhentian transportasi umum listrik.',
+      title: 'Tandai lokasi transportasi umum',
+      help: 'Misalnya halte, pangkalan ojek, atau tempat orang biasa menunggu angkutan.',
+      mapInstruction: 'Tandai lokasi yang menurutmu perlu rute atau pemberhentian transportasi umum listrik.',
+      fields: { noteLabel: 'Ada alasan khusus mengapa lokasi ini penting? (Opsional)' }
+    }
+  }
+};
+var selectedCategory = null;
+var kondisiPhotoData = null;
+
+// Menerapkan LAPOR_CONFIG ke DOM di semua layar Lapor Rutemu. Dipanggil saat
+// load dan setiap kali admin menyimpan perubahan lewat "Kelola Form".
+function applyLaporConfig(){
+  var setText = function(id, value){ var el = document.getElementById(id); if (el) el.textContent = value; };
+  setText('laporIntro', LAPOR_CONFIG.intro);
+  setText('cityQuestionText', LAPOR_CONFIG.cityQuestion);
+  setText('cityHelpText', LAPOR_CONFIG.cityHelp);
+  setText('useLocationBtn', LAPOR_CONFIG.useLocationLabel);
+  setText('cityInputLabelText', LAPOR_CONFIG.cityInputLabel);
+  setText('cityButton', LAPOR_CONFIG.cityButtonLabel);
+  setText('cityHint', LAPOR_CONFIG.cityHint);
+  setText('categoryQuestionText', LAPOR_CONFIG.categoryQuestion);
+  setText('categoryHelpText', LAPOR_CONFIG.categoryHelp);
+  setText('categoryButtonLabel', LAPOR_CONFIG.categoryButtonLabel);
+  setText('confirmTitleText', LAPOR_CONFIG.confirmTitle);
+  setText('consentLabelText', LAPOR_CONFIG.consentLabel);
+  setText('consentDescText', LAPOR_CONFIG.consentDesc);
+  setText('submitButton', LAPOR_CONFIG.submitLabel);
+  setText('submitHint', LAPOR_CONFIG.submitHint);
+  setText('doneTitleText', LAPOR_CONFIG.doneTitle);
+  setText('doneSubtitleText', LAPOR_CONFIG.doneSubtitle);
+
+  ['bbm','kondisi','akses','transum'].forEach(function(key){
+    var cat = LAPOR_CONFIG.categories[key];
+    setText('catLabel_' + key, cat.label);
+    setText('catDesc_' + key, cat.desc);
+  });
+  setText('bbmSpendLabel', LAPOR_CONFIG.categories.bbm.fields.spendLabel);
+  setText('routeStartLabel', LAPOR_CONFIG.categories.bbm.fields.startLabel);
+  setText('routeEndLabel', LAPOR_CONFIG.categories.bbm.fields.endLabel);
+  setText('kondisiPhotoLabel', LAPOR_CONFIG.categories.kondisi.fields.photoLabel);
+  setText('aksesAvailLabel', LAPOR_CONFIG.categories.akses.fields.availLabel);
+  setText('aksesAvailYesLabel', LAPOR_CONFIG.categories.akses.fields.availYesLabel);
+  setText('aksesAvailNoLabel', LAPOR_CONFIG.categories.akses.fields.availNoLabel);
+  setText('aksesChargingLabel', LAPOR_CONFIG.categories.akses.fields.chargingLabel);
+  setText('transumNoteLabel', LAPOR_CONFIG.categories.transum.fields.noteLabel);
+
+  // Kalau sedang berada di layar detail kategori, judul & instruksi peta
+  // perlu diperbarui juga (showDetailFields membaca LAPOR_CONFIG langsung).
+  if (selectedCategory) showDetailFields();
+}
+
+var formStarted = false;
+function checkCity(){
+  if (!formStarted && document.getElementById('cityInput').value.trim().length > 0){
+    formStarted = true;
+    trackEvent('form_dimulai');
+  }
+  var ready = document.getElementById('cityInput').value.trim().length >= 3;
+  document.getElementById('cityButton').disabled = strictMode && !ready;
+  document.getElementById('cityHint').style.display = (strictMode && !ready) ? 'block' : 'none';
+}
+
+function chooseCategory(){
+  var picked = document.querySelector('input[name="reportCat"]:checked');
+  if (!picked){
+    document.getElementById('categoryChoiceError').textContent = 'Pilih salah satu.';
+    if (strictMode) return;
+    selectedCategory = 'bbm'; // fallback mode demo: lanjut tanpa memilih kategori
+  } else {
+    selectedCategory = picked.value;
+  }
+  showDetailFields();
+  trackEvent('kategori_dipilih', { category: selectedCategory });
+  openScreen('reportDetail');
+}
+
+function showDetailFields(){
+  var meta = CATEGORY_META[selectedCategory];
+  var cfg = LAPOR_CONFIG.categories[selectedCategory];
+  document.getElementById('detailTitle').textContent = cfg.title;
+  document.getElementById('detailHelp').textContent = cfg.help || '';
+  document.getElementById('bbmFields').style.display = selectedCategory === 'bbm' ? 'block' : 'none';
+  document.getElementById('mapSection').style.display = meta.needsMap ? 'block' : 'none';
+  document.getElementById('kondisiFields').style.display = selectedCategory === 'kondisi' ? 'block' : 'none';
+  document.getElementById('aksesFields').style.display = selectedCategory === 'akses' ? 'block' : 'none';
+  document.getElementById('transumFields').style.display = selectedCategory === 'transum' ? 'block' : 'none';
+  if (meta.needsMap) document.getElementById('mapInstruction').textContent = cfg.mapInstruction;
+
+  // reset titik & foto tiap ganti kategori/kembali
+  document.querySelectorAll('#map .pin').forEach(function(p){ p.parentNode.removeChild(p); });
+  pins = [];
+  kondisiPhotoData = null;
+  var photoInput = document.getElementById('kondisiPhoto');
+  if (photoInput) photoInput.value = '';
+  var photoPrev = document.getElementById('kondisiPhotoPreview');
+  if (photoPrev) photoPrev.style.display = 'none';
+  var photoSizeNote = document.getElementById('kondisiPhotoSizeNote');
+  if (photoSizeNote) photoSizeNote.style.display = 'none';
+  refreshPins();
+}
+
+// Shortcut GPS untuk kategori berbasis titik — di prototype ini disimulasikan
+// (menaruh pin di titik tetap), tapi di produksi ini yang harus jadi jalur
+// UTAMA: orang yang melapor biasanya berdiri persis di lokasinya, jadi jauh
+// lebih gampang & akurat daripada tap manual presisi di peta kecil sambil di
+// pinggir jalan/di atas motor.
+function useMyLocationForPin(){
+  if (pins.length >= 1){
+    alert('Sudah ada satu titik. Hapus titik itu dulu kalau mau pakai lokasi saat ini.');
+    return;
+  }
+  var map = document.getElementById('map');
+  var box = map.getBoundingClientRect();
+  var dot = document.createElement('div');
+  dot.className = 'pin';
+  dot.style.left = (box.width * 0.52) + 'px';
+  dot.style.top = (box.height * 0.58) + 'px';
+  dot.textContent = '1';
+  map.appendChild(dot);
+  pins.push(dot);
+  refreshPins();
+  trackEvent('lapor_gunakan_lokasi_pin');
+}
+
+// Kategori berbasis titik (kondisi udara, akses EV, transum) hanya butuh 1 pin
+// sesuai brief ("Satu pin pada lokasi"). Validasi geografis (pin harus di
+// dalam wilayah kota terpilih) perlu API peta/boundary sungguhan di produksi.
+function addPin(event){
+  if (pins.length >= 1){
+    alert('Satu titik saja untuk laporan ini. Hapus lokasi ini dulu kalau ingin menggantinya.');
+    return;
+  }
+  var map = document.getElementById('map');
+  var box = map.getBoundingClientRect();
+  var dot = document.createElement('div');
+  dot.className = 'pin';
+  dot.style.left = (event.clientX - box.left) + 'px';
+  dot.style.top = (event.clientY - box.top) + 'px';
+  dot.textContent = '1';
+  map.appendChild(dot);
+  pins.push(dot);
+  refreshPins();
+}
+
+function undoPin(){
+  if (!pins.length) return;
+  var last = pins.pop();
+  if (last && last.parentNode) last.parentNode.removeChild(last);
+  refreshPins();
+}
+
+function refreshPins(){
+  var count = pins.length;
+  var emptyEl = document.getElementById('mapEmpty');
+  if (emptyEl) emptyEl.style.display = count ? 'none' : 'flex';
+  var countEl = document.getElementById('pinCount');
+  if (countEl) countEl.textContent = count === 0 ? 'Belum ada lokasi' : '1 titik ditandai';
+  var undoEl = document.getElementById('undoButton');
+  if (undoEl) undoEl.disabled = count === 0;
+  var pinErr = document.getElementById('pinError');
+  if (pinErr && count) pinErr.textContent = '';
+}
+
+// Validasi teknis dasar (tipe file & ukuran). Cek "jelas dan terbaca" tetap
+// butuh peninjauan manual admin atau layanan pengecekan gambar di backend.
+// Foto dikecilkan & dikompres di HP SEBELUM dianggap sebagai data laporan —
+// foto kamera HP biasa 3–8 MB, dan itu berat untuk kuota seluler terbatas
+// (persona: kurir/ojol/warga di luar ruangan, koneksi data seluler).
+function handlePhotoSelect(){
+  var input = document.getElementById('kondisiPhoto');
+  var file = input.files[0];
+  var errEl = document.getElementById('kondisiPhotoError');
+  var sizeNote = document.getElementById('kondisiPhotoSizeNote');
+  errEl.textContent = '';
+  sizeNote.style.display = 'none';
+  if (!file){ kondisiPhotoData = null; return; }
+  if (file.type.indexOf('image/') !== 0){
+    errEl.textContent = 'File harus berupa foto (jpg/png).'; input.value = ''; kondisiPhotoData = null; return;
+  }
+  // Batas ukuran FILE ASLI dinaikkan (bukan lagi batas data yang dikirim,
+  // karena itu sudah ditangani lewat kompresi di bawah) — cuma jaga-jaga
+  // supaya proses kompresi tidak membebani memori HP low-end.
+  if (file.size > 20 * 1024 * 1024){
+    errEl.textContent = 'Ukuran foto maksimal 20 MB.'; input.value = ''; kondisiPhotoData = null; return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var originalKB = Math.round(file.size / 1024);
+    compressImage(e.target.result, function(compressedDataUrl){
+      kondisiPhotoData = compressedDataUrl;
+      var preview = document.getElementById('kondisiPhotoPreview');
+      preview.src = compressedDataUrl;
+      preview.style.display = 'block';
+      var compressedKB = Math.round((compressedDataUrl.length * 0.75) / 1024);
+      sizeNote.textContent = 'Ukuran asli ' + originalKB.toLocaleString('id-ID') + ' KB → dikompres jadi sekitar ' + compressedKB.toLocaleString('id-ID') + ' KB sebelum dikirim, biar hemat kuota.';
+      sizeNote.style.display = 'block';
+    });
+  };
+  reader.readAsDataURL(file);
+}
+
+// Mengecilkan sisi terpanjang foto ke maks 1600px dan re-encode sebagai JPEG
+// kualitas 0.72 — cukup untuk menilai kondisi lokasi, jauh lebih ringan dari
+// ukuran asli kamera HP. Kalau proses gagal (mis. format tidak didukung
+// canvas), fallback ke data asli supaya laporan tetap bisa dikirim.
+function compressImage(dataUrl, callback){
+  var img = new Image();
+  img.onload = function(){
+    var maxDim = 1600;
+    var w = img.width, h = img.height;
+    if (w > maxDim || h > maxDim){
+      if (w > h){ h = Math.round(h * (maxDim / w)); w = maxDim; }
+      else { w = Math.round(w * (maxDim / h)); h = maxDim; }
+    }
+    var canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+    try {
+      callback(canvas.toDataURL('image/jpeg', 0.72));
+    } catch (err) {
+      callback(dataUrl);
+    }
+  };
+  img.onerror = function(){ callback(dataUrl); };
+  img.src = dataUrl;
+}
+
+function validateDetail(){
+  var ok = true;
+  if (selectedCategory === 'bbm'){
+    if (!document.getElementById('bbmSpend').value){ document.getElementById('bbmSpendError').textContent = 'Isi dulu perkiraan pengeluaran BBM per bulan.'; ok = false; }
+    if (!document.getElementById('routeStart').value.trim()){ document.getElementById('routeStartError').textContent = 'Isi dulu lokasi mulai rute.'; ok = false; }
+    if (!document.getElementById('routeEnd').value.trim()){ document.getElementById('routeEndError').textContent = 'Isi dulu lokasi akhir rute.'; ok = false; }
+  } else {
+    if (!pins.length){ document.getElementById('pinError').textContent = 'Tandai satu titik dulu di peta.'; ok = false; }
+    if (selectedCategory === 'kondisi' && !kondisiPhotoData){ document.getElementById('kondisiPhotoError').textContent = 'Tambahkan foto kondisi dulu.'; ok = false; }
+    if (selectedCategory === 'akses' && !document.querySelector('input[name="aksesAvail"]:checked')){ document.getElementById('aksesAvailError').textContent = 'Pilih salah satu.'; ok = false; }
+  }
+  return ok;
+}
+
+function buildSummary(){
+  if (strictMode && !validateDetail()) return;
+  if (!strictMode) validateDetail(); // tetap tampilkan pesan error, tapi tidak memblokir mode demo
+
+  var cfg = LAPOR_CONFIG.categories[selectedCategory];
+  var rows = '<tr><th>Kategori</th><td>' + cfg.label + '</td></tr>';
+
+  if (selectedCategory === 'bbm'){
+    var spend = document.getElementById('bbmSpend').value;
+    rows += '<tr><th>Pengeluaran BBM/bulan</th><td>' + (spend ? 'Rp ' + Number(spend).toLocaleString('id-ID') : '-') + '</td></tr>';
+    rows += '<tr><th>Mulai dari mana?</th><td>' + (document.getElementById('routeStart').value || '-') + '</td></tr>';
+    rows += '<tr><th>Sampai di mana?</th><td>' + (document.getElementById('routeEnd').value || '-') + '</td></tr>';
+  } else {
+    rows += '<tr><th>Titik</th><td>' + (pins.length ? 'Ditandai di peta' : 'Belum ditandai') + '</td></tr>';
+    rows += '<tr><th>Stempel waktu</th><td>' + new Date().toLocaleString('id-ID') + '</td></tr>';
+    if (selectedCategory === 'kondisi'){
+      rows += '<tr><th>Foto</th><td>' + (kondisiPhotoData ? 'Terlampir' : 'Belum ditambahkan') + '</td></tr>';
+    }
+    if (selectedCategory === 'akses'){
+      var avail = document.querySelector('input[name="aksesAvail"]:checked');
+      rows += '<tr><th>Motor listrik bisa dibeli/diservis</th><td>' + (avail ? (avail.value === 'ya' ? LAPOR_CONFIG.categories.akses.fields.availYesLabel : LAPOR_CONFIG.categories.akses.fields.availNoLabel) : '-') + '</td></tr>';
+      rows += '<tr><th>Charging terdekat</th><td>' + (document.getElementById('aksesCharging').value || '-') + '</td></tr>';
+    }
+    if (selectedCategory === 'transum'){
+      rows += '<tr><th>Catatan</th><td>' + (document.getElementById('transumNote').value || '-') + '</td></tr>';
+    }
+  }
+
+  document.getElementById('summaryTable').innerHTML = rows;
+  document.getElementById('consent').checked = false;
+  checkConsent();
+  openScreen('reportConfirm');
+}
+
+// ── riwayat pelapor ──
+// Brief minta metrik "riwayat kiriman pelapor sebelumnya" — itu perlu SATU
+// pengenal yang bertahan antar kunjungan supaya beberapa kiriman bisa
+// dikaitkan ke pelapor yang sama. Ini BUKAN pengenal pribadi (bukan nama,
+// nomor HP, akun, dsb) — cuma ID acak yang disimpan lokal di browser
+// pengguna sendiri, jadi tidak melanggar batasan privasi di brief (yang
+// melarang IP, lokasi perangkat, atau pengenal pribadi). Dibungkus try/catch
+// karena localStorage bisa diblokir di mode privat sebagian browser.
+function getReporterId(){
+  try {
+    var key = 'ev_campaign_reporter_id';
+    var id = localStorage.getItem(key);
+    if (!id){
+      id = 'r_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+      localStorage.setItem(key, id);
+    }
+    return id;
+  } catch (e) {
+    return null; // localStorage tidak tersedia — anggap tidak bisa dilacak riwayatnya
+  }
+}
+
+function getReporterPriorSubmissionCount(){
+  try {
+    return Number(localStorage.getItem('ev_campaign_reporter_submissions') || 0);
+  } catch (e) {
+    return 0;
+  }
+}
+
+function bumpReporterSubmissionCount(){
+  try {
+    var next = getReporterPriorSubmissionCount() + 1;
+    localStorage.setItem('ev_campaign_reporter_submissions', String(next));
+    return next;
+  } catch (e) {
+    return 1;
+  }
+}
+
+function submitReport(){
+  if (strictMode && !document.getElementById('consent').checked) return;
+  var reporterId = getReporterId();
+  var priorCount = getReporterPriorSubmissionCount();
+  var totalAfterThis = bumpReporterSubmissionCount();
+  trackEvent('laporan_selesai', {
+    category: selectedCategory,
+    city: document.getElementById('cityInput').value,
+    reporterId: reporterId,
+    reporterType: priorCount > 0 ? 'returning' : 'new',
+    totalSubmissionsByReporter: totalAfterThis
+  });
+  openScreen('reportDone');
+}
+
+function checkConsent(){
+  var agreed = document.getElementById('consent').checked;
+  document.getElementById('submitButton').disabled = strictMode && !agreed;
+  document.getElementById('submitHint').style.display = (strictMode && !agreed) ? 'block' : 'none';
+}
+
+/* ── admin ── */
+/* ── admin: dashboard analitik ──
+   Data contoh di bawah dipetakan LANGSUNG ke metrik yang diwajibkan brief:
+   "Hal yang diukur" (Hitung BBM-mu — page arrivals, perhitungan selesai,
+   75% scroll depth) dan "Metrik Pelaporan & Pelacakan" (Lapor Rutemu —
+   arrival tanpa mulai form, form ditinggal, kiriman selesai, riwayat
+   pelapor, distribusi geografis/kategori). Semua angka statis untuk demo;
+   di produksi sumbernya adalah event-event yang sudah dipanggil lewat
+   trackEvent() di seluruh file ini. */
+var ANALYTICS_DATA = {
+  funnels: [
+    { page: 'Hitung BBM-mu', arrivals: 8420, started: 5210, completed: 3980, scroll75: 3150 },
+    { page: 'Lapor Rutemu', arrivals: 6130, started: 3040, completed: 1870, scroll75: 2210 }
+  ],
+  categoryBreakdown: [
+    { key: 'bbm', count: 612 },
+    { key: 'kondisi', count: 480 },
+    { key: 'akses', count: 390 },
+    { key: 'transum', count: 388 }
+  ],
+  reporters: { new: 1720, returning: 150 },
+  weekly: [212, 268, 301, 355, 402, 468, 521, 291],
+  // Brief eksplisit minta "distribusi geografis pin ... menilai penyebaran
+  // versus pengelompokan lingkungan". Peta di prototype ini masih SVG statis
+  // (belum ada koordinat asli), jadi data di bawah CONTOH untuk menunjukkan
+  // BENTUK metriknya: per kota, pin-nya menyebar ke berapa area berbeda,
+  // atau malah menumpuk di segelintir area saja.
+  geoSpread: [
+    { city: 'Jakarta', areas: [
+        { name: 'Kebayoran Baru', count: 145 },
+        { name: 'Tebet', count: 98 },
+        { name: 'Cempaka Putih', count: 76 },
+        { name: 'Kelapa Gading', count: 60 },
+        { name: 'Area lainnya (14 kelurahan)', count: 457 }
+      ] },
+    { city: 'Surabaya', areas: [
+        { name: 'Rungkut', count: 88 },
+        { name: 'Gubeng', count: 65 },
+        { name: 'Wonokromo', count: 54 },
+        { name: 'Area lainnya (9 kelurahan)', count: 263 }
+      ] },
+    { city: 'Bandung', areas: [
+        { name: 'Coblong', count: 70 },
+        { name: 'Buah Batu', count: 52 },
+        { name: 'Area lainnya (7 kelurahan)', count: 190 }
+      ] }
+  ]
+};
+
+function renderAnalyticsSummary(){
+  var totalArrivals = ANALYTICS_DATA.funnels.reduce(function(s, f){ return s + f.arrivals; }, 0);
+  var totalStarted = ANALYTICS_DATA.funnels.reduce(function(s, f){ return s + f.started; }, 0);
+  var totalCompleted = ANALYTICS_DATA.funnels.reduce(function(s, f){ return s + f.completed; }, 0);
+  var rate = totalArrivals ? Math.round((totalCompleted / totalArrivals) * 1000) / 10 : 0;
+
+  document.getElementById('analyticsSummaryStats').innerHTML =
+    '<div class="stat"><div class="stat-value">' + totalArrivals.toLocaleString('id-ID') + '</div><div class="stat-label">kunjungan ke halaman fitur</div></div>' +
+    '<div class="stat"><div class="stat-value">' + totalStarted.toLocaleString('id-ID') + '</div><div class="stat-label">form dimulai</div></div>' +
+    '<div class="stat"><div class="stat-value">' + totalCompleted.toLocaleString('id-ID') + '</div><div class="stat-label">form selesai</div></div>' +
+    '<div class="stat"><div class="stat-value">' + rate + '%</div><div class="stat-label">completion rate keseluruhan</div></div>';
+}
+
+// Corong per halaman: kunjungan → mulai → selesai, dengan bar-track yang
+// sama persis dipakai di dashboard publik (fill-charge/fill-transit) supaya
+// bahasa visualnya konsisten satu situs.
+function renderAnalyticsFunnels(){
+  var html = ANALYTICS_DATA.funnels.map(function(f){
+    var startedPct = f.arrivals ? (f.started / f.arrivals * 100) : 0;
+    var completedPct = f.arrivals ? (f.completed / f.arrivals * 100) : 0;
+    var completionOfStarted = f.started ? Math.round((f.completed / f.started) * 1000) / 10 : 0;
+    var scrollPct = f.arrivals ? Math.round((f.scroll75 / f.arrivals) * 1000) / 10 : 0;
+    return '<div class="admin-card" style="margin-bottom:16px">' +
+      '<h3 style="margin-bottom:16px">' + f.page + '</h3>' +
+      '<div class="bar-row"><div class="bar-head"><span class="bar-name">Kunjungan</span><span class="bar-value">' + f.arrivals.toLocaleString('id-ID') + '</span></div>' +
+        '<div class="bar-track"><div class="bar-fill fill-charge" style="width:100%"></div></div></div>' +
+      '<div class="bar-row"><div class="bar-head"><span class="bar-name">Mulai isi form</span><span class="bar-value">' + f.started.toLocaleString('id-ID') + '</span></div>' +
+        '<div class="bar-track"><div class="bar-fill fill-charge" style="width:' + startedPct + '%"></div></div></div>' +
+      '<div class="bar-row"><div class="bar-head"><span class="bar-name">Selesai</span><span class="bar-value">' + f.completed.toLocaleString('id-ID') + '</span></div>' +
+        '<div class="bar-track"><div class="bar-fill fill-transit" style="width:' + completedPct + '%"></div></div></div>' +
+      '<p class="tiny" style="margin-top:14px">' + completionOfStarted + '% dari yang mulai form berhasil menyelesaikannya · ' + scrollPct + '% pengunjung scroll sampai 75% halaman</p>' +
+    '</div>';
+  }).join('');
+  document.getElementById('analyticsFunnels').innerHTML = html;
+}
+
+function renderAnalyticsCategoryBars(){
+  var total = ANALYTICS_DATA.categoryBreakdown.reduce(function(s, c){ return s + c.count; }, 0);
+  var peak = Math.max.apply(null, ANALYTICS_DATA.categoryBreakdown.map(function(c){ return c.count; }));
+  document.getElementById('analyticsCategoryBars').innerHTML = ANALYTICS_DATA.categoryBreakdown.map(function(c){
+    var label = LAPOR_CONFIG.categories[c.key] ? LAPOR_CONFIG.categories[c.key].label : c.key;
+    var percent = total ? Math.round((c.count / total) * 100) : 0;
+    return '<div class="bar-row"><div class="bar-head"><span class="bar-name">' + label + '</span>' +
+      '<span class="bar-value">' + c.count.toLocaleString('id-ID') + ' <span style="color:var(--gray);font-weight:600;font-size:15px">' + percent + '%</span></span></div>' +
+      '<div class="bar-track"><div class="bar-fill fill-charge" style="width:' + (c.count / peak * 100) + '%"></div></div></div>';
+  }).join('');
+}
+
+function renderAnalyticsReporterStats(){
+  var r = ANALYTICS_DATA.reporters;
+  var total = r.new + r.returning;
+  var returningPct = total ? Math.round((r.returning / total) * 100) : 0;
+  document.getElementById('analyticsReporterStats').innerHTML =
+    '<div class="stat"><div class="stat-value">' + r.new.toLocaleString('id-ID') + '</div><div class="stat-label">pelapor baru</div></div>' +
+    '<div class="stat"><div class="stat-value">' + r.returning.toLocaleString('id-ID') + '</div><div class="stat-label">pelapor berulang</div></div>' +
+    '<div class="stat"><div class="stat-value">' + returningPct + '%</div><div class="stat-label">dari total pelapor adalah pelapor berulang</div></div>';
+}
+
+function renderAnalyticsTrend(){
+  var weekly = ANALYTICS_DATA.weekly;
+  var peak = Math.max.apply(null, weekly);
+  var bars = '', labels = '';
+  weekly.forEach(function(value, index){
+    bars += '<div style="height:' + (value / peak * 100) + '%" title="' + value + ' laporan"></div>';
+    labels += '<span>' + (index === weekly.length - 1 ? 'kini' : '-' + (weekly.length - 1 - index) + 'm') + '</span>';
+  });
+  document.getElementById('analyticsTrendBars').innerHTML = bars;
+  document.getElementById('analyticsTrendLabels').innerHTML = labels;
+}
+
+// "Sebar vs mengelompok": untuk tiap kota, area dengan laporan TERBANYAK
+// menguasai berapa persen dari total laporan kota itu. Persentase kecil =
+// menyebar merata; persentase besar = menumpuk di satu area saja.
+function renderAnalyticsGeoSpread(){
+  var html = ANALYTICS_DATA.geoSpread.map(function(cityData){
+    var total = cityData.areas.reduce(function(s, a){ return s + a.count; }, 0);
+    var peak = Math.max.apply(null, cityData.areas.map(function(a){ return a.count; }));
+    var topShare = total ? Math.round((peak / total) * 100) : 0;
+    var verdict = topShare >= 50 ? 'Menumpuk di satu area' : (topShare >= 30 ? 'Cukup terkonsentrasi' : 'Menyebar merata');
+    var verdictClass = topShare >= 50 ? 'badge-rejected' : (topShare >= 30 ? 'badge-pending' : 'badge-approved');
+    var bars = cityData.areas.map(function(a){
+      var pct = total ? Math.round((a.count / total) * 100) : 0;
+      return '<div class="bar-row"><div class="bar-head"><span class="bar-name">' + a.name + '</span>' +
+        '<span class="bar-value">' + a.count.toLocaleString('id-ID') + ' <span style="color:var(--gray);font-weight:600;font-size:15px">' + pct + '%</span></span></div>' +
+        '<div class="bar-track"><div class="bar-fill fill-charge" style="width:' + (a.count / peak * 100) + '%"></div></div></div>';
+    }).join('');
+    return '<div class="admin-card" style="margin-bottom:16px">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px">' +
+        '<h3 style="margin:0">' + cityData.city + '</h3><span class="badge ' + verdictClass + '">' + verdict + '</span>' +
+      '</div>' + bars +
+      '<p class="tiny" style="margin-top:14px">Area dengan laporan terbanyak menguasai ' + topShare + '% dari total laporan di kota ini.</p>' +
+    '</div>';
+  }).join('');
+  document.getElementById('analyticsGeoSpread').innerHTML = html;
+}
+
+function renderAdminDashboard(){
+  renderAnalyticsSummary();
+  renderAnalyticsFunnels();
+  renderAnalyticsCategoryBars();
+  renderAnalyticsGeoSpread();
+  renderAnalyticsReporterStats();
+  renderAnalyticsTrend();
+}
+
+/* ── admin: data laporan contoh ──
+   Sebelumnya tabel "Laporan masuk" cuma punya 2 nilai "Kebutuhan" yang di-
+   hardcode (Pengisian daya / Transportasi umum), padahal Lapor Rutemu punya
+   4 kategori dengan kolom BERBEDA-BEDA (lihat LAPOR_CONFIG.categories).
+   Data contoh di bawah sengaja mencakup keempatnya dengan field yang
+   cocok sama yang benar-benar dikumpulkan form-nya masing-masing, supaya
+   daftar & detail laporan merefleksikan tipe form yang sesungguhnya. */
+var ADMIN_SAMPLE_REPORTS = [
+  { id: 1042, category: 'akses', city: 'Jakarta', status: 'pending', time: '2 jam lalu', adSource: 'ig-reels-motor-01',
+    fields: { pin: '-6.2088, 106.8456', placeType: 'Kantor', avail: 'Belum bisa', charging: 'SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) Mall Blok M' } },
+  { id: 1041, category: 'transum', city: 'Bekasi', status: 'pending', time: '3 jam lalu', adSource: 'tiktok-macet-02',
+    fields: { pin: '-6.2349, 106.9896', placeType: 'Halte bus', note: 'Banyak orang menunggu angkutan di sini setiap pagi, tidak ada tempat berteduh.' } },
+  { id: 1040, category: 'kondisi', city: 'Jakarta', status: 'pending', time: '5 jam lalu', adSource: 'ig-reels-motor-01',
+    fields: { pin: '-6.1751, 106.8650', placeType: 'Pinggir jalan', photo: true } },
+  { id: 1039, category: 'bbm', city: 'Surabaya', status: 'approved', time: '1 hari lalu', adSource: 'fb-ojol-cerita',
+    fields: { spend: 450000, routeStart: 'Rumah, Rungkut', routeEnd: 'Kantor, Gubeng' } },
+  { id: 1038, category: 'akses', city: 'Bandung', status: 'approved', time: '1 hari lalu', adSource: 'tiktok-macet-02',
+    fields: { pin: '-6.9175, 107.6191', placeType: 'Ruko', avail: 'Bisa', charging: '—' } },
+  { id: 1037, category: 'kondisi', city: 'Semarang', status: 'rejected', time: '2 hari lalu', adSource: 'ig-reels-motor-01',
+    fields: { pin: '-6.9932, 110.4203', placeType: 'Pasar', photo: true } }
+];
+var currentAdminDetailId = null;
+
+function statusBadgeHTML(status){
+  if (status === 'approved') return '<span class="badge badge-approved">Disetujui</span>';
+  if (status === 'rejected') return '<span class="badge badge-rejected">Ditolak</span>';
+  return '<span class="badge badge-pending">Perlu ditinjau</span>';
+}
+
+function renderAdminReportsList(){
+  var body = document.getElementById('adminReportsTableBody');
+  if (!body) return;
+  body.innerHTML = ADMIN_SAMPLE_REPORTS.map(function(r){
+    var catLabel = LAPOR_CONFIG.categories[r.category] ? LAPOR_CONFIG.categories[r.category].label : r.category;
+    return '<tr><td>' + r.id + '</td><td>' + r.city + '</td><td>' + catLabel + '</td><td>' + statusBadgeHTML(r.status) +
+      '</td><td>' + r.time + '</td><td><a href="#" class="admin-action" onclick="openAdminDetail(' + r.id + ');return false">Tinjau</a></td></tr>';
+  }).join('');
+}
+
+function openAdminDetail(id){
+  currentAdminDetailId = id;
+  openScreen('adminDetail');
+}
+
+// Menampilkan field yang SESUAI kategori laporan itu — bukan satu template
+// generik untuk semua, karena tiap kategori Lapor Rutemu memang menangkap
+// data yang berbeda (lihat tabel kategori di brief).
+function renderAdminDetail(id){
+  var report = ADMIN_SAMPLE_REPORTS.filter(function(r){ return r.id === id; })[0];
+  if (!report) report = ADMIN_SAMPLE_REPORTS[0];
+  var cat = LAPOR_CONFIG.categories[report.category];
+  var f = report.fields;
+
+  document.getElementById('adminDetailTitle').textContent = 'Detail laporan #' + report.id + ' — ' + cat.label;
+  document.getElementById('adminDetailStatus').innerHTML = statusBadgeHTML(report.status);
+
+  var rows = '<tr><th style="width:160px">Kota</th><td>' + report.city + '</td></tr>';
+  rows += '<tr><th>Kategori</th><td>' + cat.label + '</td></tr>';
+
+  if (report.category === 'bbm'){
+    rows += '<tr><th>Pengeluaran BBM/bulan</th><td>Rp ' + f.spend.toLocaleString('id-ID') + '</td></tr>';
+    rows += '<tr><th>Mulai dari mana?</th><td>' + f.routeStart + '</td></tr>';
+    rows += '<tr><th>Sampai di mana?</th><td>' + f.routeEnd + '</td></tr>';
+  } else {
+    rows += '<tr><th>Koordinat</th><td>' + f.pin + '</td></tr>';
+    rows += '<tr><th>Jenis lokasi</th><td>' + f.placeType + '</td></tr>';
+    if (report.category === 'kondisi'){
+      rows += '<tr><th>Foto</th><td>' + (f.photo ? 'Terlampir (perlu dicek jelas/terbaca)' : 'Tidak ada') + '</td></tr>';
+    }
+    if (report.category === 'akses'){
+      rows += '<tr><th>Motor listrik bisa dibeli/diservis</th><td>' + f.avail + '</td></tr>';
+      rows += '<tr><th>Lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat</th><td>' + f.charging + '</td></tr>';
+    }
+    if (report.category === 'transum'){
+      rows += '<tr><th>Catatan</th><td>' + f.note + '</td></tr>';
+    }
+  }
+  rows += '<tr><th>Dari iklan</th><td>' + report.adSource + '</td></tr>';
+
+  document.getElementById('adminDetailTable').innerHTML = rows;
+  document.getElementById('rejectReason').value = '';
+}
+
+function login(){
+  var user = document.getElementById('username').value.trim();
+  var pass = document.getElementById('password').value.trim();
+  if (strictMode && (!user || !pass)){
+    document.getElementById('loginMessage').textContent = 'Username dan kata sandi wajib diisi.';
+    return;
+  }
+  document.getElementById('loginMessage').textContent = '';
+  openScreen('adminDashboard');
+}
+
+/* ── admin: kelola form ── */
+function adminShowFormTab(tab){
+  var panels = { calc: 'formPanelCalc', lapor: 'formPanelLapor', campaign: 'formPanelCampaign' };
+  var tabs = { calc: 'formTabCalc', lapor: 'formTabLapor', campaign: 'formTabCampaign' };
+  Object.keys(panels).forEach(function(key){
+    document.getElementById(panels[key]).style.display = key === tab ? 'grid' : 'none';
+    document.getElementById(tabs[key]).classList.toggle('on', key === tab);
+  });
+  setMobileEditView(tab, 'form'); // selalu mulai dari tampilan Edit tiap ganti tab
+  if (tab === 'calc') renderCalcPreview();
+  if (tab === 'lapor') renderLaporPreview();
+  if (tab === 'campaign') renderCampaignPreview();
+}
+
+// Toggle Edit/Pratinjau khusus tampilan mobile (lihat .mobile-hide di CSS —
+// di layar >=900px class ini tidak berefek apa-apa karena grid dua kolom
+// sudah menampilkan keduanya sekaligus).
+function setMobileEditView(tab, view){
+  var formCol = document.getElementById(tab + 'FormCol');
+  var previewCol = document.getElementById(tab + 'PreviewCol');
+  var btnForm = document.getElementById(tab + 'ViewForm');
+  var btnPreview = document.getElementById(tab + 'ViewPreview');
+  if (!formCol || !previewCol) return;
+  formCol.classList.toggle('mobile-hide', view === 'preview');
+  previewCol.classList.toggle('mobile-hide', view !== 'preview');
+  if (btnForm) btnForm.classList.toggle('on', view === 'form');
+  if (btnPreview) btnPreview.classList.toggle('on', view === 'preview');
+}
+
+// Escape sederhana supaya isi input admin tidak dieksekusi sebagai HTML di
+// panel pratinjau (pratinjau memakai innerHTML untuk mencocokkan gaya asli).
+function pv(str){
+  var div = document.createElement('div');
+  div.textContent = str == null ? '' : str;
+  return div.innerHTML;
+}
+function val(id){ var el = document.getElementById(id); return el ? el.value : ''; }
+
+// Pratinjau langsung untuk tab "Hitung BBM-mu" — dibangun ulang tiap kali
+// admin mengetik, dari nilai form yang sedang diisi (bukan dari config yang
+// sudah tersimpan), supaya kelihatan sebelum diklik "Simpan".
+function renderCalcPreview(){
+  var target = document.getElementById('calcPreview');
+  if (!target) return;
+  var freqOptions = [
+    val('cfgFreqLabelHarian') || 'Harian',
+    val('cfgFreqLabelMingguan') || 'Mingguan',
+    val('cfgFreqLabelDuaMingguan') || 'Dua mingguan',
+    val('cfgFreqLabelBulanan') || 'Bulanan'
+  ].map(function(o){ return '<option>' + pv(o) + '</option>'; }).join('');
+
+  target.innerHTML =
+    '<div class="preview-card">' +
+      '<span class="preview-tag">Layar Hitung BBM-mu</span>' +
+      '<div class="preview-field-label">' + pv(val('cfgFuelLabel') || 'Biasanya isi bensin berapa rupiah?') + '</div>' +
+      '<div class="preview-field-input">Rp 100.000</div>' +
+      '<div class="preview-field-label">' + pv(val('cfgFreqLabel') || 'Biasanya isi bensin seberapa sering?') + '</div>' +
+      '<select class="preview-field-input" style="width:100%" disabled>' + freqOptions + '</select>' +
+      '<div class="preview-field-label">' + pv(val('cfgRouteLabel') || 'Dalam sehari, kira-kira berapa kilometer?') + '</div>' +
+      '<div class="preview-field-input">25</div>' +
+      '<div class="preview-choice"><b>' + pv(val('cfgConsentLabel') || 'Simpan hasil hitungan ini untuk riset (opsional)') + '</b>' +
+        '<p style="margin:4px 0 0">' + pv(val('cfgConsentDesc')) + '</p></div>' +
+      '<div class="preview-mini-btn" style="width:100%;text-align:center;margin-top:12px">' + pv(val('cfgSubmitLabel') || 'Lihat hasil hitungan') + '</div>' +
+    '</div>' +
+    '<div class="preview-card">' +
+      '<span class="preview-tag">Layar hasil</span>' +
+      '<p style="margin:0">Label hasil: <b>' + pv(val('cfgResultLabel') || 'pengeluaran bensinmu') + '</b></p>' +
+    '</div>';
+}
+
+// Pratinjau langsung untuk tab "Lapor Rutemu" — satu kartu per langkah,
+// termasuk kategori yang sedang dipilih di dropdown "Pilih kategori untuk
+// diedit" (supaya field spesifik kategori juga kelihatan berubah).
+function renderLaporPreview(){
+  var target = document.getElementById('laporPreview');
+  if (!target) return;
+  var catKey = val('cfgLaporCategorySelect') || 'bbm';
+  var needsMap = CATEGORY_META[catKey] ? CATEGORY_META[catKey].needsMap : false;
+
+  var fieldsHtml = '';
+  var extraInputs = document.querySelectorAll('#cfgCatExtraFields input');
+  extraInputs.forEach(function(input){
+    fieldsHtml += '<div class="preview-field-label">' + pv(input.value) + '</div><div class="preview-field-input">—</div>';
+  });
+
+  target.innerHTML =
+    '<div class="preview-card">' +
+      '<span class="preview-tag">Langkah 1 — Kota</span>' +
+      '<p>' + pv(val('cfgLaporIntro')) + '</p>' +
+      '<h5>' + pv(val('cfgCityQuestion') || 'Kamu paling sering berkendara di kota mana?') + '</h5>' +
+      '<p style="margin:0 0 10px">' + pv(val('cfgCityHelp')) + '</p>' +
+      '<div class="preview-mini-btn outline" style="display:block;text-align:center">' + pv(val('cfgUseLocationLabel') || 'Gunakan lokasi saya') + '</div>' +
+      '<div class="preview-field-label">' + pv(val('cfgCityInputLabel') || 'Atau masukkan nama kota') + '</div>' +
+      '<div class="preview-field-input">Bekasi</div>' +
+      '<div class="preview-mini-btn" style="display:block;text-align:center;margin-top:10px">' + pv(val('cfgCityButtonLabel') || 'Lanjut') + '</div>' +
+      '<p class="preview-muted">Bantuan: ' + pv(val('cfgCityHint')) + '</p>' +
+    '</div>' +
+    '<div class="preview-card">' +
+      '<span class="preview-tag">Langkah 2 — Kategori</span>' +
+      '<h5>' + pv(val('cfgCategoryQuestion') || 'Apa yang ingin kamu laporkan?') + '</h5>' +
+      '<p style="margin:0 0 10px">' + pv(val('cfgCategoryHelp')) + '</p>' +
+      '<div class="preview-choice"><b>' + pv(val('cfgCatLabel')) + '</b>' +
+        '<p style="margin:4px 0 0">' + pv(val('cfgCatDesc')) + '</p></div>' +
+      '<div class="preview-mini-btn" style="display:block;text-align:center;margin-top:10px">' + pv(val('cfgCategoryButtonLabel') || 'Lanjut') + '</div>' +
+      '<p class="preview-muted">Kategori yang sedang diedit: ' + pv(val('cfgCatLabel')) + '</p>' +
+    '</div>' +
+    '<div class="preview-card">' +
+      '<span class="preview-tag">Langkah 3 — Detail (' + pv(val('cfgCatLabel')) + ')</span>' +
+      '<h5>' + pv(val('cfgCatTitle')) + '</h5>' +
+      '<p class="preview-muted" style="margin:-4px 0 10px">' + pv(val('cfgCatHelp')) + '</p>' +
+      (needsMap ? '<p style="margin:0 0 10px">' + pv(val('cfgCatMapInstruction')) + '</p><div class="preview-field-input" style="text-align:center;padding:24px">🗺️ Peta contoh</div>' : '') +
+      fieldsHtml +
+    '</div>' +
+    '<div class="preview-card">' +
+      '<span class="preview-tag">Langkah 4 — Konfirmasi</span>' +
+      '<h5>' + pv(val('cfgConfirmTitle') || 'Cek laporanmu') + '</h5>' +
+      '<div class="preview-choice"><b>' + pv(val('cfgLaporConsentLabel') || 'Saya setuju laporan ini disimpan') + '</b>' +
+        '<p style="margin:4px 0 0">' + pv(val('cfgLaporConsentDesc')) + '</p></div>' +
+      '<div class="preview-mini-btn" style="display:block;text-align:center;margin-top:10px">' + pv(val('cfgLaporSubmitLabel') || 'Kirim') + '</div>' +
+      '<p class="preview-muted">Bantuan: ' + pv(val('cfgLaporSubmitHint')) + '</p>' +
+    '</div>' +
+    '<div class="preview-card">' +
+      '<span class="preview-tag">Selesai</span>' +
+      '<h5>' + pv(val('cfgDoneTitle')) + '</h5>' +
+      '<p style="margin:0">' + pv(val('cfgDoneSubtitle')) + '</p>' +
+    '</div>';
+}
+
+// Pratinjau langsung untuk tab "Halaman Campaign" — meniru blok stat-grid
+// yang sama persis dipakai di halaman Campaign & Tentang, dengan angka
+// contoh dari data laporan yang ada supaya proporsinya realistis.
+function renderCampaignPreview(){
+  var target = document.getElementById('campaignPreview');
+  if (!target) return;
+  var visible = document.getElementById('cfgCounterVisible').checked;
+  var positionSelect = document.getElementById('cfgCounterPosition');
+  var positionLabels = { hero: 'Panel hero', afterHero: 'Full-width setelah hero', bottom: 'Full-width di bawah halaman' };
+  var positionLabel = positionLabels[positionSelect.value] || positionSelect.value;
+  var metrics = [];
+  if (document.getElementById('cfgMetricTotal').checked) metrics.push({ key: 'total', label: val('cfgLabelTotal') || 'lokasi dilaporkan' });
+  if (document.getElementById('cfgMetricCities').checked) metrics.push({ key: 'cities', label: val('cfgLabelCities') || 'kota dengan laporan' });
+  if (document.getElementById('cfgMetricWeek').checked) metrics.push({ key: 'week', label: val('cfgLabelWeek') || 'laporan minggu ini' });
+
+  var statsHtml = metrics.map(function(m){
+    return '<div class="stat"><div class="stat-value">' + counterMetricValue(m.key).toLocaleString('id-ID') + '</div><div class="stat-label">' + pv(m.label) + '</div></div>';
+  }).join('');
+
+  if (visible){
+    target.innerHTML =
+      '<div class="preview-card">' +
+        '<span class="preview-tag">Blok Penghitung Laporan — ' + pv(positionLabel) + '</span>' +
+        '<h5>' + pv(val('cfgCounterTitle') || 'Kemajuan pelaporan warga') + '</h5>' +
+        (metrics.length ? '<div class="stat-grid" style="margin:4px 0 0">' + statsHtml + '</div>' : '<p class="preview-muted">Belum ada metrik dicentang.</p>') +
+        '<p class="preview-muted">Status: tampil di posisi "' + pv(positionLabel) + '".</p>' +
+      '</div>';
+  } else {
+    target.innerHTML =
+      '<div class="preview-card">' +
+        '<span class="preview-tag">Panel hero (blok tersembunyi)</span>' +
+        '<h5>' + pv(val('cfgCounterFallbackTitle') || 'Ikut kasih tahu kebutuhannya') + '</h5>' +
+        '<p style="margin:0">' + pv(val('cfgCounterFallbackText')) + '</p>' +
+        '<p class="preview-muted">Status: tersembunyi — pengunjung publik melihat ajakan biasa ini, bukan angka.</p>' +
+      '</div>';
+  }
+}
+
+/* ── admin: load & save (Kelola Form) ── */
+
+// Mengisi semua field di "Kelola Form" dengan nilai konfigurasi yang sedang
+// aktif, supaya admin melihat apa yang sedang tampil ke pengunjung sebelum
+// mengubahnya.
+function adminLoadFormConfig(){
+  setMobileEditView('calc', 'form');
+  setMobileEditView('lapor', 'form');
+  setMobileEditView('campaign', 'form');
+
+  // Hitung BBM-mu
+  document.getElementById('cfgFuelLabel').value = CALCULATOR_CONFIG.fuelLabel;
+  document.getElementById('cfgFreqLabel').value = CALCULATOR_CONFIG.freqLabel;
+  document.getElementById('cfgRouteLabel').value = CALCULATOR_CONFIG.routeLabel;
+  document.getElementById('cfgFreqLabelHarian').value = CALCULATOR_CONFIG.frequencyLabels.harian;
+  document.getElementById('cfgFreqValHarian').value = CALCULATOR_CONFIG.frequencyPerMonth.harian;
+  document.getElementById('cfgFreqLabelMingguan').value = CALCULATOR_CONFIG.frequencyLabels.mingguan;
+  document.getElementById('cfgFreqValMingguan').value = CALCULATOR_CONFIG.frequencyPerMonth.mingguan;
+  document.getElementById('cfgFreqLabelDuaMingguan').value = CALCULATOR_CONFIG.frequencyLabels.dua_mingguan;
+  document.getElementById('cfgFreqValDuaMingguan').value = CALCULATOR_CONFIG.frequencyPerMonth.dua_mingguan;
+  document.getElementById('cfgFreqLabelBulanan').value = CALCULATOR_CONFIG.frequencyLabels.bulanan;
+  document.getElementById('cfgFreqValBulanan').value = CALCULATOR_CONFIG.frequencyPerMonth.bulanan;
+  document.getElementById('cfgConsentLabel').value = CALCULATOR_CONFIG.consentLabel;
+  document.getElementById('cfgConsentDesc').value = CALCULATOR_CONFIG.consentDesc;
+  document.getElementById('cfgSubmitLabel').value = CALCULATOR_CONFIG.submitLabel;
+  document.getElementById('cfgResultLabel').value = CALCULATOR_CONFIG.resultLabel;
+  document.getElementById('cfgErrFuelSpend').value = CALCULATOR_CONFIG.errors.fuelSpend;
+  document.getElementById('cfgErrFuelFreq').value = CALCULATOR_CONFIG.errors.fuelFreq;
+  document.getElementById('cfgErrDailyRoute').value = CALCULATOR_CONFIG.errors.dailyRoute;
+  document.getElementById('calcSaveMsg').textContent = '';
+
+  // Lapor Rutemu — teks umum
+  document.getElementById('cfgLaporIntro').value = LAPOR_CONFIG.intro;
+  document.getElementById('cfgCityQuestion').value = LAPOR_CONFIG.cityQuestion;
+  document.getElementById('cfgCityHelp').value = LAPOR_CONFIG.cityHelp;
+  document.getElementById('cfgUseLocationLabel').value = LAPOR_CONFIG.useLocationLabel;
+  document.getElementById('cfgCityInputLabel').value = LAPOR_CONFIG.cityInputLabel;
+  document.getElementById('cfgCityButtonLabel').value = LAPOR_CONFIG.cityButtonLabel;
+  document.getElementById('cfgCityHint').value = LAPOR_CONFIG.cityHint;
+  document.getElementById('cfgCategoryQuestion').value = LAPOR_CONFIG.categoryQuestion;
+  document.getElementById('cfgCategoryHelp').value = LAPOR_CONFIG.categoryHelp;
+  document.getElementById('cfgCategoryButtonLabel').value = LAPOR_CONFIG.categoryButtonLabel;
+  document.getElementById('cfgConfirmTitle').value = LAPOR_CONFIG.confirmTitle;
+  document.getElementById('cfgLaporConsentLabel').value = LAPOR_CONFIG.consentLabel;
+  document.getElementById('cfgLaporConsentDesc').value = LAPOR_CONFIG.consentDesc;
+  document.getElementById('cfgLaporSubmitLabel').value = LAPOR_CONFIG.submitLabel;
+  document.getElementById('cfgLaporSubmitHint').value = LAPOR_CONFIG.submitHint;
+  document.getElementById('cfgDoneTitle').value = LAPOR_CONFIG.doneTitle;
+  document.getElementById('cfgDoneSubtitle').value = LAPOR_CONFIG.doneSubtitle;
+  document.getElementById('laporSaveMsg').textContent = '';
+  adminLoadCategoryFields();
+
+  // Halaman Campaign
+  document.getElementById('cfgCounterVisible').checked = REPORT_COUNTER_CONFIG.visible;
+  document.getElementById('cfgCounterPosition').value = REPORT_COUNTER_CONFIG.position;
+  document.getElementById('cfgCounterTitle').value = REPORT_COUNTER_CONFIG.title;
+  document.getElementById('cfgCounterFallbackTitle').value = REPORT_COUNTER_CONFIG.fallbackTitle;
+  document.getElementById('cfgCounterFallbackText').value = REPORT_COUNTER_CONFIG.fallbackText;
+  document.getElementById('cfgMetricTotal').checked = REPORT_COUNTER_CONFIG.metrics.indexOf('total') > -1;
+  document.getElementById('cfgMetricCities').checked = REPORT_COUNTER_CONFIG.metrics.indexOf('cities') > -1;
+  document.getElementById('cfgMetricWeek').checked = REPORT_COUNTER_CONFIG.metrics.indexOf('week') > -1;
+  document.getElementById('cfgLabelTotal').value = REPORT_COUNTER_CONFIG.labels.total;
+  document.getElementById('cfgLabelCities').value = REPORT_COUNTER_CONFIG.labels.cities;
+  document.getElementById('cfgLabelWeek').value = REPORT_COUNTER_CONFIG.labels.week;
+  document.getElementById('campaignSaveMsg').textContent = '';
+
+  renderCalcPreview();
+  renderCampaignPreview();
+}
+
+function saveCalculatorConfig(){
+  CALCULATOR_CONFIG.fuelLabel = document.getElementById('cfgFuelLabel').value;
+  CALCULATOR_CONFIG.freqLabel = document.getElementById('cfgFreqLabel').value;
+  CALCULATOR_CONFIG.routeLabel = document.getElementById('cfgRouteLabel').value;
+  CALCULATOR_CONFIG.frequencyLabels.harian = document.getElementById('cfgFreqLabelHarian').value;
+  CALCULATOR_CONFIG.frequencyPerMonth.harian = Number(document.getElementById('cfgFreqValHarian').value) || 0;
+  CALCULATOR_CONFIG.frequencyLabels.mingguan = document.getElementById('cfgFreqLabelMingguan').value;
+  CALCULATOR_CONFIG.frequencyPerMonth.mingguan = Number(document.getElementById('cfgFreqValMingguan').value) || 0;
+  CALCULATOR_CONFIG.frequencyLabels.dua_mingguan = document.getElementById('cfgFreqLabelDuaMingguan').value;
+  CALCULATOR_CONFIG.frequencyPerMonth.dua_mingguan = Number(document.getElementById('cfgFreqValDuaMingguan').value) || 0;
+  CALCULATOR_CONFIG.frequencyLabels.bulanan = document.getElementById('cfgFreqLabelBulanan').value;
+  CALCULATOR_CONFIG.frequencyPerMonth.bulanan = Number(document.getElementById('cfgFreqValBulanan').value) || 0;
+  CALCULATOR_CONFIG.consentLabel = document.getElementById('cfgConsentLabel').value;
+  CALCULATOR_CONFIG.consentDesc = document.getElementById('cfgConsentDesc').value;
+  CALCULATOR_CONFIG.submitLabel = document.getElementById('cfgSubmitLabel').value;
+  CALCULATOR_CONFIG.resultLabel = document.getElementById('cfgResultLabel').value;
+  CALCULATOR_CONFIG.errors.fuelSpend = document.getElementById('cfgErrFuelSpend').value;
+  CALCULATOR_CONFIG.errors.fuelFreq = document.getElementById('cfgErrFuelFreq').value;
+  CALCULATOR_CONFIG.errors.dailyRoute = document.getElementById('cfgErrDailyRoute').value;
+
+  applyCalculatorConfig();
+  document.getElementById('calcSaveMsg').textContent = 'Tersimpan. Perubahan langsung berlaku di halaman Hitung BBM-mu.';
+  trackEvent('admin_config_saved', { form: 'hitung_bbm' });
+}
+
+// Kategori yang sedang dipilih di dropdown "Kelola Form" (bukan
+// selectedCategory milik alur pengunjung — sengaja dipisah).
+// Nama tampilan yang lebih enak dibaca admin, dipetakan dari key config
+// mentah. Kalau ada key baru yang belum terdaftar di sini, tetap fallback
+// tampilkan nama key aslinya (tidak akan error, cuma kurang rapi).
+var FIELD_DISPLAY_NAMES = {
+  spendLabel: 'Label kolom biaya BBM/bulan',
+  startLabel: 'Label kolom lokasi mulai',
+  endLabel: 'Label kolom lokasi akhir',
+  photoLabel: 'Label kolom foto',
+  availLabel: 'Pertanyaan ketersediaan motor listrik',
+  availYesLabel: 'Label jawaban "Bisa"',
+  availNoLabel: 'Label jawaban "Belum bisa"',
+  chargingLabel: 'Label kolom lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat',
+  noteLabel: 'Label kolom catatan'
+};
+
+function adminLoadCategoryFields(){
+  var key = document.getElementById('cfgLaporCategorySelect').value;
+  var cfg = LAPOR_CONFIG.categories[key];
+  document.getElementById('cfgCatLabel').value = cfg.label;
+  document.getElementById('cfgCatDesc').value = cfg.desc;
+  document.getElementById('cfgCatTitle').value = cfg.title;
+  document.getElementById('cfgCatHelp').value = cfg.help || '';
+
+  var mapWrap = document.getElementById('cfgCatMapInstructionWrap');
+  mapWrap.style.display = CATEGORY_META[key].needsMap ? 'block' : 'none';
+  if (CATEGORY_META[key].needsMap) document.getElementById('cfgCatMapInstruction').value = cfg.mapInstruction;
+
+  var extra = document.getElementById('cfgCatExtraFields');
+  extra.innerHTML = '';
+  Object.keys(cfg.fields).forEach(function(fieldKey){
+    var wrap = document.createElement('div');
+    var label = document.createElement('label');
+    label.textContent = FIELD_DISPLAY_NAMES[fieldKey] || fieldKey;
+    label.setAttribute('for', 'cfgCatField_' + fieldKey);
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.id = 'cfgCatField_' + fieldKey;
+    input.value = cfg.fields[fieldKey];
+    wrap.appendChild(label);
+    wrap.appendChild(input);
+    extra.appendChild(wrap);
+  });
+  renderLaporPreview();
+}
+
+function saveCategoryFields(){
+  var key = document.getElementById('cfgLaporCategorySelect').value;
+  var cfg = LAPOR_CONFIG.categories[key];
+  cfg.label = document.getElementById('cfgCatLabel').value;
+  cfg.desc = document.getElementById('cfgCatDesc').value;
+  cfg.title = document.getElementById('cfgCatTitle').value;
+  cfg.help = document.getElementById('cfgCatHelp').value;
+  if (CATEGORY_META[key].needsMap) cfg.mapInstruction = document.getElementById('cfgCatMapInstruction').value;
+  Object.keys(cfg.fields).forEach(function(fieldKey){
+    var input = document.getElementById('cfgCatField_' + fieldKey);
+    if (input) cfg.fields[fieldKey] = input.value;
+  });
+  applyLaporConfig();
+  document.getElementById('laporSaveMsg').textContent = 'Kategori "' + cfg.label + '" tersimpan. Perubahan langsung berlaku di halaman Lapor Rutemu.';
+  trackEvent('admin_config_saved', { form: 'lapor_rutemu_kategori', category: key });
+}
+
+function saveLaporConfig(){
+  LAPOR_CONFIG.intro = document.getElementById('cfgLaporIntro').value;
+  LAPOR_CONFIG.cityQuestion = document.getElementById('cfgCityQuestion').value;
+  LAPOR_CONFIG.cityHelp = document.getElementById('cfgCityHelp').value;
+  LAPOR_CONFIG.useLocationLabel = document.getElementById('cfgUseLocationLabel').value;
+  LAPOR_CONFIG.cityInputLabel = document.getElementById('cfgCityInputLabel').value;
+  LAPOR_CONFIG.cityButtonLabel = document.getElementById('cfgCityButtonLabel').value;
+  LAPOR_CONFIG.cityHint = document.getElementById('cfgCityHint').value;
+  LAPOR_CONFIG.categoryQuestion = document.getElementById('cfgCategoryQuestion').value;
+  LAPOR_CONFIG.categoryHelp = document.getElementById('cfgCategoryHelp').value;
+  LAPOR_CONFIG.categoryButtonLabel = document.getElementById('cfgCategoryButtonLabel').value;
+  LAPOR_CONFIG.confirmTitle = document.getElementById('cfgConfirmTitle').value;
+  LAPOR_CONFIG.consentLabel = document.getElementById('cfgLaporConsentLabel').value;
+  LAPOR_CONFIG.consentDesc = document.getElementById('cfgLaporConsentDesc').value;
+  LAPOR_CONFIG.submitLabel = document.getElementById('cfgLaporSubmitLabel').value;
+  LAPOR_CONFIG.submitHint = document.getElementById('cfgLaporSubmitHint').value;
+  LAPOR_CONFIG.doneTitle = document.getElementById('cfgDoneTitle').value;
+  LAPOR_CONFIG.doneSubtitle = document.getElementById('cfgDoneSubtitle').value;
+
+  applyLaporConfig();
+  document.getElementById('laporSaveMsg').textContent = 'Tersimpan. Perubahan langsung berlaku di halaman Lapor Rutemu.';
+  trackEvent('admin_config_saved', { form: 'lapor_rutemu_umum' });
+}
+
+function saveCampaignCounterConfig(){
+  REPORT_COUNTER_CONFIG.visible = document.getElementById('cfgCounterVisible').checked;
+  REPORT_COUNTER_CONFIG.position = document.getElementById('cfgCounterPosition').value;
+  REPORT_COUNTER_CONFIG.title = document.getElementById('cfgCounterTitle').value;
+  REPORT_COUNTER_CONFIG.fallbackTitle = document.getElementById('cfgCounterFallbackTitle').value;
+  REPORT_COUNTER_CONFIG.fallbackText = document.getElementById('cfgCounterFallbackText').value;
+  var metrics = [];
+  if (document.getElementById('cfgMetricTotal').checked) metrics.push('total');
+  if (document.getElementById('cfgMetricCities').checked) metrics.push('cities');
+  if (document.getElementById('cfgMetricWeek').checked) metrics.push('week');
+  REPORT_COUNTER_CONFIG.metrics = metrics;
+  REPORT_COUNTER_CONFIG.labels.total = document.getElementById('cfgLabelTotal').value;
+  REPORT_COUNTER_CONFIG.labels.cities = document.getElementById('cfgLabelCities').value;
+  REPORT_COUNTER_CONFIG.labels.week = document.getElementById('cfgLabelWeek').value;
+
+  renderReportCounterBlock();
+  renderCampaignCounter();
+  document.getElementById('campaignSaveMsg').textContent = 'Tersimpan. Blok Penghitung Laporan diperbarui di halaman Campaign dan Tentang.';
+  trackEvent('admin_config_saved', { form: 'halaman_kampanye' });
+}
+
+/* ── dashboard ── */
+function cityTotal(city){
+  if (activeFilter === 'charging') return city.charging;
+  if (activeFilter === 'transit') return city.transit;
+  return city.charging + city.transit;
+}
+
+function setFilter(name){
+  activeFilter = name;
+  ['All','Charging','Transit'].forEach(function(key){
+    document.getElementById('filter' + key).classList.remove('on');
+  });
+  var map = { all: 'All', charging: 'Charging', transit: 'Transit' };
+  document.getElementById('filter' + map[name]).classList.add('on');
+  document.getElementById('filterNote').textContent =
+    name === 'charging' ? 'Hanya menampilkan laporan kebutuhan SPKLU.' :
+    name === 'transit'  ? 'Hanya menampilkan laporan kebutuhan transportasi umum listrik.' :
+                          'Menampilkan semua laporan.';
+  renderDashboard();
+}
+
+function renderDashboard(){
+  var cities = reportData.cities;
+  var total = cities.reduce(function(sum, c){ return sum + cityTotal(c); }, 0);
+  var weekTotal = cities.reduce(function(sum, c){ return sum + c.thisWeek; }, 0);
+  var namedCities = cities.filter(function(c){ return c.name !== 'Kota lainnya'; }).length;
+
+  document.getElementById('statTotal').textContent = total.toLocaleString('id-ID');
+  document.getElementById('statCities').textContent = namedCities;
+  document.getElementById('statWeek').textContent = weekTotal.toLocaleString('id-ID');
+
+  var largest = Math.max.apply(null, cities.map(cityTotal));
+  var html = '';
+  cities.forEach(function(city){
+    var value = cityTotal(city);
+    var width = largest ? (value / largest * 100) : 0;
+    var chargeShare = value ? (city.charging / (city.charging + city.transit) * 100) : 0;
+    var isOther = city.name === 'Kota lainnya';
+
+    var track;
+    if (activeFilter === 'all'){
+      track = '<div class="bar-fill fill-charge" style="width:' + (width * chargeShare / 100) + '%"></div>' +
+              '<div class="bar-fill fill-transit" style="width:' + (width * (100 - chargeShare) / 100) + '%"></div>';
+    } else {
+      track = '<div class="bar-fill ' + (activeFilter === 'charging' ? 'fill-charge' : 'fill-transit') +
+              '" style="width:' + width + '%"></div>';
+    }
+
+    html += (isOther ? '<div class="bar-row">' : '<a class="bar-row" href="#" onclick="openCity(\'' + city.name + '\');return false">') +
+              '<div class="bar-head">' +
+                '<span class="bar-name"' + (isOther ? ' style="color:var(--gray)"' : '') + '>' + city.name + '</span>' +
+                '<span class="bar-value">' + value.toLocaleString('id-ID') + '</span>' +
+              '</div>' +
+              '<div class="bar-track">' + track + '</div>' +
+            (isOther ? '</div>' : '</a>');
+  });
+  document.getElementById('cityBars').innerHTML = html;
+
+  var weekly = reportData.weekly;
+  var peak = Math.max.apply(null, weekly);
+  var bars = '', labels = '';
+  weekly.forEach(function(value, index){
+    bars += '<div style="height:' + (value / peak * 100) + '%" title="' + value + ' laporan"></div>';
+    labels += '<span>' + (index === weekly.length - 1 ? 'kini' : '-' + (weekly.length - 1 - index) + 'm') + '</span>';
+  });
+  document.getElementById('trendBars').innerHTML = bars;
+  document.getElementById('trendLabels').innerHTML = labels;
+}
+
+function openCity(name){
+  activeCity = name;
+  openScreen('cityDetail');
+}
+
+function renderCityDetail(){
+  var city = reportData.cities.filter(function(c){ return c.name === activeCity; })[0];
+  if (!city) return;
+
+  var total = city.charging + city.transit;
+  var nationalTotal = reportData.cities.reduce(function(sum, c){ return sum + c.charging + c.transit; }, 0);
+
+  document.getElementById('cityName').textContent = city.name;
+  document.getElementById('cityTotal').textContent = total.toLocaleString('id-ID');
+  document.getElementById('cityShare').textContent = Math.round(total / nationalTotal * 100) + '%';
+  document.getElementById('cityWeek').textContent = city.thisWeek;
+
+  var needs = [
+    { label: 'Tempat pengisian daya', value: city.charging, className: 'fill-charge' },
+    { label: 'Transportasi umum listrik', value: city.transit, className: 'fill-transit' }
+  ];
+  document.getElementById('cityNeedBars').innerHTML = barList(needs, total);
+
+  var places = Object.keys(city.places).map(function(key){
+    return { label: key, value: city.places[key], className: 'fill-charge' };
+  });
+  var placeTotal = places.reduce(function(sum, p){ return sum + p.value; }, 0);
+  document.getElementById('cityPlaceBars').innerHTML =
+    places.length ? barList(places, placeTotal) : '<p class="small">Belum ada rincian jenis lokasi untuk kelompok ini.</p>';
+}
+
+function barList(items, total){
+  var peak = Math.max.apply(null, items.map(function(i){ return i.value; }));
+  return items.map(function(item){
+    var percent = total ? Math.round(item.value / total * 100) : 0;
+    return '<div class="bar-row">' +
+             '<div class="bar-head">' +
+               '<span class="bar-name">' + item.label + '</span>' +
+               '<span class="bar-value">' + item.value.toLocaleString('id-ID') + ' <span style="color:var(--gray);font-weight:600;font-size:15px">' + percent + '%</span></span>' +
+             '</div>' +
+             '<div class="bar-track"><div class="bar-fill ' + item.className + '" style="width:' + (item.value / peak * 100) + '%"></div></div>' +
+           '</div>';
+  }).join('');
+}
+
+/* ── init ── */
+renderFuelSpendPresets();
+applyCalculatorConfig();
+applyLaporConfig();
+setStrictMode();
+renderDashboard();
+renderReportCounterBlock();
+renderCampaignCounter();
+</script>
+
+</body>
+</html>
