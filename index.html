@@ -219,8 +219,22 @@ th{font-weight:600;font-size:13.5px;color:var(--gray-light);letter-spacing:.01em
 .trend-labels span{flex:1;text-align:center}
 
 footer{border-top:1px solid var(--line);padding:44px 0;font-size:15px;color:var(--gray)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
 footer a{color:var(--gray);text-decoration:none;margin-right:24px}
 footer a:hover{color:var(--ink)}
+.footer-social{display:flex;gap:14px;margin:0}
+.footer-social a{margin:0;color:var(--gray);display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px}
+.footer-social a:hover{color:var(--ink);background:var(--mist)}
+.footer-social svg{width:19px;height:19px}
+
+/* Tombol berbagi dengan logo platform — dipakai di layar "Bagikan hasilmu" */
+.share-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:480px){.share-buttons{grid-template-columns:1fr}}
+.share-btn{display:flex;flex-direction:column;align-items:center;gap:8px;
+  background:var(--white);box-shadow:inset 0 0 0 1.5px var(--line);border:none;border-radius:12px;
+  padding:16px 10px;cursor:pointer;font-family:var(--font);font-size:14px;font-weight:600;color:var(--ink);min-height:44px}
+.share-btn:hover{box-shadow:inset 0 0 0 1.5px var(--gray-light)}
+.share-btn svg{width:24px;height:24px}
 
 /* ── admin panel shell — deliberately NOT the marketing visual language ── */
 body.admin-mode{background:var(--mist)}
@@ -593,9 +607,19 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
   </div>
   <p class="tiny">Hasil ini nantinya bisa dibagikan sebagai gambar.</p>
 
-  <div class="row" style="margin-top:20px">
-    <button class="btn btn-fill" onclick="alert('Bagikan hasil lewat WhatsApp')">Bagikan lewat WhatsApp</button>
-    <button class="btn btn-outline" onclick="alert('Bagikan hasil ke Instagram Story')">Instagram Story</button>
+  <div class="share-buttons" style="margin-top:20px">
+    <button class="share-btn" onclick="alert('Bagikan hasil ke X')">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+      X
+    </button>
+    <button class="share-btn" onclick="alert('Bagikan hasil ke Instagram Story')">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.9 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.9-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.757 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
+      Instagram
+    </button>
+    <button class="share-btn" onclick="alert('Bagikan hasil ke TikTok')">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82c-1.12-1.09-1.67-2.65-1.75-4.17H11.7v14.02c0 1.83-1.48 3.31-3.31 3.31-1.84 0-3.32-1.48-3.32-3.31s1.48-3.32 3.32-3.32c.34 0 .67.06.98.15V8.98a7.05 7.05 0 0 0-.98-.07C4.51 8.91 1.4 12.02 1.4 15.9S4.51 22.9 8.39 22.9s6.99-3.11 6.99-6.99V8.87c1.31.94 2.94 1.49 4.72 1.49v-3.5c-.99 0-1.9-.32-2.65-.87a4.99 4.99 0 0 1-.85-.17z"/></svg>
+      TikTok
+    </button>
   </div>
   <button class="btn-plain" onclick="openScreen('result')">Kembali ke hitungan</button>
 </div></div></section>
@@ -1239,10 +1263,26 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 </main>
 
 <footer><div class="wrap">
-  <a href="#" onclick="openScreen('about');return false">Tentang</a>
-  <a href="#" onclick="openScreen('about');return false">Sumber data</a>
-  <a href="#" onclick="openScreen('about');return false">Privasi</a>
-  <a href="#" onclick="openScreen('adminLogin');return false">Masuk admin</a>
+  <div>
+    <div style="margin-bottom:14px">
+      <a href="#" onclick="openScreen('about');return false">Tentang</a>
+      <a href="#" onclick="openScreen('about');return false">Sumber data</a>
+      <a href="#" onclick="openScreen('about');return false">Privasi</a>
+      <a href="#" onclick="openScreen('adminLogin');return false">Masuk admin</a>
+    </div>
+    <p class="tiny" style="margin:0">© 2026 Bahana | Yayasan Komunikasi Pembenahan Indonesia</p>
+  </div>
+  <div class="footer-social">
+    <a href="#" onclick="alert('Tautan ke akun X EV Campaign');return false" aria-label="X (Twitter)">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+    </a>
+    <a href="#" onclick="alert('Tautan ke akun Instagram EV Campaign');return false" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.9 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.9-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.757 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
+    </a>
+    <a href="#" onclick="alert('Tautan ke akun TikTok EV Campaign');return false" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82c-1.12-1.09-1.67-2.65-1.75-4.17H11.7v14.02c0 1.83-1.48 3.31-3.31 3.31-1.84 0-3.32-1.48-3.32-3.31s1.48-3.32 3.32-3.32c.34 0 .67.06.98.15V8.98a7.05 7.05 0 0 0-.98-.07C4.51 8.91 1.4 12.02 1.4 15.9S4.51 22.9 8.39 22.9s6.99-3.11 6.99-6.99V8.87c1.31.94 2.94 1.49 4.72 1.49v-3.5c-.99 0-1.9-.32-2.65-.87a4.99 4.99 0 0 1-.85-.17z"/></svg>
+    </a>
+  </div>
 </div></footer>
 
 <script>
