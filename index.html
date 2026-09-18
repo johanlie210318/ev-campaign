@@ -546,7 +546,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 
 <!-- result -->
 <section class="screen" id="result"><div class="sec"><div class="wrap narrow">
-  <p class="small" style="margin-bottom:6px" id="resultCaption">Perkiraan pengeluaran bensinmu dalam setahun</p>
+  <p class="small" style="margin-bottom:6px">Perkiraan <span id="resultCaption">pengeluaran bensinmu</span> dalam <strong>setahun</strong></p>
   <div class="big-number c-brick" id="yearAmount">Rp 0</div>
   <p class="small" style="margin-top:12px">atau sekitar <strong id="monthAmount">Rp 0</strong> per bulan</p>
 
@@ -2286,7 +2286,7 @@ function renderCalcPreview(){
     '</div>' +
     '<div class="preview-card">' +
       '<span class="preview-tag">Layar hasil</span>' +
-      '<p style="margin:0">Label hasil: <b>' + pv(val('cfgResultLabel') || 'pengeluaran bensinmu') + '</b></p>' +
+      '<p style="margin:0">Perkiraan <b>' + pv(val('cfgResultLabel') || 'pengeluaran bensinmu') + '</b> dalam <b>setahun</b></p>' +
     '</div>';
 }
 
