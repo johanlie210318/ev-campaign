@@ -248,6 +248,10 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 .admin-action{color:var(--indigo);font-weight:700;font-size:13px;text-decoration:none;padding:7px 13px;border-radius:8px;background:var(--indigo-tint);white-space:nowrap}
 .admin-action:hover{background:var(--indigo);color:#fff}
 .admin-card{background:var(--mist);border-radius:16px;padding:26px 28px}
+/* Garis pembatas tipis di atas tiap sub-section form Kelola Form (bukan
+   yang pertama di tiap tab, karena itu sudah cukup dipisah oleh tab bar
+   di atasnya). */
+.admin-section-h3{border-top:1px solid var(--line);padding-top:26px;margin-top:32px}
 
 /* Mobile: sidebar bar horizontal (--> drawer) — top bar + hamburger + slide-in
    panel + backdrop. Jauh lebih familiar buat pengguna admin di HP daripada
@@ -1016,7 +1020,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <label for="cfgRouteHelp">Teks bantuan kolom "Rute harian"</label>
     <input type="text" id="cfgRouteHelp" oninput="renderCalcPreview()">
 
-    <h3 style="margin-top:32px">Opsi frekuensi &amp; nilai perhitungan</h3>
+    <h3 class="admin-section-h3">Opsi frekuensi &amp; nilai perhitungan</h3>
     <p class="tiny">Nilai adalah perkiraan berapa kali isi bensin dalam sebulan. Dipakai untuk: pengeluaran bulanan = sekali beli × nilai ini.</p>
     <div class="scroll"><table>
       <tr><th>Opsi</th><th>Label</th><th>Kali per bulan</th></tr>
@@ -1026,7 +1030,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
       <tr><td>Bulanan</td><td><input type="text" id="cfgFreqLabelBulanan" style="min-width:140px" oninput="renderCalcPreview()"></td><td><input type="number" id="cfgFreqValBulanan" step="0.01" style="width:110px" oninput="renderCalcPreview()"></td></tr>
     </table></div>
 
-    <h3 style="margin-top:32px">Persetujuan &amp; tombol</h3>
+    <h3 class="admin-section-h3">Persetujuan &amp; tombol</h3>
     <label for="cfgConsentLabel">Teks persetujuan (checkbox)</label>
     <input type="text" id="cfgConsentLabel" oninput="renderCalcPreview()">
     <label for="cfgConsentDesc">Keterangan persetujuan</label>
@@ -1036,7 +1040,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <label for="cfgResultLabel">Label hasil (mis. "pengeluaran bensinmu")</label>
     <input type="text" id="cfgResultLabel" oninput="renderCalcPreview()">
 
-    <h3 style="margin-top:32px">Pesan validasi/kesalahan</h3>
+    <h3 class="admin-section-h3">Pesan validasi/kesalahan</h3>
     <label for="cfgErrFuelSpend">Jika pengeluaran belum diisi</label>
     <input type="text" id="cfgErrFuelSpend">
     <label for="cfgErrFuelFreq">Jika frekuensi belum dipilih</label>
@@ -1076,7 +1080,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <label for="cfgCityHint">Pesan bantuan jika kota belum diisi</label>
     <input type="text" id="cfgCityHint" oninput="renderLaporPreview()">
 
-    <h3 style="margin-top:32px">Segmen &amp; pertanyaan kategori (Langkah 2)</h3>
+    <h3 class="admin-section-h3">Segmen &amp; pertanyaan kategori (Langkah 2)</h3>
     <label for="cfgCategoryQuestion">Pertanyaan kategori (CTA)</label>
     <input type="text" id="cfgCategoryQuestion" oninput="renderLaporPreview()">
     <label for="cfgCategoryHelp">Teks bantuan kategori</label>
@@ -1113,7 +1117,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 
     <button class="btn btn-outline" onclick="saveCategoryFields()" style="margin-top:16px">Simpan kategori ini</button>
 
-    <h3 style="margin-top:36px">Konfirmasi, persetujuan &amp; selesai (Langkah 4)</h3>
+    <h3 class="admin-section-h3">Konfirmasi, persetujuan &amp; selesai (Langkah 4)</h3>
     <label for="cfgConfirmTitle">Judul halaman konfirmasi</label>
     <input type="text" id="cfgConfirmTitle" oninput="renderLaporPreview()">
     <label for="cfgLaporConsentLabel">Teks persetujuan (checkbox)</label>
@@ -1163,7 +1167,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <label for="cfgCounterTitle">Judul blok (saat aktif &amp; tampil)</label>
     <input type="text" id="cfgCounterTitle" oninput="renderCampaignPreview()">
 
-    <h3 style="margin-top:28px">Kalau blok belum aktif / dipindah dari hero</h3>
+    <h3 class="admin-section-h3">Kalau blok belum aktif / dipindah dari hero</h3>
     <p class="tiny">Teks ini yang tampil di panel hero sebagai gantinya.</p>
     <label for="cfgCounterFallbackTitle">Judul pengganti</label>
     <input type="text" id="cfgCounterFallbackTitle" oninput="renderCampaignPreview()">
@@ -1184,7 +1188,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
       Laporan minggu ini
     </label>
 
-    <h3 style="margin-top:28px">Label metrik</h3>
+    <h3 class="admin-section-h3">Label metrik</h3>
     <label for="cfgLabelTotal">Label untuk total lokasi</label>
     <input type="text" id="cfgLabelTotal" oninput="renderCampaignPreview()">
     <label for="cfgLabelCities">Label untuk jumlah kota</label>
