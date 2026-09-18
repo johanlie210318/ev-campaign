@@ -388,7 +388,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <nav class="menu" id="menu">
       <a href="#" data-screen="home" onclick="openScreen('home');return false">Hitung BBM-mu</a>
       <a href="#" data-screen="dashboard" onclick="openScreen('dashboard');return false">Lihat laporan</a>
-      <a href="#" data-screen="Campaign" onclick="openScreen('Campaign');return false">Campaign</a>
+      <a href="#" data-screen="Campaign" onclick="openScreen('Campaign');return false">Kampanye</a>
       <button class="btn btn-fill" style="padding:12px 20px;min-height:44px;font-size:15px" onclick="openScreen('reportCity')">Lapor Rutemu</button>
     </nav>
   </div>
@@ -421,9 +421,9 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
   <div class="hero"><div class="wrap">
     <div class="hero-grid">
       <div>
-        <p class="small" style="margin-bottom:10px">Campaign Kendaraan & Transportasi Listrik</p>
+        <p class="small" style="margin-bottom:10px">Kampanye elektrifikasi transportasi</p>
         <h1>Kendaraan listrik butuh lebih dari sekadar kendaraan baru.</h1>
-        <p class="lead">Kamu juga butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) dan transportasi umum yang layak untuk kebutuhan sehari-hari. Di sini, kamu bisa menghitung pengeluaran BBM-mu dan melaporkan lokasi yang perlu mendapat perhatian.</p>
+        <p class="lead">Kamu juga butuh SPKLU dan transportasi umum yang layak untuk kebutuhan sehari-hari. Di sini, kamu bisa menghitung pengeluaran BBM-mu dan melaporkan lokasi yang perlu mendapat perhatian.</p>
         <div class="row" style="margin-top:24px">
           <button class="btn btn-fill" onclick="openScreen('home')">Hitung BBM-mu</button>
         </div>
@@ -431,7 +431,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
       <div class="panel">
         <h3 id="campaignPanelTitle">Kemajuan pelaporan warga</h3>
         <div id="CampaignCounter" class="stat-grid" style="display:none;margin:2px 0 16px"></div>
-        <p class="small" id="campaignPanelFallback">Tandai lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.</p>
+        <p class="small" id="campaignPanelFallback">Tandai lokasi yang menurutmu butuh SPKLU atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.</p>
         <button class="btn-plain" onclick="openScreen('reportCity')" style="padding:0">Lapor lokasimu →</button>
       </div>
     </div>
@@ -448,7 +448,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <h2>Yang bisa kamu lakukan</h2>
     <div class="grid3">
       <div><div class="num">1</div><h3>Hitung BBM-mu</h3><p class="small">Masukkan pengeluaran dan kebiasaan berkendara untuk melihat perkiraan biaya BBM per bulan dan per tahun.</p><button class="btn-plain" onclick="openScreen('home')">Buka kalkulator →</button></div>
-      <div><div class="num">2</div><h3>Lapor Rutemu</h3><p class="small">Tandai lokasi yang menurutmu perlu SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik.</p><button class="btn-plain" onclick="openScreen('reportCity')">Buat laporan →</button></div>
+      <div><div class="num">2</div><h3>Lapor Rutemu</h3><p class="small">Tandai lokasi yang menurutmu perlu SPKLU atau transportasi umum listrik.</p><button class="btn-plain" onclick="openScreen('reportCity')">Buat laporan →</button></div>
       <div><div class="num">3</div><h3>Lihat laporan</h3><p class="small">Lihat laporan yang sudah lolos pengecekan dan bagaimana kebutuhan tersebar di berbagai kota.</p><button class="btn-plain" onclick="openScreen('dashboard')">Lihat data →</button></div>
     </div>
   </div></div>
@@ -473,11 +473,13 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 
       <div class="panel">
         <label for="fuelSpend" id="fuelSpendLabel">Sekali isi bensin, biasanya berapa rupiah?</label>
+        <p class="tiny" id="fuelSpendHelp" style="margin:-10px 0 8px"></p>
         <input type="text" id="fuelSpend" inputmode="numeric" placeholder="Contoh: 50.000" oninput="handleFuelSpendInput()" onblur="formatFuelSpendDisplay()">
         <div class="amount-presets" id="fuelSpendPresets" role="group" aria-label="Pilihan cepat jumlah"></div>
         <p class="error" id="fuelSpendError" role="alert"></p>
 
         <label for="fuelFreq" id="fuelFreqLabel">Seberapa sering kamu biasanya isi bensin?</label>
+        <p class="tiny" id="fuelFreqHelp" style="margin:-10px 0 8px"></p>
         <select id="fuelFreq" onchange="clearErr('fuelFreq')">
           <option value="">Pilih salah satu</option>
           <option value="harian" id="fuelFreqOptHarian">Harian</option>
@@ -488,6 +490,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
         <p class="error" id="fuelFreqError" role="alert"></p>
 
         <label for="dailyRoute" id="dailyRouteLabel">Dalam sehari, kira-kira berapa kilometer jarak yang kamu tempuh?</label>
+        <p class="tiny" id="dailyRouteHelp" style="margin:-10px 0 8px"></p>
         <input type="number" id="dailyRoute" inputmode="numeric" placeholder="Contoh: 25" min="0" oninput="clearErr('dailyRoute')">
         <p class="error" id="dailyRouteError" role="alert"></p>
 
@@ -512,7 +515,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
       <div>
         <div class="num">1</div>
         <h3>Tandai lokasi yang kamu butuhkan</h3>
-        <p class="small">Ada tempat yang menurutmu perlu SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di peta.</p>
+        <p class="small">Ada tempat yang menurutmu perlu SPKLU atau transportasi umum listrik? Tandai di peta.</p>
       </div>
       <div>
         <div class="num">2</div>
@@ -577,7 +580,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 
 <!-- reportCity -->
 <section class="screen" id="reportCity"><div class="sec"><div class="wrap narrow">
-  <p class="small" style="margin-bottom:28px" id="laporIntro">Ada lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di sini. Laporanmu membantu kami memetakan kebutuhan di kotamu.</p>
+  <p class="small" style="margin-bottom:28px" id="laporIntro">Ada lokasi yang menurutmu butuh SPKLU atau transportasi umum listrik? Tandai di sini. Laporanmu membantu kami memetakan kebutuhan di kotamu.</p>
   <div class="steps"><span class="on"></span><span></span><span></span><span></span></div>
   <p class="step-text">Langkah 1 dari 4</p>
 
@@ -603,7 +606,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 
   <label class="choice">
     <input type="radio" name="reportCat" value="bbm" onchange="clearErr('categoryChoice')"><span id="catLabel_bbm">BBM</span>
-    <span class="desc" id="catDesc_bbm">Perkiraan biaya bensin per bulan dan rute yang biasa kamu lewati.</span>
+    <span class="desc" id="catDesc_bbm">Kamu akan diarahkan ke halaman Hitung BBM-mu untuk menghitung pengeluaran BBM-mu.</span>
   </label>
   <label class="choice">
     <input type="radio" name="reportCat" value="kondisi" onchange="clearErr('categoryChoice')"><span id="catLabel_kondisi">Kondisi udara</span>
@@ -611,7 +614,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
   </label>
   <label class="choice">
     <input type="radio" name="reportCat" value="akses" onchange="clearErr('categoryChoice')"><span id="catLabel_akses">Akses kendaraan listrik</span>
-    <span class="desc" id="catDesc_akses">Apakah motor listrik bisa dibeli atau diservis di sekitar sini? Kamu juga bisa mencantumkan lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat.</span>
+    <span class="desc" id="catDesc_akses">Apakah motor listrik bisa dibeli atau diservis di sekitar sini? Kamu juga bisa mencantumkan lokasi SPKLU terdekat.</span>
   </label>
   <label class="choice">
     <input type="radio" name="reportCat" value="transum" onchange="clearErr('categoryChoice')"><span id="catLabel_transum">Transportasi umum</span>
@@ -629,21 +632,6 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
   <p class="step-text">Langkah 3 dari 4</p>
   <h2 id="detailTitle">Detail laporan</h2>
   <p class="small" id="detailHelp"></p>
-
-  <!-- kategori: BBM -->
-  <div id="bbmFields" style="display:none">
-    <label for="bbmSpend" id="bbmSpendLabel">Perkiraan biaya bensin per bulan (Rp)</label>
-    <input type="number" id="bbmSpend" inputmode="numeric" min="0" oninput="clearErr('bbmSpend')">
-    <p class="error" id="bbmSpendError" role="alert"></p>
-
-    <label for="routeStart" id="routeStartLabel">Mulai dari mana?</label>
-    <input type="text" id="routeStart" placeholder="Contoh: Rumah, Jl. Mawar" oninput="clearErr('routeStart')">
-    <p class="error" id="routeStartError" role="alert"></p>
-
-    <label for="routeEnd" id="routeEndLabel">Sampai di mana?</label>
-    <input type="text" id="routeEnd" placeholder="Contoh: Kantor, Jl. Melati" oninput="clearErr('routeEnd')">
-    <p class="error" id="routeEndError" role="alert"></p>
-  </div>
 
   <!-- peta bersama untuk kategori berbasis titik: kondisi udara, akses EV, transum -->
   <div id="mapSection" style="display:none">
@@ -706,6 +694,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
   <!-- kategori: Kondisi udara (tambahan setelah peta) -->
   <div id="kondisiFields" style="display:none;margin-top:22px">
     <label for="kondisiPhoto" id="kondisiPhotoLabel">Foto di lokasi ini</label>
+    <p class="small" id="kondisiPhotoHelp" style="margin-top:-10px"></p>
     <input type="file" id="kondisiPhoto" accept="image/*" onchange="handlePhotoSelect()">
     <p class="error" id="kondisiPhotoError" role="alert"></p>
     <img id="kondisiPhotoPreview" alt="Pratinjau foto" style="display:none;max-width:100%;border-radius:12px;margin-top:10px">
@@ -722,13 +711,15 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     </div>
     <p class="error" id="aksesAvailError" role="alert"></p>
 
-    <label for="aksesCharging" id="aksesChargingLabel">Lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat (jika tahu)</label>
+    <label for="aksesCharging" id="aksesChargingLabel">Lokasi SPKLU terdekat (jika tahu)</label>
+    <p class="small" id="aksesChargingHelp" style="margin-top:-10px"></p>
     <input type="text" id="aksesCharging" placeholder="Contoh: SPKLU, mall, bengkel">
   </div>
 
   <!-- kategori: Transportasi umum (tambahan setelah peta) -->
   <div id="transumFields" style="display:none;margin-top:22px">
     <label for="transumNote" id="transumNoteLabel">Ada alasan khusus mengapa lokasi ini penting? (Opsional)</label>
+    <p class="small" id="transumNoteHelp" style="margin-top:-10px"></p>
     <textarea id="transumNote" maxlength="200" placeholder="Contoh: Banyak orang menunggu angkutan di sini setiap pagi."></textarea>
   </div>
 
@@ -845,7 +836,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 <!-- about -->
 <section class="screen" id="about"><div class="sec"><div class="wrap narrow">
   <h2>Tentang EV Campaign</h2>
-  <p class="small">Peralihan ke kendaraan listrik bukan cuma soal ganti kendaraan. Infrastruktur SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) dan transportasi di sekitar kita juga perlu ikut berkembang.</p>
+  <p class="small">Peralihan ke kendaraan listrik bukan cuma soal ganti kendaraan. Infrastruktur SPKLU dan transportasi di sekitar kita juga perlu ikut berkembang.</p>
 
   <!--
     Blok Penghitung Laporan — sesuai brief: harus default tersembunyi, bisa
@@ -994,13 +985,14 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
   <div class="admin-topbar">
     <div>
       <h2>Kelola Form</h2>
+      <p class="small">Ubah label, teks bantuan, pilihan, dan pesan yang ditampilkan ke pengunjung di Hitung BBM-mu, Lapor Rutemu, dan halaman Kampanye — tanpa perlu bantuan developer.</p>
     </div>
   </div>
 
   <div class="filter" role="tablist" style="max-width:640px">
     <button id="formTabCalc" class="on" onclick="adminShowFormTab('calc')">Hitung BBM-mu</button>
     <button id="formTabLapor" onclick="adminShowFormTab('lapor')">Lapor Rutemu</button>
-    <button id="formTabCampaign" onclick="adminShowFormTab('campaign')">Halaman Campaign</button>
+    <button id="formTabCampaign" onclick="adminShowFormTab('campaign')">Halaman Kampanye</button>
   </div>
 
   <!-- ── Tab: Hitung BBM-mu ── -->
@@ -1010,13 +1002,19 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
      <button id="calcViewPreview" onclick="setMobileEditView('calc','preview')">Pratinjau</button>
    </div>
    <div class="admin-edit-form" id="calcFormCol">
-    <h3>Label kolom</h3>
+    <h3>Label &amp; teks bantuan kolom</h3>
     <label for="cfgFuelLabel">Label kolom "Pengeluaran sekali beli"</label>
     <input type="text" id="cfgFuelLabel" oninput="renderCalcPreview()">
+    <label for="cfgFuelHelp">Teks bantuan kolom "Pengeluaran sekali beli"</label>
+    <input type="text" id="cfgFuelHelp" oninput="renderCalcPreview()">
     <label for="cfgFreqLabel">Label kolom "Frekuensi pembelian"</label>
     <input type="text" id="cfgFreqLabel" oninput="renderCalcPreview()">
+    <label for="cfgFreqHelp">Teks bantuan kolom "Frekuensi pembelian"</label>
+    <input type="text" id="cfgFreqHelp" oninput="renderCalcPreview()">
     <label for="cfgRouteLabel">Label kolom "Rute harian"</label>
     <input type="text" id="cfgRouteLabel" oninput="renderCalcPreview()">
+    <label for="cfgRouteHelp">Teks bantuan kolom "Rute harian"</label>
+    <input type="text" id="cfgRouteHelp" oninput="renderCalcPreview()">
 
     <h3 style="margin-top:32px">Opsi frekuensi &amp; nilai perhitungan</h3>
     <p class="tiny">Nilai adalah perkiraan berapa kali isi bensin dalam sebulan. Dipakai untuk: pengeluaran bulanan = sekali beli × nilai ini.</p>
@@ -1098,10 +1096,15 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <input type="text" id="cfgCatLabel" oninput="renderLaporPreview()">
     <label for="cfgCatDesc">Deskripsi singkat di bawah nama pilihan</label>
     <textarea id="cfgCatDesc" oninput="renderLaporPreview()"></textarea>
-    <label for="cfgCatTitle">Judul halaman detail (Langkah 3)</label>
-    <input type="text" id="cfgCatTitle" oninput="renderLaporPreview()">
-    <label for="cfgCatHelp">Teks bantuan (tampil di bawah judul, Langkah 3)</label>
-    <input type="text" id="cfgCatHelp" oninput="renderLaporPreview()">
+
+    <p class="tiny" id="cfgCatLinkNote" style="display:none">Kategori ini langsung mengarahkan pengunjung ke halaman lain, jadi tidak punya form/detail sendiri (Langkah 3 &amp; 4 dilewati).</p>
+
+    <div id="cfgCatDetailWrap">
+      <label for="cfgCatTitle">Judul halaman detail (Langkah 3)</label>
+      <input type="text" id="cfgCatTitle" oninput="renderLaporPreview()">
+      <label for="cfgCatHelp">Teks bantuan (tampil di bawah judul, Langkah 3)</label>
+      <input type="text" id="cfgCatHelp" oninput="renderLaporPreview()">
+    </div>
     <div id="cfgCatMapInstructionWrap">
       <label for="cfgCatMapInstruction">Instruksi di atas peta</label>
       <input type="text" id="cfgCatMapInstruction" oninput="renderLaporPreview()">
@@ -1135,7 +1138,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
    </div>
   </div>
 
-  <!-- ── Tab: Halaman Campaign ── -->
+  <!-- ── Tab: Halaman Kampanye ── -->
   <div id="formPanelCampaign" style="display:none;margin-top:28px" class="admin-edit-grid">
    <div class="admin-mobile-toggle" role="tablist">
      <button class="on" id="campaignViewForm" onclick="setMobileEditView('campaign','form')">Edit</button>
@@ -1143,14 +1146,14 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
    </div>
    <div class="admin-edit-form" id="campaignFormCol">
     <h3>Blok Penghitung Laporan</h3>
-    <p class="small">Blok ini tampil di halaman Campaign dan halaman Tentang. Sesuai brief, defaultnya tersembunyi.</p>
+    <p class="small">Blok ini tampil di halaman Kampanye dan halaman Tentang. Sesuai brief, defaultnya tersembunyi.</p>
     <label class="choice">
       <input type="checkbox" id="cfgCounterVisible" onchange="renderCampaignPreview()">
       Tampilkan blok ini di halaman publik
       <span class="desc">Kalau tidak dicentang, blok ini tetap tersembunyi walau metrik di bawah sudah diatur.</span>
     </label>
 
-    <label for="cfgCounterPosition">Posisi blok di halaman Campaign</label>
+    <label for="cfgCounterPosition">Posisi blok di halaman Kampanye</label>
     <select id="cfgCounterPosition" onchange="renderCampaignPreview()">
       <option value="hero">Di panel hero (atas, sebelah judul)</option>
       <option value="afterHero">Full-width, tepat setelah hero</option>
@@ -1193,7 +1196,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <p class="hint" id="campaignSaveMsg"></p>
    </div>
    <div class="preview-col mobile-hide" id="campaignPreviewCol">
-    <h4>Pratinjau langsung — Halaman Campaign</h4>
+    <h4>Pratinjau langsung — Halaman Kampanye</h4>
     <div id="campaignPreview"></div>
    </div>
   </div>
@@ -1221,7 +1224,7 @@ var REPORT_COUNTER_CONFIG = {
   labels: { total: 'lokasi dilaporkan', cities: 'kota dengan laporan', week: 'laporan minggu ini' },
   title: 'Kemajuan pelaporan warga',                 // judul saat blok AKTIF & tampil
   fallbackTitle: 'Ikut kasih tahu kebutuhannya',      // judul panel hero saat blok TIDAK tampil di hero
-  fallbackText: 'Tandai lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.'
+  fallbackText: 'Tandai lokasi yang menurutmu butuh SPKLU atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.'
 };
 
 function counterMetricValue(key){
@@ -1247,7 +1250,7 @@ function renderReportCounterBlock(){
   block.innerHTML = counterStatsHTML();
 }
 
-// Blok Penghitung Laporan di halaman Campaign — sesuai brief, ini harus
+// Blok Penghitung Laporan di halaman Kampanye — sesuai brief, ini harus
 // bisa "dipindah-pindah posisinya" oleh admin tanpa bantuan developer.
 // Disimulasikan di sini lewat 3 slot fisik yang sudah disiapkan di HTML
 // (hero / setelah-hero / bawah halaman); admin pilih salah satu di Kelola
@@ -1404,8 +1407,11 @@ function setStrictMode(){
    "Manajemen Konten" utk Hitung BBM-mu). */
 var CALCULATOR_CONFIG = {
   fuelLabel: 'Sekali isi bensin, biasanya berapa rupiah?',
+  fuelHelp: 'Tidak perlu struk atau catatan resmi — perkiraan saja sudah cukup.',
   freqLabel: 'Seberapa sering kamu biasanya isi bensin?',
+  freqHelp: 'Pilih yang paling mendekati kebiasaanmu sehari-hari.',
   routeLabel: 'Dalam sehari, kira-kira berapa kilometer jarak yang kamu tempuh?',
+  routeHelp: 'Hitung jarak pulang-pergi kalau kamu bolak-balik dalam sehari.',
   frequencyPerMonth: { harian: 30, mingguan: 4.33, dua_mingguan: 2.17, bulanan: 1 },
   frequencyLabels: { harian: 'Harian', mingguan: 'Mingguan', dua_mingguan: 'Dua Minggu Sekali', bulanan: 'Bulanan' },
   consentLabel: 'Simpan hasil perhitungan ini untuk keperluan riset (opsional)',
@@ -1430,8 +1436,11 @@ var CALCULATOR_CONFIG = {
 function applyCalculatorConfig(){
   var setText = function(id, value){ var el = document.getElementById(id); if (el) el.textContent = value; };
   setText('fuelSpendLabel', CALCULATOR_CONFIG.fuelLabel);
+  setText('fuelSpendHelp', CALCULATOR_CONFIG.fuelHelp);
   setText('fuelFreqLabel', CALCULATOR_CONFIG.freqLabel);
+  setText('fuelFreqHelp', CALCULATOR_CONFIG.freqHelp);
   setText('dailyRouteLabel', CALCULATOR_CONFIG.routeLabel);
+  setText('dailyRouteHelp', CALCULATOR_CONFIG.routeHelp);
   setText('calcConsentLabel', CALCULATOR_CONFIG.consentLabel);
   setText('calcConsentDesc', CALCULATOR_CONFIG.consentDesc);
   setText('calcButton', CALCULATOR_CONFIG.submitLabel);
@@ -1562,10 +1571,12 @@ function calculate(){
    perlu dipindah jadi field CMS non-teknis di produksi (syarat "Manajemen
    Konten" Lapor Rutemu). */
 // Flag teknis per kategori (bukan hal yang perlu diedit non-teknis): apakah
-// kategori ini butuh peta dan/atau foto. Teks yang tampil ke pengguna semua
-// disimpan di LAPOR_CONFIG.categories supaya bisa diedit lewat "Kelola Form".
+// kategori ini butuh peta dan/atau foto, atau (khusus BBM, sesuai brief
+// terbaru) cuma mengarahkan ke halaman lain tanpa form sendiri. Teks yang
+// tampil ke pengguna semua disimpan di LAPOR_CONFIG.categories supaya bisa
+// diedit lewat "Kelola Form".
 var CATEGORY_META = {
-  bbm:      { needsMap: false },
+  bbm:      { needsMap: false, linksTo: 'home' },
   kondisi:  { needsMap: true, needsPhoto: true },
   akses:    { needsMap: true },
   transum:  { needsMap: true }
@@ -1575,7 +1586,7 @@ var CATEGORY_META = {
 // satu tempat supaya di produksi bisa dipindah jadi field CMS non-teknis
 // (syarat "Persyaratan Manajemen Konten Mutlak" di brief).
 var LAPOR_CONFIG = {
-  intro: 'Ada lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di sini. Laporanmu membantu kami memetakan kebutuhan di kotamu.',
+  intro: 'Ada lokasi yang menurutmu butuh SPKLU atau transportasi umum listrik? Tandai di sini. Laporanmu membantu kami memetakan kebutuhan di kotamu.',
   cityQuestion: 'Kamu paling sering berkendara di kota mana?',
   cityHelp: 'Pilih kota tempat kamu paling sering berkendara.',
   useLocationLabel: 'Gunakan lokasi saya',
@@ -1595,30 +1606,32 @@ var LAPOR_CONFIG = {
   categories: {
     bbm: {
       label: 'BBM',
-      desc: 'Perkiraan biaya bensin per bulan dan rute yang biasa kamu lewati.',
-      title: 'Ceritakan rute yang biasa kamu lewati',
-      help: 'Perkiraan saja tidak apa-apa — tidak perlu struk atau catatan resmi.',
-      fields: { spendLabel: 'Perkiraan biaya bensin per bulan (Rp)', startLabel: 'Mulai dari mana?', endLabel: 'Sampai di mana?' }
+      desc: 'Kamu akan diarahkan ke halaman Hitung BBM-mu untuk menghitung pengeluaran BBM-mu.',
+      fields: {}
     },
     kondisi: {
       label: 'Kondisi udara',
       desc: 'Tandai lokasinya dan tambahkan foto.',
       title: 'Tandai lokasi dan tambahkan foto',
-      help: 'Ambil foto dari tempat kamu berdiri sekarang agar lokasinya akurat.',
+      help: 'Laporan ini membantu kami memetakan titik dengan kualitas udara yang perlu diperhatikan.',
       mapInstruction: 'Tandai satu lokasi yang menurutmu perlu diperhatikan.',
-      fields: { photoLabel: 'Foto di lokasi ini' }
+      fields: {
+        photoLabel: 'Foto di lokasi ini',
+        photoHelp: 'Ambil foto dari tempat kamu berdiri sekarang agar hasilnya akurat dan jelas.'
+      }
     },
     akses: {
       label: 'Akses kendaraan listrik',
-      desc: 'Apakah motor listrik bisa dibeli atau diservis di sekitar sini? Kamu juga bisa mencantumkan lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat.',
+      desc: 'Apakah motor listrik bisa dibeli atau diservis di sekitar sini? Kamu juga bisa mencantumkan lokasi SPKLU terdekat.',
       title: 'Tandai lokasi dan isi detailnya',
-      help: 'Belum tahu lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat? Kolom ini boleh dikosongkan.',
+      help: 'Laporan ini membantu kami memahami sejauh mana akses kendaraan listrik di daerahmu.',
       mapInstruction: 'Tandai lokasi yang kamu maksud.',
       fields: {
         availLabel: 'Apakah motor listrik bisa dibeli dan diservis di sekitar sini?',
         availYesLabel: 'Bisa',
         availNoLabel: 'Belum bisa',
-        chargingLabel: 'Lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat (jika tahu)'
+        chargingLabel: 'Lokasi SPKLU terdekat (jika tahu)',
+        chargingHelp: 'Boleh dikosongkan kalau kamu belum tahu lokasi SPKLU terdekat.'
       }
     },
     transum: {
@@ -1627,7 +1640,10 @@ var LAPOR_CONFIG = {
       title: 'Tandai lokasi transportasi umum',
       help: 'Misalnya halte, pangkalan ojek, atau tempat orang biasa menunggu angkutan.',
       mapInstruction: 'Tandai lokasi yang menurutmu perlu rute atau pemberhentian transportasi umum listrik.',
-      fields: { noteLabel: 'Ada alasan khusus mengapa lokasi ini penting? (Opsional)' }
+      fields: {
+        noteLabel: 'Ada alasan khusus mengapa lokasi ini penting? (Opsional)',
+        noteHelp: 'Membantu kami memahami kenapa lokasi ini penting bagimu.'
+      }
     }
   }
 };
@@ -1661,15 +1677,15 @@ function applyLaporConfig(){
     setText('catLabel_' + key, cat.label);
     setText('catDesc_' + key, cat.desc);
   });
-  setText('bbmSpendLabel', LAPOR_CONFIG.categories.bbm.fields.spendLabel);
-  setText('routeStartLabel', LAPOR_CONFIG.categories.bbm.fields.startLabel);
-  setText('routeEndLabel', LAPOR_CONFIG.categories.bbm.fields.endLabel);
   setText('kondisiPhotoLabel', LAPOR_CONFIG.categories.kondisi.fields.photoLabel);
+  setText('kondisiPhotoHelp', LAPOR_CONFIG.categories.kondisi.fields.photoHelp);
   setText('aksesAvailLabel', LAPOR_CONFIG.categories.akses.fields.availLabel);
   setText('aksesAvailYesLabel', LAPOR_CONFIG.categories.akses.fields.availYesLabel);
   setText('aksesAvailNoLabel', LAPOR_CONFIG.categories.akses.fields.availNoLabel);
   setText('aksesChargingLabel', LAPOR_CONFIG.categories.akses.fields.chargingLabel);
+  setText('aksesChargingHelp', LAPOR_CONFIG.categories.akses.fields.chargingHelp);
   setText('transumNoteLabel', LAPOR_CONFIG.categories.transum.fields.noteLabel);
+  setText('transumNoteHelp', LAPOR_CONFIG.categories.transum.fields.noteHelp);
 
   // Kalau sedang berada di layar detail kategori, judul & instruksi peta
   // perlu diperbarui juga (showDetailFields membaca LAPOR_CONFIG langsung).
@@ -1692,12 +1708,23 @@ function chooseCategory(){
   if (!picked){
     document.getElementById('categoryChoiceError').textContent = 'Pilih salah satu.';
     if (strictMode) return;
-    selectedCategory = 'bbm'; // fallback mode demo: lanjut tanpa memilih kategori
+    selectedCategory = 'kondisi'; // fallback mode demo: lanjut tanpa memilih kategori
   } else {
     selectedCategory = picked.value;
   }
-  showDetailFields();
   trackEvent('kategori_dipilih', { category: selectedCategory });
+
+  // Kategori "link" (BBM, sesuai brief terbaru) tidak punya form/detail
+  // sendiri — begitu dipilih, langsung arahkan ke halamannya, tanpa lewat
+  // reportDetail/reportConfirm sama sekali.
+  var meta = CATEGORY_META[selectedCategory];
+  if (meta && meta.linksTo){
+    trackEvent('lapor_kategori_redirect', { category: selectedCategory, target: meta.linksTo });
+    openScreen(meta.linksTo);
+    return;
+  }
+
+  showDetailFields();
   openScreen('reportDetail');
 }
 
@@ -1706,7 +1733,6 @@ function showDetailFields(){
   var cfg = LAPOR_CONFIG.categories[selectedCategory];
   document.getElementById('detailTitle').textContent = cfg.title;
   document.getElementById('detailHelp').textContent = cfg.help || '';
-  document.getElementById('bbmFields').style.display = selectedCategory === 'bbm' ? 'block' : 'none';
   document.getElementById('mapSection').style.display = meta.needsMap ? 'block' : 'none';
   document.getElementById('kondisiFields').style.display = selectedCategory === 'kondisi' ? 'block' : 'none';
   document.getElementById('aksesFields').style.display = selectedCategory === 'akses' ? 'block' : 'none';
@@ -1854,15 +1880,9 @@ function compressImage(dataUrl, callback){
 
 function validateDetail(){
   var ok = true;
-  if (selectedCategory === 'bbm'){
-    if (!document.getElementById('bbmSpend').value){ document.getElementById('bbmSpendError').textContent = 'Isi dulu perkiraan pengeluaran BBM per bulan.'; ok = false; }
-    if (!document.getElementById('routeStart').value.trim()){ document.getElementById('routeStartError').textContent = 'Isi dulu lokasi mulai rute.'; ok = false; }
-    if (!document.getElementById('routeEnd').value.trim()){ document.getElementById('routeEndError').textContent = 'Isi dulu lokasi akhir rute.'; ok = false; }
-  } else {
-    if (!pins.length){ document.getElementById('pinError').textContent = 'Tandai satu titik dulu di peta.'; ok = false; }
-    if (selectedCategory === 'kondisi' && !kondisiPhotoData){ document.getElementById('kondisiPhotoError').textContent = 'Tambahkan foto kondisi dulu.'; ok = false; }
-    if (selectedCategory === 'akses' && !document.querySelector('input[name="aksesAvail"]:checked')){ document.getElementById('aksesAvailError').textContent = 'Pilih salah satu.'; ok = false; }
-  }
+  if (!pins.length){ document.getElementById('pinError').textContent = 'Tandai satu titik dulu di peta.'; ok = false; }
+  if (selectedCategory === 'kondisi' && !kondisiPhotoData){ document.getElementById('kondisiPhotoError').textContent = 'Tambahkan foto kondisi dulu.'; ok = false; }
+  if (selectedCategory === 'akses' && !document.querySelector('input[name="aksesAvail"]:checked')){ document.getElementById('aksesAvailError').textContent = 'Pilih salah satu.'; ok = false; }
   return ok;
 }
 
@@ -1873,25 +1893,18 @@ function buildSummary(){
   var cfg = LAPOR_CONFIG.categories[selectedCategory];
   var rows = '<tr><th>Kategori</th><td>' + cfg.label + '</td></tr>';
 
-  if (selectedCategory === 'bbm'){
-    var spend = document.getElementById('bbmSpend').value;
-    rows += '<tr><th>Pengeluaran BBM/bulan</th><td>' + (spend ? 'Rp ' + Number(spend).toLocaleString('id-ID') : '-') + '</td></tr>';
-    rows += '<tr><th>Mulai dari mana?</th><td>' + (document.getElementById('routeStart').value || '-') + '</td></tr>';
-    rows += '<tr><th>Sampai di mana?</th><td>' + (document.getElementById('routeEnd').value || '-') + '</td></tr>';
-  } else {
-    rows += '<tr><th>Titik</th><td>' + (pins.length ? 'Ditandai di peta' : 'Belum ditandai') + '</td></tr>';
-    rows += '<tr><th>Stempel waktu</th><td>' + new Date().toLocaleString('id-ID') + '</td></tr>';
-    if (selectedCategory === 'kondisi'){
-      rows += '<tr><th>Foto</th><td>' + (kondisiPhotoData ? 'Terlampir' : 'Belum ditambahkan') + '</td></tr>';
-    }
-    if (selectedCategory === 'akses'){
-      var avail = document.querySelector('input[name="aksesAvail"]:checked');
-      rows += '<tr><th>Motor listrik bisa dibeli/diservis</th><td>' + (avail ? (avail.value === 'ya' ? LAPOR_CONFIG.categories.akses.fields.availYesLabel : LAPOR_CONFIG.categories.akses.fields.availNoLabel) : '-') + '</td></tr>';
-      rows += '<tr><th>Charging terdekat</th><td>' + (document.getElementById('aksesCharging').value || '-') + '</td></tr>';
-    }
-    if (selectedCategory === 'transum'){
-      rows += '<tr><th>Catatan</th><td>' + (document.getElementById('transumNote').value || '-') + '</td></tr>';
-    }
+  rows += '<tr><th>Titik</th><td>' + (pins.length ? 'Ditandai di peta' : 'Belum ditandai') + '</td></tr>';
+  rows += '<tr><th>Stempel waktu</th><td>' + new Date().toLocaleString('id-ID') + '</td></tr>';
+  if (selectedCategory === 'kondisi'){
+    rows += '<tr><th>Foto</th><td>' + (kondisiPhotoData ? 'Terlampir' : 'Belum ditambahkan') + '</td></tr>';
+  }
+  if (selectedCategory === 'akses'){
+    var avail = document.querySelector('input[name="aksesAvail"]:checked');
+    rows += '<tr><th>Motor listrik bisa dibeli/diservis</th><td>' + (avail ? (avail.value === 'ya' ? LAPOR_CONFIG.categories.akses.fields.availYesLabel : LAPOR_CONFIG.categories.akses.fields.availNoLabel) : '-') + '</td></tr>';
+    rows += '<tr><th>SPKLU terdekat</th><td>' + (document.getElementById('aksesCharging').value || '-') + '</td></tr>';
+  }
+  if (selectedCategory === 'transum'){
+    rows += '<tr><th>Catatan</th><td>' + (document.getElementById('transumNote').value || '-') + '</td></tr>';
   }
 
   document.getElementById('summaryTable').innerHTML = rows;
@@ -1976,7 +1989,6 @@ var ANALYTICS_DATA = {
     { page: 'Lapor Rutemu', arrivals: 6130, started: 3040, completed: 1870, scroll75: 2210 }
   ],
   categoryBreakdown: [
-    { key: 'bbm', count: 612 },
     { key: 'kondisi', count: 480 },
     { key: 'akses', count: 390 },
     { key: 'transum', count: 388 }
@@ -2124,13 +2136,11 @@ function renderAdminDashboard(){
    daftar & detail laporan merefleksikan tipe form yang sesungguhnya. */
 var ADMIN_SAMPLE_REPORTS = [
   { id: 1042, category: 'akses', city: 'Jakarta', status: 'pending', time: '2 jam lalu', adSource: 'ig-reels-motor-01',
-    fields: { pin: '-6.2088, 106.8456', placeType: 'Kantor', avail: 'Belum bisa', charging: 'SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) Mall Blok M' } },
+    fields: { pin: '-6.2088, 106.8456', placeType: 'Kantor', avail: 'Belum bisa', charging: 'SPKLU Mall Blok M' } },
   { id: 1041, category: 'transum', city: 'Bekasi', status: 'pending', time: '3 jam lalu', adSource: 'tiktok-macet-02',
     fields: { pin: '-6.2349, 106.9896', placeType: 'Halte bus', note: 'Banyak orang menunggu angkutan di sini setiap pagi, tidak ada tempat berteduh.' } },
   { id: 1040, category: 'kondisi', city: 'Jakarta', status: 'pending', time: '5 jam lalu', adSource: 'ig-reels-motor-01',
     fields: { pin: '-6.1751, 106.8650', placeType: 'Pinggir jalan', photo: true } },
-  { id: 1039, category: 'bbm', city: 'Surabaya', status: 'approved', time: '1 hari lalu', adSource: 'fb-ojol-cerita',
-    fields: { spend: 450000, routeStart: 'Rumah, Rungkut', routeEnd: 'Kantor, Gubeng' } },
   { id: 1038, category: 'akses', city: 'Bandung', status: 'approved', time: '1 hari lalu', adSource: 'tiktok-macet-02',
     fields: { pin: '-6.9175, 107.6191', placeType: 'Ruko', avail: 'Bisa', charging: '—' } },
   { id: 1037, category: 'kondisi', city: 'Semarang', status: 'rejected', time: '2 hari lalu', adSource: 'ig-reels-motor-01',
@@ -2174,23 +2184,17 @@ function renderAdminDetail(id){
   var rows = '<tr><th style="width:160px">Kota</th><td>' + report.city + '</td></tr>';
   rows += '<tr><th>Kategori</th><td>' + cat.label + '</td></tr>';
 
-  if (report.category === 'bbm'){
-    rows += '<tr><th>Pengeluaran BBM/bulan</th><td>Rp ' + f.spend.toLocaleString('id-ID') + '</td></tr>';
-    rows += '<tr><th>Mulai dari mana?</th><td>' + f.routeStart + '</td></tr>';
-    rows += '<tr><th>Sampai di mana?</th><td>' + f.routeEnd + '</td></tr>';
-  } else {
-    rows += '<tr><th>Koordinat</th><td>' + f.pin + '</td></tr>';
-    rows += '<tr><th>Jenis lokasi</th><td>' + f.placeType + '</td></tr>';
-    if (report.category === 'kondisi'){
-      rows += '<tr><th>Foto</th><td>' + (f.photo ? 'Terlampir (perlu dicek jelas/terbaca)' : 'Tidak ada') + '</td></tr>';
-    }
-    if (report.category === 'akses'){
-      rows += '<tr><th>Motor listrik bisa dibeli/diservis</th><td>' + f.avail + '</td></tr>';
-      rows += '<tr><th>Lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat</th><td>' + f.charging + '</td></tr>';
-    }
-    if (report.category === 'transum'){
-      rows += '<tr><th>Catatan</th><td>' + f.note + '</td></tr>';
-    }
+  rows += '<tr><th>Koordinat</th><td>' + f.pin + '</td></tr>';
+  rows += '<tr><th>Jenis lokasi</th><td>' + f.placeType + '</td></tr>';
+  if (report.category === 'kondisi'){
+    rows += '<tr><th>Foto</th><td>' + (f.photo ? 'Terlampir (perlu dicek jelas/terbaca)' : 'Tidak ada') + '</td></tr>';
+  }
+  if (report.category === 'akses'){
+    rows += '<tr><th>Motor listrik bisa dibeli/diservis</th><td>' + f.avail + '</td></tr>';
+    rows += '<tr><th>Lokasi SPKLU terdekat</th><td>' + f.charging + '</td></tr>';
+  }
+  if (report.category === 'transum'){
+    rows += '<tr><th>Catatan</th><td>' + f.note + '</td></tr>';
   }
   rows += '<tr><th>Dari iklan</th><td>' + report.adSource + '</td></tr>';
 
@@ -2264,10 +2268,13 @@ function renderCalcPreview(){
     '<div class="preview-card">' +
       '<span class="preview-tag">Layar Hitung BBM-mu</span>' +
       '<div class="preview-field-label">' + pv(val('cfgFuelLabel') || 'Biasanya isi bensin berapa rupiah?') + '</div>' +
+      '<p class="preview-muted" style="margin:-2px 0 6px">' + pv(val('cfgFuelHelp')) + '</p>' +
       '<div class="preview-field-input">Rp 100.000</div>' +
       '<div class="preview-field-label">' + pv(val('cfgFreqLabel') || 'Biasanya isi bensin seberapa sering?') + '</div>' +
+      '<p class="preview-muted" style="margin:-2px 0 6px">' + pv(val('cfgFreqHelp')) + '</p>' +
       '<select class="preview-field-input" style="width:100%" disabled>' + freqOptions + '</select>' +
       '<div class="preview-field-label">' + pv(val('cfgRouteLabel') || 'Dalam sehari, kira-kira berapa kilometer?') + '</div>' +
+      '<p class="preview-muted" style="margin:-2px 0 6px">' + pv(val('cfgRouteHelp')) + '</p>' +
       '<div class="preview-field-input">25</div>' +
       '<div class="preview-choice"><b>' + pv(val('cfgConsentLabel') || 'Simpan hasil hitungan ini untuk riset (opsional)') + '</b>' +
         '<p style="margin:4px 0 0">' + pv(val('cfgConsentDesc')) + '</p></div>' +
@@ -2285,8 +2292,9 @@ function renderCalcPreview(){
 function renderLaporPreview(){
   var target = document.getElementById('laporPreview');
   if (!target) return;
-  var catKey = val('cfgLaporCategorySelect') || 'bbm';
+  var catKey = val('cfgLaporCategorySelect') || 'kondisi';
   var needsMap = CATEGORY_META[catKey] ? CATEGORY_META[catKey].needsMap : false;
+  var linksTo = CATEGORY_META[catKey] ? CATEGORY_META[catKey].linksTo : null;
 
   var fieldsHtml = '';
   var extraInputs = document.querySelectorAll('#cfgCatExtraFields input');
@@ -2294,7 +2302,7 @@ function renderLaporPreview(){
     fieldsHtml += '<div class="preview-field-label">' + pv(input.value) + '</div><div class="preview-field-input">—</div>';
   });
 
-  target.innerHTML =
+  var stepsHtml =
     '<div class="preview-card">' +
       '<span class="preview-tag">Langkah 1 — Kota</span>' +
       '<p>' + pv(val('cfgLaporIntro')) + '</p>' +
@@ -2314,31 +2322,43 @@ function renderLaporPreview(){
         '<p style="margin:4px 0 0">' + pv(val('cfgCatDesc')) + '</p></div>' +
       '<div class="preview-mini-btn" style="display:block;text-align:center;margin-top:10px">' + pv(val('cfgCategoryButtonLabel') || 'Lanjut') + '</div>' +
       '<p class="preview-muted">Kategori yang sedang diedit: ' + pv(val('cfgCatLabel')) + '</p>' +
-    '</div>' +
-    '<div class="preview-card">' +
-      '<span class="preview-tag">Langkah 3 — Detail (' + pv(val('cfgCatLabel')) + ')</span>' +
-      '<h5>' + pv(val('cfgCatTitle')) + '</h5>' +
-      '<p class="preview-muted" style="margin:-4px 0 10px">' + pv(val('cfgCatHelp')) + '</p>' +
-      (needsMap ? '<p style="margin:0 0 10px">' + pv(val('cfgCatMapInstruction')) + '</p><div class="preview-field-input" style="text-align:center;padding:24px">🗺️ Peta contoh</div>' : '') +
-      fieldsHtml +
-    '</div>' +
-    '<div class="preview-card">' +
-      '<span class="preview-tag">Langkah 4 — Konfirmasi</span>' +
-      '<h5>' + pv(val('cfgConfirmTitle') || 'Cek laporanmu') + '</h5>' +
-      '<div class="preview-choice"><b>' + pv(val('cfgLaporConsentLabel') || 'Saya setuju laporan ini disimpan') + '</b>' +
-        '<p style="margin:4px 0 0">' + pv(val('cfgLaporConsentDesc')) + '</p></div>' +
-      '<div class="preview-mini-btn" style="display:block;text-align:center;margin-top:10px">' + pv(val('cfgLaporSubmitLabel') || 'Kirim') + '</div>' +
-      '<p class="preview-muted">Bantuan: ' + pv(val('cfgLaporSubmitHint')) + '</p>' +
-    '</div>' +
-    '<div class="preview-card">' +
-      '<span class="preview-tag">Selesai</span>' +
-      '<h5>' + pv(val('cfgDoneTitle')) + '</h5>' +
-      '<p style="margin:0">' + pv(val('cfgDoneSubtitle')) + '</p>' +
     '</div>';
+
+  if (linksTo){
+    stepsHtml += '<div class="preview-card">' +
+      '<span class="preview-tag">Setelah "Lanjut" ditekan</span>' +
+      '<h5>Langsung diarahkan, tanpa Langkah 3 &amp; 4</h5>' +
+      '<p style="margin:0">Kategori ini tidak punya form/detail sendiri — begitu dipilih, pengunjung langsung dibawa ke halaman lain.</p>' +
+    '</div>';
+  } else {
+    stepsHtml +=
+      '<div class="preview-card">' +
+        '<span class="preview-tag">Langkah 3 — Detail (' + pv(val('cfgCatLabel')) + ')</span>' +
+        '<h5>' + pv(val('cfgCatTitle')) + '</h5>' +
+        '<p class="preview-muted" style="margin:-4px 0 10px">' + pv(val('cfgCatHelp')) + '</p>' +
+        (needsMap ? '<p style="margin:0 0 10px">' + pv(val('cfgCatMapInstruction')) + '</p><div class="preview-field-input" style="text-align:center;padding:24px">🗺️ Peta contoh</div>' : '') +
+        fieldsHtml +
+      '</div>' +
+      '<div class="preview-card">' +
+        '<span class="preview-tag">Langkah 4 — Konfirmasi</span>' +
+        '<h5>' + pv(val('cfgConfirmTitle') || 'Cek laporanmu') + '</h5>' +
+        '<div class="preview-choice"><b>' + pv(val('cfgLaporConsentLabel') || 'Saya setuju laporan ini disimpan') + '</b>' +
+          '<p style="margin:4px 0 0">' + pv(val('cfgLaporConsentDesc')) + '</p></div>' +
+        '<div class="preview-mini-btn" style="display:block;text-align:center;margin-top:10px">' + pv(val('cfgLaporSubmitLabel') || 'Kirim') + '</div>' +
+        '<p class="preview-muted">Bantuan: ' + pv(val('cfgLaporSubmitHint')) + '</p>' +
+      '</div>' +
+      '<div class="preview-card">' +
+        '<span class="preview-tag">Selesai</span>' +
+        '<h5>' + pv(val('cfgDoneTitle')) + '</h5>' +
+        '<p style="margin:0">' + pv(val('cfgDoneSubtitle')) + '</p>' +
+      '</div>';
+  }
+
+  target.innerHTML = stepsHtml;
 }
 
-// Pratinjau langsung untuk tab "Halaman Campaign" — meniru blok stat-grid
-// yang sama persis dipakai di halaman Campaign & Tentang, dengan angka
+// Pratinjau langsung untuk tab "Halaman Kampanye" — meniru blok stat-grid
+// yang sama persis dipakai di halaman Kampanye & Tentang, dengan angka
 // contoh dari data laporan yang ada supaya proporsinya realistis.
 function renderCampaignPreview(){
   var target = document.getElementById('campaignPreview');
@@ -2387,8 +2407,11 @@ function adminLoadFormConfig(){
 
   // Hitung BBM-mu
   document.getElementById('cfgFuelLabel').value = CALCULATOR_CONFIG.fuelLabel;
+  document.getElementById('cfgFuelHelp').value = CALCULATOR_CONFIG.fuelHelp;
   document.getElementById('cfgFreqLabel').value = CALCULATOR_CONFIG.freqLabel;
+  document.getElementById('cfgFreqHelp').value = CALCULATOR_CONFIG.freqHelp;
   document.getElementById('cfgRouteLabel').value = CALCULATOR_CONFIG.routeLabel;
+  document.getElementById('cfgRouteHelp').value = CALCULATOR_CONFIG.routeHelp;
   document.getElementById('cfgFreqLabelHarian').value = CALCULATOR_CONFIG.frequencyLabels.harian;
   document.getElementById('cfgFreqValHarian').value = CALCULATOR_CONFIG.frequencyPerMonth.harian;
   document.getElementById('cfgFreqLabelMingguan').value = CALCULATOR_CONFIG.frequencyLabels.mingguan;
@@ -2427,7 +2450,7 @@ function adminLoadFormConfig(){
   document.getElementById('laporSaveMsg').textContent = '';
   adminLoadCategoryFields();
 
-  // Halaman Campaign
+  // Halaman Kampanye
   document.getElementById('cfgCounterVisible').checked = REPORT_COUNTER_CONFIG.visible;
   document.getElementById('cfgCounterPosition').value = REPORT_COUNTER_CONFIG.position;
   document.getElementById('cfgCounterTitle').value = REPORT_COUNTER_CONFIG.title;
@@ -2447,8 +2470,11 @@ function adminLoadFormConfig(){
 
 function saveCalculatorConfig(){
   CALCULATOR_CONFIG.fuelLabel = document.getElementById('cfgFuelLabel').value;
+  CALCULATOR_CONFIG.fuelHelp = document.getElementById('cfgFuelHelp').value;
   CALCULATOR_CONFIG.freqLabel = document.getElementById('cfgFreqLabel').value;
+  CALCULATOR_CONFIG.freqHelp = document.getElementById('cfgFreqHelp').value;
   CALCULATOR_CONFIG.routeLabel = document.getElementById('cfgRouteLabel').value;
+  CALCULATOR_CONFIG.routeHelp = document.getElementById('cfgRouteHelp').value;
   CALCULATOR_CONFIG.frequencyLabels.harian = document.getElementById('cfgFreqLabelHarian').value;
   CALCULATOR_CONFIG.frequencyPerMonth.harian = Number(document.getElementById('cfgFreqValHarian').value) || 0;
   CALCULATOR_CONFIG.frequencyLabels.mingguan = document.getElementById('cfgFreqLabelMingguan').value;
@@ -2476,24 +2502,30 @@ function saveCalculatorConfig(){
 // mentah. Kalau ada key baru yang belum terdaftar di sini, tetap fallback
 // tampilkan nama key aslinya (tidak akan error, cuma kurang rapi).
 var FIELD_DISPLAY_NAMES = {
-  spendLabel: 'Label kolom biaya BBM/bulan',
-  startLabel: 'Label kolom lokasi mulai',
-  endLabel: 'Label kolom lokasi akhir',
   photoLabel: 'Label kolom foto',
+  photoHelp: 'Teks bantuan untuk kolom foto',
   availLabel: 'Pertanyaan ketersediaan motor listrik',
   availYesLabel: 'Label jawaban "Bisa"',
   availNoLabel: 'Label jawaban "Belum bisa"',
-  chargingLabel: 'Label kolom lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat',
-  noteLabel: 'Label kolom catatan'
+  chargingLabel: 'Label kolom lokasi SPKLU terdekat',
+  chargingHelp: 'Teks bantuan untuk kolom lokasi SPKLU',
+  noteLabel: 'Label kolom catatan',
+  noteHelp: 'Teks bantuan untuk kolom catatan'
 };
 
 function adminLoadCategoryFields(){
   var key = document.getElementById('cfgLaporCategorySelect').value;
   var cfg = LAPOR_CONFIG.categories[key];
+  var isLinkCategory = !!(CATEGORY_META[key] && CATEGORY_META[key].linksTo);
   document.getElementById('cfgCatLabel').value = cfg.label;
   document.getElementById('cfgCatDesc').value = cfg.desc;
-  document.getElementById('cfgCatTitle').value = cfg.title;
-  document.getElementById('cfgCatHelp').value = cfg.help || '';
+
+  document.getElementById('cfgCatLinkNote').style.display = isLinkCategory ? 'block' : 'none';
+  document.getElementById('cfgCatDetailWrap').style.display = isLinkCategory ? 'none' : 'block';
+  if (!isLinkCategory){
+    document.getElementById('cfgCatTitle').value = cfg.title;
+    document.getElementById('cfgCatHelp').value = cfg.help || '';
+  }
 
   var mapWrap = document.getElementById('cfgCatMapInstructionWrap');
   mapWrap.style.display = CATEGORY_META[key].needsMap ? 'block' : 'none';
@@ -2520,10 +2552,13 @@ function adminLoadCategoryFields(){
 function saveCategoryFields(){
   var key = document.getElementById('cfgLaporCategorySelect').value;
   var cfg = LAPOR_CONFIG.categories[key];
+  var isLinkCategory = !!(CATEGORY_META[key] && CATEGORY_META[key].linksTo);
   cfg.label = document.getElementById('cfgCatLabel').value;
   cfg.desc = document.getElementById('cfgCatDesc').value;
-  cfg.title = document.getElementById('cfgCatTitle').value;
-  cfg.help = document.getElementById('cfgCatHelp').value;
+  if (!isLinkCategory){
+    cfg.title = document.getElementById('cfgCatTitle').value;
+    cfg.help = document.getElementById('cfgCatHelp').value;
+  }
   if (CATEGORY_META[key].needsMap) cfg.mapInstruction = document.getElementById('cfgCatMapInstruction').value;
   Object.keys(cfg.fields).forEach(function(fieldKey){
     var input = document.getElementById('cfgCatField_' + fieldKey);
@@ -2575,7 +2610,7 @@ function saveCampaignCounterConfig(){
 
   renderReportCounterBlock();
   renderCampaignCounter();
-  document.getElementById('campaignSaveMsg').textContent = 'Tersimpan. Blok Penghitung Laporan diperbarui di halaman Campaign dan Tentang.';
+  document.getElementById('campaignSaveMsg').textContent = 'Tersimpan. Blok Penghitung Laporan diperbarui di halaman Kampanye dan Tentang.';
   trackEvent('admin_config_saved', { form: 'halaman_kampanye' });
 }
 
