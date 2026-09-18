@@ -227,14 +227,110 @@ footer a:hover{color:var(--ink)}
 .footer-social a:hover{color:var(--ink);background:var(--mist)}
 .footer-social svg{width:19px;height:19px}
 
-/* Tombol berbagi dengan logo platform — dipakai di layar "Bagikan hasilmu" */
-.share-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media(max-width:480px){.share-buttons{grid-template-columns:1fr}}
-.share-btn{display:flex;flex-direction:column;align-items:center;gap:8px;
-  background:var(--white);box-shadow:inset 0 0 0 1.5px var(--line);border:none;border-radius:12px;
-  padding:16px 10px;cursor:pointer;font-family:var(--font);font-size:14px;font-weight:600;color:var(--ink);min-height:44px}
-.share-btn:hover{box-shadow:inset 0 0 0 1.5px var(--gray-light)}
-.share-btn svg{width:24px;height:24px}
+/* ── share result ── */
+.share-page{padding:72px 0 84px}
+.share-layout{
+  max-width:980px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);
+  gap:56px;align-items:center
+}
+.share-copy .eyebrow{
+  display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;
+  color:var(--indigo);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase
+}
+.share-copy .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--indigo)}
+.share-copy h2{font-size:clamp(34px,4vw,48px);margin-bottom:14px;letter-spacing:-.035em}
+.share-copy .lead{font-size:17px;color:var(--gray);max-width:45ch;margin-bottom:0}
+
+.share-card-wrap{position:relative}
+.share-card-wrap::before{
+  content:"";position:absolute;inset:18px -14px -18px 14px;border-radius:26px;
+  background:var(--indigo-tint);z-index:0
+}
+.share-card{
+  position:relative;z-index:1;overflow:hidden;min-height:326px;padding:32px 34px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  color:#fff;background:linear-gradient(145deg,var(--indigo),#46538F);
+  border-radius:24px;box-shadow:0 18px 40px rgba(43,53,99,.16)
+}
+.share-card::after{
+  content:"";position:absolute;width:220px;height:220px;border:1px solid rgba(255,255,255,.12);
+  border-radius:50%;right:-70px;bottom:-90px;box-shadow:0 0 0 34px rgba(255,255,255,.035),0 0 0 68px rgba(255,255,255,.025);
+  pointer-events:none
+}
+.share-card-top,.share-card-bottom{position:relative;z-index:1}
+.share-card-brand{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:42px}
+.share-card-brand strong{font-size:16px;letter-spacing:-.02em}
+.share-card-brand span{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#C9CFED}
+.share-card-label{font-size:13px;color:#C9CFED;margin:0 0 7px}
+.share-card-amount{
+  font-size:clamp(44px,5vw,62px);font-weight:800;line-height:1;letter-spacing:-.045em;
+  font-variant-numeric:tabular-nums;white-space:nowrap
+}
+.share-card-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-top:34px}
+.share-card-month{font-size:12.5px;color:#C9CFED;margin:0}
+.share-card-month strong{display:block;color:#fff;font-size:15px;margin-top:2px}
+.share-card-url{font-size:12px;color:#D8DDF2;margin:0;white-space:nowrap}
+
+.share-panel{
+  background:var(--white);border:1.5px solid var(--line);border-radius:20px;padding:24px;
+  box-shadow:0 8px 24px rgba(27,31,46,.05)
+}
+.share-panel-head{margin-bottom:18px}
+.share-panel-head h3{font-size:19px;margin:0 0 4px}
+.share-panel-head p{font-size:13.5px;color:var(--gray);margin:0}
+.share-buttons{display:grid;grid-template-columns:1fr;gap:10px}
+.share-btn{
+  width:100%;display:flex;align-items:center;gap:14px;text-align:left;
+  background:var(--white);border:1.5px solid var(--line);border-radius:14px;
+  padding:14px 15px;cursor:pointer;font-family:var(--font);color:var(--ink);
+  min-height:64px;transition:border-color .18s ease,background .18s ease,transform .18s ease
+}
+.share-btn:hover{border-color:#C9CDD8;background:#FAFBFD;transform:translateY(-1px)}
+.share-btn:active{transform:translateY(0)}
+.share-btn .share-icon{
+  width:38px;height:38px;flex:0 0 38px;border-radius:11px;background:var(--mist);
+  display:flex;align-items:center;justify-content:center;color:var(--ink)
+}
+.share-btn svg{width:20px;height:20px}
+.share-btn .share-label{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.share-btn .share-label strong{font-size:14.5px;font-weight:700}
+.share-btn .share-label span{font-size:12px;color:var(--gray);font-weight:400}
+.share-btn .share-arrow{font-size:19px;color:var(--gray-light);line-height:1}
+.share-note{
+  display:flex;gap:10px;align-items:flex-start;margin:16px 0 0;padding:12px 13px;
+  background:var(--mist);border-radius:12px;color:var(--gray);font-size:12.5px;line-height:1.55
+}
+.share-note svg{width:16px;height:16px;flex:0 0 16px;margin-top:1px;color:var(--indigo)}
+.share-back{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);width:100%;text-align:left}
+
+@media(max-width:900px){
+  .share-page{padding:52px 0 64px}
+  .share-layout{grid-template-columns:1fr;gap:34px;max-width:680px}
+  .share-copy h2{font-size:38px}
+  .share-copy .lead{font-size:16px}
+}
+@media(max-width:560px){
+  .share-page{padding:36px 0 48px}
+  .share-layout{gap:28px}
+  .share-copy .eyebrow{font-size:11px;margin-bottom:9px}
+  .share-copy h2{font-size:32px;line-height:1.1;margin-bottom:10px}
+  .share-copy .lead{font-size:15px;line-height:1.65}
+  .share-card-wrap::before{inset:10px -7px -10px 7px;border-radius:20px}
+  .share-card{min-height:275px;padding:24px 22px;border-radius:19px}
+  .share-card-brand{margin-bottom:30px}
+  .share-card-brand strong{font-size:14px}
+  .share-card-brand span{font-size:9.5px}
+  .share-card-label{font-size:12px}
+  .share-card-amount{font-size:clamp(37px,11vw,50px)}
+  .share-card-bottom{margin-top:28px;align-items:flex-end}
+  .share-card-month{font-size:11px}
+  .share-card-month strong{font-size:13px}
+  .share-card-url{font-size:10.5px}
+  .share-panel{padding:18px;border-radius:17px}
+  .share-panel-head h3{font-size:18px}
+  .share-panel-head p{font-size:12.5px}
+  .share-btn{min-height:62px;padding:12px 13px}
+}
 
 /* ── admin panel shell — deliberately NOT the marketing visual language ── */
 body.admin-mode{background:var(--mist)}
@@ -598,31 +694,82 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 </div></div></section>
 
 <!-- share -->
-<section class="screen" id="share"><div class="sec"><div class="wrap narrow">
-  <h2>Bagikan hasilmu</h2>
-  <div style="background:var(--indigo);color:#fff;border-radius:20px;padding:44px 30px;margin:22px 0">
-    <p style="color:#C3C9EA;font-size:14px;margin:0 0 6px">Biaya bensin saya setahun</p>
-    <div class="big-number" id="shareAmount">Rp 0</div>
-    <p style="color:#C3C9EA;font-size:14px;margin:16px 0 0">evCampaign.go.id</p>
-  </div>
-  <p class="tiny">Hasil ini nantinya bisa dibagikan sebagai gambar.</p>
+<section class="screen" id="share">
+  <div class="share-page">
+    <div class="wrap">
+      <div class="share-layout">
 
-  <div class="share-buttons" style="margin-top:20px">
-    <button class="share-btn" onclick="alert('Bagikan hasil ke X')">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-      X
-    </button>
-    <button class="share-btn" onclick="alert('Bagikan hasil ke Instagram Story')">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.9 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.9-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.757 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
-      Instagram
-    </button>
-    <button class="share-btn" onclick="alert('Bagikan hasil ke TikTok')">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82c-1.12-1.09-1.67-2.65-1.75-4.17H11.7v14.02c0 1.83-1.48 3.31-3.31 3.31-1.84 0-3.32-1.48-3.32-3.31s1.48-3.32 3.32-3.32c.34 0 .67.06.98.15V8.98a7.05 7.05 0 0 0-.98-.07C4.51 8.91 1.4 12.02 1.4 15.9S4.51 22.9 8.39 22.9s6.99-3.11 6.99-6.99V8.87c1.31.94 2.94 1.49 4.72 1.49v-3.5c-.99 0-1.9-.32-2.65-.87a4.99 4.99 0 0 1-.85-.17z"/></svg>
-      TikTok
-    </button>
+        <div class="share-copy">
+          <p class="eyebrow">Hasil perhitunganmu</p>
+          <h2>Bagikan hasilmu.</h2>
+          <p class="lead">Tunjukkan berapa biaya bensin yang kamu keluarkan dalam setahun dan ajak orang lain ikut menghitung.</p>
+        </div>
+
+        <div class="share-card-wrap">
+          <div class="share-card" aria-label="Kartu hasil perhitungan">
+            <div class="share-card-top">
+              <div class="share-card-brand">
+                <strong>EV<span style="color:#C9CFED">Campaign</span></strong>
+                <span>Hasilmu</span>
+              </div>
+
+              <p class="share-card-label">Biaya bensin saya setahun</p>
+              <div class="share-card-amount" id="shareAmount">Rp 0</div>
+            </div>
+
+            <div class="share-card-bottom">
+              <p class="share-card-month">Per bulan<strong id="shareMonthAmount">Rp 0</strong></p>
+              <p class="share-card-url">evCampaign.go.id</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="share-panel">
+          <div class="share-panel-head">
+            <h3>Bagikan ke</h3>
+            <p>Pilih platform yang ingin kamu gunakan.</p>
+          </div>
+
+          <div class="share-buttons">
+            <button class="share-btn" onclick="alert('Bagikan hasil ke X')">
+              <span class="share-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+              </span>
+              <span class="share-label"><strong>X</strong><span>Bagikan ke postingan</span></span>
+              <span class="share-arrow" aria-hidden="true">›</span>
+            </button>
+
+            <button class="share-btn" onclick="alert('Bagikan hasil ke Instagram Story')">
+              <span class="share-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.296 1.636-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.9 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.9-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.757 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
+              </span>
+              <span class="share-label"><strong>Instagram</strong><span>Bagikan ke Story</span></span>
+              <span class="share-arrow" aria-hidden="true">›</span>
+            </button>
+
+            <button class="share-btn" onclick="alert('Bagikan hasil ke TikTok')">
+              <span class="share-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82c-1.12-1.09-1.67-2.65-1.75-4.17H11.7v14.02c0 1.83-1.48 3.31-3.31 3.31-1.84 0-3.32-1.48-3.32-3.31s1.48-3.32 3.32-3.32c.34 0 .67.06.98.15V8.98a7.05 7.05 0 0 0-.98-.07C4.51 8.91 1.4 12.02 1.4 15.9S4.51 22.9 8.39 22.9s6.99-3.11 6.99-6.99V8.87c1.31.94 2.94 1.49 4.72 1.49v-3.5c-.99 0-1.9-.32-2.65-.87a4.99 4.99 0 0 1-.85-.17z"/></svg>
+              </span>
+              <span class="share-label"><strong>TikTok</strong><span>Bagikan hasilmu</span></span>
+              <span class="share-arrow" aria-hidden="true">›</span>
+            </button>
+          </div>
+
+          <div class="share-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="12" cy="12" r="9.5"></circle><path d="M12 10.5v6"></path><path d="M12 7.5h.01"></path>
+            </svg>
+            <span>Hasil ini dirancang untuk dibagikan sebagai gambar. Pastikan angka yang tampil sudah sesuai sebelum membagikannya.</span>
+          </div>
+
+          <button class="btn-plain share-back" onclick="openScreen('result')">← Kembali ke hitungan</button>
+        </div>
+
+      </div>
+    </div>
   </div>
-  <button class="btn-plain" onclick="openScreen('result')">Kembali ke hitungan</button>
-</div></div></section>
+</section>
 
 <!-- reportCity -->
 <section class="screen" id="reportCity"><div class="sec"><div class="wrap narrow">
@@ -1657,6 +1804,8 @@ function calculate(){
   document.getElementById('monthAmount').textContent = formatIDR(v.monthly);
   document.getElementById('resultCaption').textContent = CALCULATOR_CONFIG.resultLabel;
   document.getElementById('shareAmount').textContent = formatIDR(v.yearly);
+  var shareMonth = document.getElementById('shareMonthAmount');
+  if(shareMonth) shareMonth.textContent = formatIDR(v.monthly);
 
   // Perbandingan bensin vs listrik, dihitung dari jarak tahunan yang sama
   // (bukan dari nilai bensin yang sudah dihitung di atas, supaya jaraknya
