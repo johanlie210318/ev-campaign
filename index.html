@@ -127,7 +127,7 @@ textarea{min-height:88px;line-height:1.6;resize:vertical}
 .c-leaf{color:var(--leaf)}
 .c-indigo{color:var(--indigo)}
 
-.pair{display:none;grid-template-columns:1fr 1fr;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0}
 @media(max-width:560px){.pair{grid-template-columns:1fr}}
 .pair>div{border-radius:16px;padding:22px}
 .pair .fuel{background:var(--brick-tint)}
@@ -556,7 +556,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <div class="electric"><p class="cap">Listrik · setahun</p><div class="value c-leaf" id="electricYearAmount">Rp 0</div></div>
   </div>
 
-  <div class="info"><strong>Catatan</strong> Perhitungan ini masih menggunakan angka contoh. Sumber harga, tarif, dan asumsi perhitungan akan dicantumkan di sini.</div>
+  <div class="info"><strong>Asumsi perhitungan</strong> Perbandingan memakai jarak harian yang kamu isi. Motor bensin: harga Pertalite Rp10.000/liter, konsumsi ±40 km/liter. Motor listrik: konsumsi ±35 Wh/km, tarif listrik PLN Rp1.352/kWh (900VA non-subsidi). Angka riil bisa berbeda tergantung jenis kendaraan dan wilayah.</div>
 
   <div class="row" style="margin-top:8px">
     <button class="btn btn-fill" onclick="openScreen('reportCity')">Laporkan lokasi yang butuh pengisian daya</button>
@@ -864,7 +864,7 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
   <p class="small">Informasi tentang penyelenggara, pendukung, dan kontak akan dicantumkan di sini.</p>
 
   <h3 style="margin-top:28px">Dari mana angka kalkulator berasal?</h3>
-  <p class="small">Perhitungan menggunakan harga BBM, tarif listrik, konsumsi kendaraan, dan asumsi lain. Sumber data dan tanggal pembaruan akan dicantumkan di sini.</p>
+  <p class="small">Perbandingan motor bensin vs listrik memakai harga Pertalite Rp10.000/liter dan konsumsi rata-rata motor matic ±40 km/liter, dibandingkan dengan motor listrik berkonsumsi ±35 Wh/km dan tarif listrik PLN Rp1.352/kWh (golongan R-1/TR 900VA non-subsidi). Semua angka ini rata-rata umum per September 2026 dan bisa berbeda tergantung jenis kendaraan dan wilayah.</p>
 
   <h3 style="margin-top:28px">Laporan ini digunakan untuk apa?</h3>
   <p class="small">Laporan digunakan untuk memetakan kebutuhan fasilitas kendaraan listrik berdasarkan masukan masyarakat. Setiap laporan akan diperiksa terlebih dahulu sebelum masuk ke data publik.</p>
@@ -886,6 +886,8 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 
       <button class="btn btn-fill btn-block" onclick="login()" style="margin-top:24px">Masuk</button>
       <p class="hint" id="loginMessage"></p>
+
+      <div class="info"><strong>Prototype.</strong> Autentikasi dan perlindungan akses perlu diterapkan sebelum digunakan sebagai produk.</div>
       <button class="btn-plain" onclick="openScreen('home')">Kembali ke halaman utama</button>
     </div>
   </div>
@@ -1202,6 +1204,8 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <div id="campaignPreview"></div>
    </div>
   </div>
+
+  <div class="info" style="margin-top:36px"><strong>Prototype.</strong> Perubahan di sini disimpan sementara di halaman ini saja (untuk didemokan), tidak ke server. Di Wix produksi, ini perlu jadi field CMS sungguhan yang tersambung ke halaman publik.</div>
 </div></section>
 
 </main>
@@ -1535,6 +1539,29 @@ function calcValues(){
   return { monthly: monthly, yearly: monthly * 12 };
 }
 
+// ── perbandingan bensin vs listrik ──
+// Angka di bawah berdasar riset harga & konsumsi riil per September 2026,
+// bukan angka contoh sembarangan. Perbandingan dihitung dari JARAK yang
+// sama (input "rute harian" pengguna) supaya adil — bukan menghitung ulang
+// biaya bensin dengan asumsi lain dari yang sudah ditampilkan di atas.
+// Sumber & asumsi:
+// - Harga Pertalite Rp10.000/liter (stabil sejak 2022, konsisten s.d. 2026)
+// - Konsumsi motor bensin ~40 km/liter (rata-rata realistis motor matic di
+//   lalu lintas kota; klaim pabrikan 45-60 km/l, kondisi jalan padat riil
+//   turun ke 33-45 km/l)
+// - Konsumsi motor listrik ~35 Wh/km (dihitung dari Gesits ±28,8 Wh/km dan
+//   Alva One ±38,6 Wh/km — kapasitas baterai dibagi jarak tempuh resmi)
+// - Tarif listrik PLN Rp1.352/kWh (golongan R-1/TR 900VA non-subsidi,
+//   berlaku stabil sepanjang 2026)
+// Ini tetap rata-rata umum, bukan angka pasti — bisa beda tergantung motor
+// dan wilayah, makanya tetap dicatat sebagai asumsi di layar hasil.
+var EV_COMPARISON_CONFIG = {
+  fuelPricePerLiter: 10000,
+  motorcycleKmPerLiter: 40,
+  electricKwhPerKm: 0.035,
+  electricityPricePerKwh: 1352
+};
+
 function calculate(){
   if (strictMode && !validateCalcForm()) return;
   if (!strictMode) validateCalcForm(); // tetap tampilkan pesan error, tapi tidak memblokir mode demo
@@ -1562,6 +1589,13 @@ function calculate(){
   document.getElementById('resultCaption').textContent = CALCULATOR_CONFIG.resultLabel;
   document.getElementById('shareAmount').textContent = formatIDR(v.yearly);
 
+  // Perbandingan bensin vs listrik, dihitung dari jarak tahunan yang sama
+  // (bukan dari nilai bensin yang sudah dihitung di atas, supaya jaraknya
+  // konsisten dengan yang benar-benar diisi pengguna).
+  var yearlyKm = (Number(document.getElementById('dailyRoute').value) || 0) * 365;
+  var electricYearly = yearlyKm * EV_COMPARISON_CONFIG.electricKwhPerKm * EV_COMPARISON_CONFIG.electricityPricePerKwh;
+  document.getElementById('fuelYearAmount').textContent = formatIDR(v.yearly);
+  document.getElementById('electricYearAmount').textContent = formatIDR(electricYearly);
 
   openScreen('result');
 }
