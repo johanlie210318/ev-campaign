@@ -1021,7 +1021,7 @@ body.admin-mode .admin-sidebar{display:flex}
         </div>
       </div>
       <div class="panel">
-        <h3 id="campaignPanelTitle">Kemajuan pelaporan warga</h3>
+        <h3 id="campaignPanelTitle">Ikut kasih tahu kebutuhannya</h3>
         <div id="CampaignCounter" class="stat-grid" style="display:none;margin:2px 0 16px"></div>
         <p class="small" id="campaignPanelFallback">Tandai lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.</p>
         <button class="btn-plain" onclick="openScreen('reportCity')" style="padding:0">Lapor lokasimu →</button>
@@ -1995,7 +1995,7 @@ var REPORT_COUNTER_CONFIG = {
   position: 'hero',   // 'hero' | 'afterHero' | 'bottom' — ini yang bikin bloknya benar-benar "bisa dipindah" sesuai brief, bukan cuma dikunci di satu tempat
   metrics: ['total', 'cities'],   // pilihan admin: 'total', 'cities', 'week'
   labels: { total: 'lokasi dilaporkan', cities: 'kota dengan laporan', week: 'laporan minggu ini' },
-  title: 'Kemajuan pelaporan warga',                 // judul saat blok AKTIF & tampil
+  title: 'Ikut kasih tahu kebutuhannya',                 // judul saat blok AKTIF & tampil
   fallbackTitle: 'Ikut kasih tahu kebutuhannya',      // judul panel hero saat blok TIDAK tampil di hero
   fallbackText: 'Tandai lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.'
 };
@@ -3318,7 +3318,7 @@ function renderCampaignPreview(){
     target.innerHTML =
       '<div class="preview-card">' +
         '<span class="preview-tag">Blok Penghitung Laporan — ' + pv(positionLabel) + '</span>' +
-        '<h5>' + pv(val('cfgCounterTitle') || 'Kemajuan pelaporan warga') + '</h5>' +
+        '<h5>' + pv(val('cfgCounterTitle') || 'Ikut kasih tahu kebutuhannya') + '</h5>' +
         (metrics.length ? '<div class="stat-grid" style="margin:4px 0 0">' + statsHtml + '</div>' : '<p class="preview-muted">Belum ada metrik dicentang.</p>') +
         '<p class="preview-muted">Status: tampil di posisi "' + pv(positionLabel) + '".</p>' +
       '</div>';
