@@ -159,6 +159,59 @@ p{margin:0 0 16px;max-width:62ch}
   .campaign-action-card .small{min-height:0}
 }
 
+/* ── Shared campaign background for all public pages ── */
+/*
+   campaign.jpg is used as a BACKGROUND behind the page hero/content.
+   It is intentionally not a separate banner block, so every public page
+   keeps the same visual language as the Campaign page.
+*/
+.screen.campaign-bg{
+  position:relative;
+  overflow:hidden;
+}
+.screen.campaign-bg::before{
+  content:'';
+  position:absolute;
+  z-index:0;
+  top:0;
+  left:0;
+  right:0;
+  height:430px;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,
+      rgba(255,255,255,.98) 0%,
+      rgba(255,255,255,.94) 30%,
+      rgba(255,255,255,.62) 47%,
+      rgba(255,255,255,.12) 68%,
+      rgba(255,255,255,.02) 100%),
+    url('campaign.jpg') no-repeat center right;
+  background-size:cover;
+}
+.screen.campaign-bg > *{
+  position:relative;
+  z-index:1;
+}
+/* First content area sits directly on top of the campaign artwork. */
+.screen.campaign-bg > .hero,
+.screen.campaign-bg > .sec,
+.screen.campaign-bg > .share-page{
+  background:transparent;
+}
+
+@media(max-width:680px){
+  .screen.campaign-bg::before{
+    height:340px;
+    background:
+      linear-gradient(180deg,
+        rgba(255,255,255,.95) 0%,
+        rgba(255,255,255,.82) 52%,
+        rgba(255,255,255,.18) 100%),
+      url('campaign.jpg') no-repeat center center;
+    background-size:cover;
+  }
+}
+
 /* calculator panel */
 .panel{background:var(--mist);border-radius:20px;padding:28px}
 .panel-result{background:var(--indigo);color:#fff;border-radius:16px;padding:22px 24px;margin-top:22px}
@@ -206,7 +259,8 @@ input[type=file]::file-selector-button:hover{background:var(--indigo);color:#fff
 
 /* Chip pilihan cepat — sengaja diletakkan DI BAWAH kolom teks, target sentuh
    besar & terpisah jelas satu sama lain. */
-.amount-presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.amount-presets-label{margin:12px 0 7px;font-size:12.5px;font-weight:600;color:var(--gray)}
+.amount-presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:0}
 .amount-chip{font-family:var(--font);font-size:13.5px;font-weight:600;color:var(--indigo);
   background:var(--indigo-tint);border:1.5px solid transparent;border-radius:999px;
   padding:8px 14px;min-height:38px;cursor:pointer;-webkit-appearance:none;appearance:none}
@@ -364,8 +418,8 @@ th{font-weight:600;font-size:13.5px;color:var(--gray-light);letter-spacing:.01em
 /* ── share result ── */
 .share-page{padding:72px 0 84px}
 .share-layout{
-  max-width:980px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);
-  gap:56px;align-items:center
+  max-width:1040px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:48px 56px;align-items:center
 }
 .share-copy .eyebrow{
   display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;
@@ -397,7 +451,7 @@ th{font-weight:600;font-size:13.5px;color:var(--gray-light);letter-spacing:.01em
 .share-card-brand span{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#C9CFED}
 .share-card-label{font-size:13px;color:#C9CFED;margin:0 0 7px}
 .share-card-amount{
-  font-size:clamp(44px,5vw,62px);font-weight:800;line-height:1;letter-spacing:-.045em;
+  font-size:clamp(38px,4.2vw,54px);font-weight:800;line-height:1;letter-spacing:-.045em;
   font-variant-numeric:tabular-nums;white-space:nowrap
 }
 .share-card-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-top:34px}
@@ -406,6 +460,9 @@ th{font-weight:600;font-size:13.5px;color:var(--gray-light);letter-spacing:.01em
 .share-card-url{font-size:12px;color:#D8DDF2;margin:0;white-space:nowrap}
 
 .share-panel{
+  grid-column:1 / -1;
+  width:min(680px,100%);
+  justify-self:center;
   background:var(--white);border:1.5px solid var(--line);border-radius:20px;padding:24px;
   box-shadow:0 8px 24px rgba(27,31,46,.05)
 }
@@ -440,6 +497,7 @@ th{font-weight:600;font-size:13.5px;color:var(--gray-light);letter-spacing:.01em
 @media(max-width:900px){
   .share-page{padding:52px 0 64px}
   .share-layout{grid-template-columns:1fr;gap:34px;max-width:680px}
+  .share-panel{grid-column:auto;width:100%;justify-self:stretch}
   .share-copy h2{font-size:38px}
   .share-copy .lead{font-size:16px}
 }
@@ -1021,7 +1079,7 @@ body.admin-mode .admin-sidebar{display:flex}
         </div>
       </div>
       <div class="panel">
-        <h3 id="campaignPanelTitle">Ikut kasih tahu kebutuhannya</h3>
+        <h3 id="campaignPanelTitle">Kemajuan pelaporan warga</h3>
         <div id="CampaignCounter" class="stat-grid" style="display:none;margin:2px 0 16px"></div>
         <p class="small" id="campaignPanelFallback">Tandai lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.</p>
         <button class="btn-plain" onclick="openScreen('reportCity')" style="padding:0">Lapor lokasimu →</button>
@@ -1082,6 +1140,7 @@ body.admin-mode .admin-sidebar{display:flex}
         <label for="fuelSpend" id="fuelSpendLabel">Sekali isi bensin, biasanya berapa rupiah?</label>
         <p class="tiny" id="fuelSpendHelp" style="margin:-10px 0 8px"></p>
         <input type="text" id="fuelSpend" inputmode="numeric" placeholder="Contoh: 50.000" oninput="handleFuelSpendInput()" onblur="formatFuelSpendDisplay()">
+        <p class="tiny amount-presets-label">Atau pilih nominal cepat</p>
         <div class="amount-presets" id="fuelSpendPresets" role="group" aria-label="Pilihan cepat jumlah"></div>
         <p class="error" id="fuelSpendError" role="alert"></p>
 
@@ -1995,7 +2054,7 @@ var REPORT_COUNTER_CONFIG = {
   position: 'hero',   // 'hero' | 'afterHero' | 'bottom' — ini yang bikin bloknya benar-benar "bisa dipindah" sesuai brief, bukan cuma dikunci di satu tempat
   metrics: ['total', 'cities'],   // pilihan admin: 'total', 'cities', 'week'
   labels: { total: 'lokasi dilaporkan', cities: 'kota dengan laporan', week: 'laporan minggu ini' },
-  title: 'Ikut kasih tahu kebutuhannya',                 // judul saat blok AKTIF & tampil
+  title: 'Kemajuan pelaporan warga',                 // judul saat blok AKTIF & tampil
   fallbackTitle: 'Ikut kasih tahu kebutuhannya',      // judul panel hero saat blok TIDAK tampil di hero
   fallbackText: 'Tandai lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.'
 };
@@ -2126,6 +2185,14 @@ function openScreen(id){
   // pengunjung/reviewer iklan Meta.
   var isAdmin = ADMIN_SCREENS.indexOf(id) > -1;
   var isAuth = AUTH_SCREENS.indexOf(id) > -1;
+
+  // Semua halaman publik memakai campaign.jpg sebagai background hero.
+  // Bukan sebagai section/banner terpisah, sehingga konten halaman tetap
+  // berada di atas artwork seperti pada halaman Kampanye.
+  var targetScreen = document.getElementById(id);
+  if (targetScreen) {
+    targetScreen.classList.toggle('campaign-bg', !isAdmin && !isAuth && id !== 'Campaign');
+  }
   document.querySelector('header.nav').style.display = (isAdmin || isAuth) ? 'none' : '';
   document.querySelector('footer').style.display = (isAdmin || isAuth) ? 'none' : '';
   var footerCampaignCta = document.getElementById('footerCampaignCta');
@@ -2229,6 +2296,7 @@ function applyCalculatorConfig(){
   setText('fuelFreqOptMingguan', CALCULATOR_CONFIG.frequencyLabels.mingguan);
   setText('fuelFreqOptDuaMingguan', CALCULATOR_CONFIG.frequencyLabels.dua_mingguan);
   setText('fuelFreqOptBulanan', CALCULATOR_CONFIG.frequencyLabels.bulanan);
+  renderFuelSpendPresets();
 }
 
 // Daftar nilai preset — dipakai chip pilihan cepat di bawah kolom.
@@ -2287,6 +2355,9 @@ function formatFuelSpendDisplay(){
   var raw = parseThousands(field.value);
   field.value = raw ? raw.toLocaleString('id-ID') : '';
 }
+
+// Render nominal Rupiah saat halaman kalkulator pertama kali siap.
+renderFuelSpendPresets();
 
 function validateCalcForm(){
   var ok = true;
@@ -3318,7 +3389,7 @@ function renderCampaignPreview(){
     target.innerHTML =
       '<div class="preview-card">' +
         '<span class="preview-tag">Blok Penghitung Laporan — ' + pv(positionLabel) + '</span>' +
-        '<h5>' + pv(val('cfgCounterTitle') || 'Ikut kasih tahu kebutuhannya') + '</h5>' +
+        '<h5>' + pv(val('cfgCounterTitle') || 'Kemajuan pelaporan warga') + '</h5>' +
         (metrics.length ? '<div class="stat-grid" style="margin:4px 0 0">' + statsHtml + '</div>' : '<p class="preview-muted">Belum ada metrik dicentang.</p>') +
         '<p class="preview-muted">Status: tampil di posisi "' + pv(positionLabel) + '".</p>' +
       '</div>';
