@@ -3238,7 +3238,8 @@ var REPORT_DONE_TRANSLATIONS = {
 };
 
 function setLanguage(lang){
-  lang = 'id' === lang ? 'id' : 'en'; // fallback ke ID kalau bukan ID/EN
+  // set ID as default, fallback to EN if not ID/EN
+  lang = lang === 'id' ? 'id' : (lang === 'en' ? 'en' : 'en');
   CURRENT_LANGUAGE = lang;
   document.documentElement.lang = lang;
   document.title = lang === 'en' ? 'EV Campaign — Calculate and Report Needs in Your City' : 'EV Campaign — Hitung dan Laporkan Kebutuhan di Kotamu';
