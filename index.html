@@ -48,6 +48,18 @@ p{margin:0 0 16px;max-width:62ch}
 .menu a:hover{color:var(--ink)}
 .menu a.current{color:var(--indigo);font-weight:600}
 .burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:10px;width:44px;height:42px;font-size:17px;cursor:pointer;color:var(--ink)}
+.lang-toggle{display:inline-flex;align-items:center;gap:2px;margin-left:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--white);box-shadow:0 1px 2px rgba(27,31,46,.04)}
+.lang-toggle button{border:0;background:transparent;color:var(--gray);font:600 12px var(--font);padding:6px 9px;border-radius:999px;cursor:pointer;line-height:1}
+.lang-toggle button.active{background:var(--indigo);color:#fff}
+.lang-toggle button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
+.scroll-top{display:none;position:fixed;right:16px;bottom:18px;z-index:45;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.95);color:var(--indigo);box-shadow:0 8px 24px rgba(27,31,46,.14);font:800 18px var(--font);cursor:pointer;align-items:center;justify-content:center}
+.scroll-top.show{display:flex}
+@media(max-width:840px){
+  .lang-toggle{margin-left:auto;margin-right:8px}
+  .lang-toggle button{padding:7px 9px}
+}
+@media(min-width:841px){.scroll-top.show{display:none!important}}
+
 @media(max-width:840px){
   .burger{display:block}
   .menu{display:none;position:absolute;top:72px;left:0;right:0;background:var(--white);flex-direction:column;align-items:stretch;gap:0;padding:6px 24px 18px;border-bottom:1px solid var(--line)}
@@ -547,6 +559,10 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 <header class="nav">
   <div class="nav-inner">
     <a href="#" class="logo" onclick="openScreen('Campaign');return false">EV<em>Campaign</em></a>
+    <div class="lang-toggle" role="group" aria-label="Language / Bahasa">
+      <button type="button" id="langID" class="active" onclick="setLanguage('id')" aria-pressed="true">ID</button>
+      <button type="button" id="langEN" onclick="setLanguage('en')" aria-pressed="false">EN</button>
+    </div>
     <button class="burger" onclick="toggleMenu()" aria-label="Menu">☰</button>
     <nav class="menu" id="menu">
       <a href="#" data-screen="home" onclick="openScreen('home');return false">Hitung BBM-mu</a>
@@ -576,6 +592,8 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
   <a href="#" class="exit" onclick="openScreen('Campaign');return false">↩ Ke situs publik</a>
   <a href="#" class="exit" onclick="openScreen('adminLogin');return false">⎋ Keluar</a>
 </aside>
+
+<button class="scroll-top" id="scrollTopBtn" type="button" onclick="scrollToTop()" aria-label="Kembali ke atas">↑</button>
 
 <main>
 
@@ -986,36 +1004,36 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <div class="wrap report-done-wrap">
       <div class="report-done-hero">
         <div class="report-success-mark" aria-hidden="true">✓</div>
-        <p class="report-done-kicker">Laporan berhasil dikirim</p>
-        <h2 id="doneTitleText">Terima kasih sudah ikut berkontribusi!</h2>
-        <p class="small" id="doneSubtitleText">Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.</p>
+        <p class="report-done-kicker" data-i18n="reportKicker">Laporan berhasil dikirim</p>
+        <h2 id="doneTitleText" data-i18n="doneTitle">Terima kasih sudah ikut berkontribusi!</h2>
+        <p class="small" id="doneSubtitleText" data-i18n="doneSubtitle">Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.</p>
       </div>
 
-      <div class="report-summary-card" aria-label="Ringkasan laporan">
+      <div class="report-summary-card" aria-label="Ringkasan laporan" data-i18n-aria="summaryAria">
         <div class="report-summary-item">
-          <p class="report-summary-label">Kota</p>
+          <p class="report-summary-label" data-i18n="cityLabel">Kota</p>
           <p class="report-summary-value" id="doneCity">—</p>
         </div>
         <div class="report-summary-item">
-          <p class="report-summary-label">Laporan</p>
+          <p class="report-summary-label" data-i18n="reportLabel">Laporan</p>
           <p class="report-summary-value" id="doneCategory">—</p>
         </div>
       </div>
 
       <div class="report-next">
-        <p class="report-next-title">Apa selanjutnya?</p>
-        <p class="report-next-copy">Kami akan memeriksa laporanmu terlebih dahulu. Setelah lolos pengecekan, laporan akan ikut membantu memetakan kebutuhan di kotamu.</p>
+        <p class="report-next-title" data-i18n="nextTitle">Apa selanjutnya?</p>
+        <p class="report-next-copy" data-i18n="nextCopy">Kami akan memeriksa laporanmu terlebih dahulu. Setelah lolos pengecekan, laporan akan ikut membantu memetakan kebutuhan di kotamu.</p>
         <div class="report-done-actions">
-          <button class="btn btn-fill" onclick="openScreen('dashboard')">Lihat laporan di kotamu <span aria-hidden="true">→</span></button>
-          <button class="btn btn-outline" onclick="shareReportInvite()">Ajak orang lain ikut <span aria-hidden="true">↗</span></button>
+          <button class="btn btn-fill" onclick="openScreen('dashboard')"><span data-i18n="viewCityReport">Lihat laporan di kotamu</span> <span aria-hidden="true">→</span></button>
+          <button class="btn btn-outline" onclick="shareReportInvite()"><span data-i18n="inviteOthers">Ajak orang lain ikut</span> <span aria-hidden="true">↗</span></button>
         </div>
         <div class="report-share-note">
           <span class="icon" aria-hidden="true">i</span>
-          <span>Semakin banyak orang melaporkan kebutuhan di kotanya, semakin lengkap gambaran yang bisa kami petakan.</span>
+          <span data-i18n="shareNote">Semakin banyak orang melaporkan kebutuhan di kotanya, semakin lengkap gambaran yang bisa kami petakan.</span>
         </div>
       </div>
 
-      <button class="btn-plain" onclick="openScreen('reportCategoryChoice')" style="display:block;margin:16px auto 0">Kirim laporan lain</button>
+      <button class="btn-plain" onclick="openScreen('reportCategoryChoice')" style="display:block;margin:16px auto 0" data-i18n="anotherReport">Kirim laporan lain</button>
     </div>
   </div>
 </section>
@@ -1655,7 +1673,10 @@ function openScreen(id){
   trackEvent('page_view', { screen: id });
   if (id === 'result') trackEvent('hasil_dilihat');
   if (id === 'reportCity') trackEvent('lapor_rutemu_arrival');
+  // Mobile browsers can preserve scroll position when switching SPA-like screens.
+  // Reset after the new screen is painted so the viewport reliably starts at top.
   window.scrollTo(0,0);
+  requestAnimationFrame(function(){ window.scrollTo(0,0); updateScrollTopButton(); });
 }
 
 window.addEventListener('beforeunload', function(){
@@ -2288,8 +2309,14 @@ function submitReport(){
 }
 
 function shareReportInvite(){
-  var text = 'Yuk ikut melaporkan kebutuhan fasilitas kendaraan listrik di kotamu di evCampaign.go.id.';
-  var shareData = {title:'Lapor Rutemu — EV Campaign', text:text, url:window.location.href};
+  var text = CURRENT_LANGUAGE === 'en'
+    ? 'Join us in reporting electric vehicle infrastructure needs in your city at evCampaign.go.id.'
+    : 'Yuk ikut melaporkan kebutuhan fasilitas kendaraan listrik di kotamu di evCampaign.go.id.';
+  var shareData = {
+    title: CURRENT_LANGUAGE === 'en' ? 'Report Your Route — EV Campaign' : 'Lapor Rutemu — EV Campaign',
+    text:text,
+    url:window.location.href
+  };
   if (navigator.share){
     navigator.share(shareData).catch(function(){});
     return;
@@ -3163,7 +3190,80 @@ function barList(items, total){
   }).join('');
 }
 
+/* ── language + mobile scroll-to-top ── */
+var CURRENT_LANGUAGE = 'id';
+var REPORT_DONE_TRANSLATIONS = {
+  id: {
+    reportKicker: 'Laporan berhasil dikirim',
+    doneTitle: 'Terima kasih sudah ikut berkontribusi!',
+    doneSubtitle: 'Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.',
+    summaryAria: 'Ringkasan laporan',
+    cityLabel: 'Kota',
+    reportLabel: 'Laporan',
+    nextTitle: 'Apa selanjutnya?',
+    nextCopy: 'Kami akan memeriksa laporanmu terlebih dahulu. Setelah lolos pengecekan, laporan akan ikut membantu memetakan kebutuhan di kotamu.',
+    viewCityReport: 'Lihat laporan di kotamu',
+    inviteOthers: 'Ajak orang lain ikut',
+    shareNote: 'Semakin banyak orang melaporkan kebutuhan di kotanya, semakin lengkap gambaran yang bisa kami petakan.',
+    anotherReport: 'Kirim laporan lain'
+  },
+  en: {
+    reportKicker: 'Report submitted successfully',
+    doneTitle: 'Thank you for contributing!',
+    doneSubtitle: 'We will review your report before it is displayed publicly.',
+    summaryAria: 'Report summary',
+    cityLabel: 'City',
+    reportLabel: 'Report',
+    nextTitle: 'What happens next?',
+    nextCopy: 'We will review your report first. Once approved, it will help us map infrastructure needs in your city.',
+    viewCityReport: 'View reports in your city',
+    inviteOthers: 'Invite others to join',
+    shareNote: 'The more people report needs in their cities, the clearer the picture we can map.',
+    anotherReport: 'Submit another report'
+  }
+};
+
+function setLanguage(lang){
+  lang = lang === 'en' ? 'en' : 'id';
+  CURRENT_LANGUAGE = lang;
+  document.documentElement.lang = lang;
+  document.title = lang === 'en' ? 'EV Campaign — Calculate and Report Needs in Your City' : 'EV Campaign — Hitung dan Laporkan Kebutuhan di Kotamu';
+  var dict = REPORT_DONE_TRANSLATIONS[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key = el.getAttribute('data-i18n');
+    if (dict[key] != null) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+    var key = el.getAttribute('data-i18n-aria');
+    if (dict[key] != null) el.setAttribute('aria-label', dict[key]);
+  });
+  var idBtn = document.getElementById('langID');
+  var enBtn = document.getElementById('langEN');
+  if (idBtn){ idBtn.classList.toggle('active', lang === 'id'); idBtn.setAttribute('aria-pressed', String(lang === 'id')); }
+  if (enBtn){ enBtn.classList.toggle('active', lang === 'en'); enBtn.setAttribute('aria-pressed', String(lang === 'en')); }
+  try { localStorage.setItem('ev_campaign_language', lang); } catch(e){}
+}
+
+function scrollToTop(){
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function updateScrollTopButton(){
+  var btn = document.getElementById('scrollTopBtn');
+  if (!btn || window.innerWidth > 840) return;
+  btn.classList.toggle('show', window.scrollY > 300);
+}
+window.addEventListener('scroll', updateScrollTopButton, {passive:true});
+window.addEventListener('resize', updateScrollTopButton);
+
 /* ── init ── */
+(function(){
+  var saved = 'id';
+  try { saved = localStorage.getItem('ev_campaign_language') || 'id'; } catch(e){}
+  setLanguage(saved);
+  updateScrollTopButton();
+})();
+
 renderFuelSpendPresets();
 applyCalculatorConfig();
 applyLaporConfig();
