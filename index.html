@@ -49,14 +49,9 @@ p{margin:0 0 16px;max-width:62ch}
 .menu a.current{color:var(--indigo);font-weight:600}
 .nav-actions{display:flex;align-items:center;gap:10px;margin-left:0}
 .burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:10px;width:44px;height:42px;font-size:17px;cursor:pointer;color:var(--ink)}
-.lang-toggle{display:inline-flex;align-items:center;gap:2px;margin-left:0;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--white);box-shadow:0 1px 2px rgba(27,31,46,.04)}
-.lang-toggle button{border:0;background:transparent;color:var(--gray);font:600 12px var(--font);padding:6px 9px;border-radius:999px;cursor:pointer;line-height:1}
-.lang-toggle button.active{background:var(--indigo);color:#fff}
-.lang-toggle button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 .scroll-top{display:none;position:fixed;right:16px;bottom:18px;z-index:45;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.95);color:var(--indigo);box-shadow:0 8px 24px rgba(27,31,46,.14);font:800 18px var(--font);cursor:pointer;align-items:center;justify-content:center}
 .scroll-top.show{display:flex}
 @media(max-width:840px){
-  .lang-toggle button{padding:7px 9px}
 }
 @media(min-width:841px){.scroll-top.show{display:none!important}}
 
@@ -68,7 +63,6 @@ p{margin:0 0 16px;max-width:62ch}
   .menu .btn{margin-top:14px}
   .nav-actions{display:flex;align-items:center;gap:10px;margin-top:14px}
   .nav-actions .btn{margin-top:0;flex:1}
-  .nav-actions .lang-toggle{flex:0 0 auto}
 }
 @media(min-width:841px){
   .nav-actions{margin-left:0}
@@ -97,11 +91,73 @@ p{margin:0 0 16px;max-width:62ch}
 .sec-mist{background:var(--mist)}
 .hr{height:1px;background:var(--line);border:0;margin:0}
 
-/* hero */
-.hero{padding:64px 0 76px}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+/* Base Style (Desktop) */
+.hero {
+  padding: 64px 0 76px;
+}
+
+.screen#Campaign .hero {
+  position: relative;
+  padding: 72px 0 78px;
+  overflow: hidden;
+  background: 
+    linear-gradient(90deg,
+      rgba(255,255,255,.98) 0%,
+      rgba(255,255,255,.94) 30%,
+      rgba(255,255,255,.62) 47%,
+      rgba(255,255,255,.12) 68%,
+      rgba(255,255,255,.02) 100%),
+    url('campaign.jpg') no-repeat center right;
+  background-size: cover;
+}
+
+/* Penyesuaian khusus tampilan Mobile */
+@media (max-width: 768px) {
+  .screen#Campaign .hero {
+    background: 
+      linear-gradient(180deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.88) 60%,
+        rgba(255, 255, 255, 0.4) 100%),
+      url('campaign.jpg') no-repeat center center;
+    background-size: cover;
+  }
+}
+.screen#Campaign .hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.02));
+  pointer-events:none;
+}
+.screen#Campaign .hero > .wrap{position:relative;z-index:1}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.screen#Campaign .hero-grid > div:first-child{max-width:590px}
 .hero p.lead{font-size:19px;color:var(--gray);max-width:44ch}
+.screen#Campaign .hero p.lead{color:#4f5a73}
+.screen#Campaign .hero .panel{
+  background:rgba(246,247,250,.88);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 18px 45px rgba(27,31,46,.12);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+}
+.campaign-actions{gap:20px}
+.campaign-action-card{position:relative;padding:28px 28px 26px;background:rgba(255,255,255,.76);border:1px solid rgba(227,229,236,.9);border-radius:20px;box-shadow:0 8px 28px rgba(27,31,46,.05)}
+.campaign-action-icon{width:52px;height:52px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;border-radius:15px;background:var(--indigo-tint);color:var(--indigo)}
+.campaign-action-icon svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.campaign-action-card:nth-child(2) .campaign-action-icon{background:var(--leaf-tint);color:var(--leaf)}
+.campaign-action-card:nth-child(3) .campaign-action-icon{background:var(--brick-tint);color:var(--brick)}
+.campaign-action-card h3{margin-bottom:9px}
+.campaign-action-card .small{min-height:78px}
+@media(max-width:900px){
+  .screen#Campaign .hero{padding:54px 0 64px;background-position:62% center}
+  .hero-grid{grid-template-columns:1fr;gap:32px}
+  .screen#Campaign .hero-grid > div:first-child{max-width:none}
+}
+@media(max-width:680px){
+  .campaign-action-card .small{min-height:0}
+}
 
 /* calculator panel */
 .panel{background:var(--mist);border-radius:20px;padding:28px}
@@ -234,8 +290,9 @@ th,td{border-bottom:1px solid var(--line);padding:15px 8px;text-align:left;verti
 th{font-weight:600;font-size:13.5px;color:var(--gray-light);letter-spacing:.01em}
 
 .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:36px;margin-top:36px}
-.num{width:30px;height:30px;border-radius:9px;background:var(--indigo-tint);color:var(--indigo);
-  display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin-bottom:12px}
+.action-icon{width:46px;height:46px;border-radius:14px;background:var(--indigo-tint);color:var(--indigo);
+  display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.action-icon svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 
 /* ── dashboard ── */
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0 8px}
@@ -267,14 +324,42 @@ th{font-weight:600;font-size:13.5px;color:var(--gray-light);letter-spacing:.01em
 .trend-labels{display:flex;gap:6px;font-size:12px;color:var(--gray-light)}
 .trend-labels span{flex:1;text-align:center}
 
-footer{border-top:1px solid var(--line);padding:44px 0;font-size:15px;color:var(--gray)}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-footer a{color:var(--gray);text-decoration:none;margin-right:24px}
-footer a:hover{color:var(--ink)}
-.footer-social{display:flex;gap:14px;margin:0}
-.footer-social a{margin:0;color:var(--gray);display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px}
-.footer-social a:hover{color:var(--ink);background:var(--mist)}
-.footer-social svg{width:19px;height:19px}
+/* ── footer ── */
+.site-footer{margin-top:0;background:#17203D;color:#fff;border-top:1px solid rgba(255,255,255,.08)}
+.footer-main{padding:58px 0 42px}
+.footer-grid{display:grid;grid-template-columns:minmax(280px,1.65fr) repeat(3,minmax(130px,.7fr));gap:42px;align-items:start}
+.footer-brand{max-width:390px}
+.footer-brand-mark{display:inline-flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;font-size:18px;letter-spacing:-.025em;margin-bottom:16px}
+.footer-brand-mark span{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12)}
+.footer-brand-mark svg{width:19px;height:19px}
+.footer-brand p{color:rgba(255,255,255,.68);font-size:14.5px;line-height:1.7;margin:0;max-width:38ch}
+.footer-col-title{font-size:13px;font-weight:800;letter-spacing:.02em;color:#fff;margin:3px 0 15px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{color:rgba(255,255,255,.66);text-decoration:none;font-size:14px;line-height:1.45;transition:color .18s ease,transform .18s ease}
+.footer-links a:hover{color:#fff;transform:translateX(2px)}
+.footer-cta{margin-top:28px;display:none;align-items:center;gap:8px;padding:11px 15px;border-radius:10px;background:#fff;color:var(--indigo);font-size:14px;font-weight:700;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease}
+.footer-cta:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.16)}
+.footer-cta svg{width:15px;height:15px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:20px 0 24px}
+.footer-bottom-inner{display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap}
+.footer-copy{font-size:12.5px;color:rgba(255,255,255,.48);margin:0;line-height:1.5}
+.footer-social{display:flex;gap:8px;margin:0}
+.footer-social a{margin:0;color:rgba(255,255,255,.68);display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(255,255,255,.13);border-radius:10px;background:rgba(255,255,255,.04);transition:color .18s ease,background .18s ease,border-color .18s ease,transform .18s ease}
+.footer-social a:hover{color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);transform:translateY(-1px)}
+.footer-social svg{width:17px;height:17px}
+@media(max-width:840px){
+  .footer-grid{grid-template-columns:1.4fr 1fr 1fr;gap:34px}
+  .footer-brand{grid-column:1/-1;max-width:560px}
+}
+@media(max-width:560px){
+  .footer-main{padding:42px 0 32px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:30px 22px}
+  .footer-brand{grid-column:1/-1}
+  .footer-cta{margin-top:22px}
+  .footer-bottom{padding:18px 0 22px}
+  .footer-bottom-inner{align-items:flex-start;flex-direction:column-reverse;gap:16px}
+  .footer-social a{width:40px;height:40px}
+}
 
 /* ── share result ── */
 .share-page{padding:72px 0 84px}
@@ -381,89 +466,138 @@ footer a:hover{color:var(--ink)}
   .share-btn{min-height:62px;padding:12px 13px}
 }
 
-/* ── admin panel shell — deliberately NOT the marketing visual language ── */
-body.admin-mode{background:var(--mist)}
+/* ── admin panel: refined product UI ── */
+body.admin-mode{
+  background:#F5F6FA;
+  color:var(--ink);
+}
+body.admin-mode main{
+  margin-left:248px;
+  min-height:100vh;
+  padding:28px 34px 52px;
+}
 .admin-sidebar{
-  position:fixed;top:0;left:0;bottom:0;width:240px;
-  background:#1D2340;color:#B7BCDA;
-  display:none;flex-direction:column;padding:22px 16px;z-index:70;overflow-y:auto;
+  position:fixed;inset:0 auto 0 0;width:248px;
+  background:#18203A;color:#AEB6D3;
+  display:none;flex-direction:column;padding:24px 14px 16px;z-index:70;
+  border-right:1px solid rgba(255,255,255,.07);
+  box-shadow:8px 0 28px rgba(20,28,55,.08);
 }
 body.admin-mode .admin-sidebar{display:flex}
-.admin-sidebar .brand{display:flex;align-items:baseline;gap:7px;color:#fff;font-weight:800;font-size:16px;letter-spacing:-.01em;padding:6px 10px 24px}
-.admin-sidebar .brand b{color:rgba(255,255,255,.5);font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}
-.admin-nav{display:flex;flex-direction:column;gap:2px;flex:1}
-.admin-nav a{display:flex;align-items:center;gap:10px;color:#B7BCDA;text-decoration:none;font-size:14.5px;font-weight:500;padding:10px 12px;border-radius:9px}
-.admin-nav a:hover{background:rgba(255,255,255,.07);color:#fff}
-.admin-nav a.current{background:var(--indigo);color:#fff;font-weight:700}
-.admin-divider{height:1px;background:rgba(255,255,255,.12);margin:14px 6px}
-.admin-sidebar .exit{color:#8A90B4;text-decoration:none;font-size:13.5px;font-weight:600;padding:10px 12px;display:flex;align-items:center;gap:8px;border-radius:9px}
-.admin-sidebar .exit:hover{color:#fff;background:rgba(255,255,255,.07)}
-
-body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
-.admin-content{
-  padding:38px 44px;max-width:960px;
-  background:var(--white);border:1.5px solid var(--line);border-radius:20px;
-  box-shadow:0 1px 3px rgba(27,31,46,.04);
+.admin-sidebar .brand{
+  display:flex;align-items:center;gap:9px;color:#fff;font-weight:800;font-size:16px;
+  letter-spacing:-.02em;padding:4px 10px 26px;
 }
-.admin-topbar{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:26px}
-.admin-topbar h2{margin:0 0 4px}
-.admin-topbar p.small{margin:0}
-.admin-back{font-size:13.5px;font-weight:600;color:var(--gray);text-decoration:none;display:inline-flex;align-items:center;gap:5px;margin-bottom:14px}
-.admin-back:hover{color:var(--indigo)}
-
-.badge{display:inline-flex;align-items:center;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.01em;white-space:nowrap}
-.badge-pending{background:#FBEFDD;color:#9A6A1E}
-.badge-approved{background:var(--leaf-tint);color:var(--leaf)}
-.badge-rejected{background:var(--brick-tint);color:var(--brick)}
-
-.admin-table-wrap{background:var(--mist);border-radius:14px;overflow:hidden;padding:6px}
-.admin-table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--white);border-radius:10px;overflow:hidden}
-.admin-table th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-light);font-weight:700;padding:13px 16px;border-bottom:1.5px solid var(--line);background:var(--mist)}
-.admin-table td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+.admin-sidebar .brand:before{
+  content:'⚡';display:grid;place-items:center;width:30px;height:30px;border-radius:9px;
+  background:#3A4780;color:#fff;font-size:14px;
+}
+.admin-sidebar .brand b{
+  color:#8F98BA;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  background:rgba(255,255,255,.06);padding:4px 6px;border-radius:5px;
+}
+.admin-nav{display:flex;flex-direction:column;gap:4px;flex:1}
+.admin-nav a{
+  display:flex;align-items:center;gap:11px;color:#AEB6D3;text-decoration:none;font-size:14px;font-weight:600;
+  padding:11px 12px;border-radius:10px;transition:.16s ease;
+}
+.admin-nav a:hover{background:rgba(255,255,255,.07);color:#fff;transform:translateX(1px)}
+.admin-nav a.current{background:#3A4780;color:#fff;box-shadow:0 5px 14px rgba(58,71,128,.25)}
+.admin-divider{height:1px;background:rgba(255,255,255,.09);margin:15px 7px}
+.admin-sidebar .exit{color:#8992B2;text-decoration:none;font-size:13px;font-weight:600;padding:10px 12px;display:flex;align-items:center;gap:8px;border-radius:9px}
+.admin-sidebar .exit:hover{color:#fff;background:rgba(255,255,255,.06)}
+.admin-content{
+  width:100%;max-width:1180px;margin:0 auto;padding:32px 34px 38px;
+  background:#fff;border:1px solid #E5E7EF;border-radius:22px;
+  box-shadow:0 10px 35px rgba(29,35,64,.055);
+}
+.admin-content[style*="max-width:100%"]{max-width:1180px!important}
+.admin-topbar{
+  display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:18px;
+  margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid #ECEEF4;
+}
+.admin-topbar h2{margin:0 0 7px;font-size:27px;letter-spacing:-.025em}
+.admin-topbar p.small{margin:0;max-width:720px;line-height:1.6}
+.admin-back{font-size:13px;font-weight:700;color:#68708A;text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:18px;padding:7px 10px;border-radius:8px;background:#F5F6FA}
+.admin-back:hover{color:#3A4780;background:#EEF0FA}
+.admin-table-wrap{background:#F5F6FA;border:1px solid #E5E7EF;border-radius:15px;overflow:hidden;padding:5px}
+.admin-table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;background:#fff;border-radius:11px;overflow:hidden}
+.admin-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:#8A91A7;font-weight:800;padding:12px 15px;border-bottom:1px solid #E8EAF1;background:#F8F9FB}
+.admin-table td{padding:14px 15px;border-bottom:1px solid #EEF0F4;vertical-align:middle}
 .admin-table tr:last-child td{border-bottom:none}
-.admin-table tr:hover td{background:var(--mist)}
-.admin-action{color:var(--indigo);font-weight:700;font-size:13px;text-decoration:none;padding:7px 13px;border-radius:8px;background:var(--indigo-tint);white-space:nowrap}
-.admin-action:hover{background:var(--indigo);color:#fff}
-.admin-card{background:var(--mist);border-radius:16px;padding:26px 28px}
-/* Garis pembatas tipis di atas tiap sub-section form Kelola Form (bukan
-   yang pertama di tiap tab, karena itu sudah cukup dipisah oleh tab bar
-   di atasnya). */
-.admin-section-h3{border-top:1px solid var(--line);padding-top:26px;margin-top:32px}
+.admin-table tbody tr{transition:background .15s ease}
+.admin-table tbody tr:hover td{background:#F8F9FC}
+.admin-action{color:#3A4780;font-weight:800;font-size:12.5px;text-decoration:none;padding:7px 11px;border-radius:8px;background:#EEF0FA;white-space:nowrap}
+.admin-action:hover{background:#3A4780;color:#fff}
+.admin-card{background:#F8F9FC;border:1px solid #E5E7EF;border-radius:16px;padding:22px 24px;box-shadow:0 2px 7px rgba(29,35,64,.025)}
+.admin-section-h3{border-top:1px solid #E6E8EF;padding-top:28px;margin-top:34px}
 
-/* Mobile: sidebar bar horizontal (--> drawer) — top bar + hamburger + slide-in
-   panel + backdrop. Jauh lebih familiar buat pengguna admin di HP daripada
-   nav yang di-scroll horizontal. */
+/* Dashboard modules */
+#adminDashboard .stat-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+#adminDashboard .stat{
+  position:relative;background:#fff;border:1px solid #E5E7EF;border-radius:15px;padding:20px;
+  box-shadow:0 4px 14px rgba(29,35,64,.035);overflow:hidden;
+}
+#adminDashboard .stat:before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#3A4780}
+#adminDashboard .stat-value{font-size:29px;letter-spacing:-.035em}
+#adminDashboard .stat-label{font-size:12px;line-height:1.45;color:#7A8298}
+#adminDashboard h3{font-size:17px;letter-spacing:-.015em}
+#analyticsFunnels .admin-card,#analyticsGeoSpread .admin-card{background:#fff}
+#analyticsCategoryBars{background:#F8F9FC;border:1px solid #E5E7EF;border-radius:15px;padding:18px 20px}
+#analyticsCategoryBars .bar-row{margin:12px 0}
+#analyticsTrendBars{background:#F8F9FC;border:1px solid #E5E7EF;border-radius:15px;padding:18px 20px;height:170px;align-items:flex-end}
+
+/* Admin controls */
+#adminList .admin-topbar > div:last-child{display:flex;flex-direction:column;min-width:190px}
+.admin-edit-grid{grid-template-columns:minmax(0,1fr) minmax(330px,.82fr);gap:30px}
+.admin-edit-form{background:#fff}
+.admin-edit-form h3{font-size:17px;letter-spacing:-.015em;margin:0 0 18px}
+.admin-edit-form label:not(.choice){font-size:12.5px;font-weight:700;color:#4F566C;margin-top:15px;margin-bottom:6px}
+.admin-edit-form input,.admin-edit-form select,.admin-edit-form textarea{border-color:#DDE1EA;background:#fff;border-radius:10px;min-height:44px}
+.admin-edit-form input:focus,.admin-edit-form select:focus,.admin-edit-form textarea:focus{border-color:#6571A8;box-shadow:0 0 0 3px rgba(58,71,128,.09)}
+.admin-edit-form .choice{border:1px solid #E1E4EC;background:#F8F9FC;border-radius:11px;padding:13px 14px;margin-top:9px;transition:.15s ease}
+.admin-edit-form .choice:hover{border-color:#C8CDDC;background:#F4F5FA}
+.admin-mobile-toggle{border:1px solid #E3E6ED!important}
+.preview-col{background:#F5F6FA;border:1px solid #E1E4EC;border-radius:17px;padding:18px;box-shadow:inset 0 1px 0 #fff}
+.preview-col h4{font-size:10.5px;letter-spacing:.09em}
+.preview-card{box-shadow:0 4px 12px rgba(29,35,64,.035)}
+
+/* Mobile admin */
 .admin-topbar-mobile{display:none}
 .admin-sidebar-backdrop{display:none}
-
+@media(max-width:1100px){
+  body.admin-mode main{margin-left:248px;padding:22px}
+  .admin-content{padding:28px 24px}
+  #adminDashboard .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media(max-width:900px){
-  body.admin-mode .admin-topbar-mobile{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-    background:#1D2340;color:#fff;padding:13px 16px;
-    position:sticky;top:0;z-index:65;
-  }
-  .admin-topbar-mobile .brand{color:#fff;font-weight:800;font-size:14.5px;display:flex;align-items:center;gap:7px;letter-spacing:-.01em}
-  .admin-topbar-mobile .brand b{background:var(--indigo);font-size:9px;font-weight:700;padding:3px 6px;border-radius:5px;letter-spacing:.04em}
-  .admin-hamburger{background:rgba(255,255,255,.14);border:none;color:#fff;width:38px;height:38px;
-    min-width:38px;border-radius:9px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-  .admin-topbar-mobile-spacer{width:38px}
-
-  .admin-sidebar{
-    width:78%;max-width:280px;
-    transform:translateX(-100%);transition:transform .22s ease;
-  }
+  body.admin-mode .admin-topbar-mobile{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#18203A;color:#fff;padding:11px 16px;position:sticky;top:0;z-index:65;box-shadow:0 4px 14px rgba(20,28,55,.14)}
+  .admin-topbar-mobile .brand{color:#fff;font-weight:800;font-size:14.5px;display:flex;align-items:center;gap:7px}
+  .admin-topbar-mobile .brand b{background:#3A4780;font-size:9px;font-weight:800;padding:3px 6px;border-radius:5px;letter-spacing:.04em}
+  .admin-hamburger{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.1);color:#fff;width:40px;height:40px;min-width:40px;border-radius:10px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .admin-topbar-mobile-spacer{width:40px}
+  .admin-sidebar{width:82%;max-width:292px;transform:translateX(-100%);transition:transform .22s ease}
   body.admin-sidebar-open .admin-sidebar{transform:translateX(0)}
-  .admin-nav{flex-direction:column}
-  .admin-divider{display:block}
-  .admin-sidebar .exit{white-space:normal}
-
-  body.admin-mode main{margin-left:0;padding:14px}
-  .admin-content{padding:20px 16px;border-radius:16px}
-  .admin-content .admin-edit-grid{max-width:100%}
-
-  body.admin-mode.admin-sidebar-open .admin-sidebar-backdrop{
-    display:block;position:fixed;inset:0;background:rgba(15,17,35,.45);z-index:64;
-  }
+  body.admin-mode main{margin-left:0;padding:14px 12px 34px}
+  .admin-content{padding:22px 17px;border-radius:18px;box-shadow:0 6px 22px rgba(29,35,64,.05)}
+  .admin-topbar{margin-bottom:22px;padding-bottom:18px}
+  .admin-topbar h2{font-size:23px}
+  .admin-topbar > div:last-child{width:100%}
+  #adminList .admin-topbar > div:last-child{min-width:0}
+  #adminList .admin-topbar select{width:100%;min-width:0!important}
+  .admin-table-wrap{overflow-x:auto}
+  .admin-table{min-width:680px}
+  .admin-edit-grid{grid-template-columns:minmax(0,1fr)}
+  body.admin-sidebar-open .admin-sidebar-backdrop{display:block;position:fixed;inset:0;background:rgba(15,17,35,.5);z-index:64}
+}
+@media(max-width:560px){
+  #adminDashboard .stat-grid{grid-template-columns:1fr 1fr;gap:10px}
+  #adminDashboard .stat{padding:16px}
+  #adminDashboard .stat-value{font-size:24px}
+  .admin-card{padding:18px}
+  .admin-topbar h2{font-size:21px}
+  .admin-edit-form .row{flex-direction:column}
+  .admin-edit-form .row .btn{width:100%}
 }
 
 .auth-shell{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--mist)}
@@ -558,6 +692,279 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
   @keyframes fadein{from{opacity:0}to{opacity:1}}
   .bar-fill,.trend div{transition:width .25s ease,height .25s ease}
 }
+
+
+/* ── Shared EV Campaign visual system ──
+   Kampanye, Hitung BBM, Lapor Rutemu, hasil, dan laporan memakai
+   satu bahasa visual: indigo sebagai primary, surface putih, mist
+   sebagai secondary surface, radius 16–20px, dan border tipis.
+*/
+:root{
+  --surface:#FFFFFF;
+  --surface-soft:#F6F7FA;
+  --shadow-soft:0 10px 30px rgba(27,31,46,.055);
+  --shadow-panel:0 14px 36px rgba(27,31,46,.075);
+}
+
+/* Semua halaman aplikasi selain campaign memakai canvas yang sama */
+.screen:not(#Campaign){background:var(--white)}
+.screen:not(#Campaign) .sec{padding-top:64px;padding-bottom:72px}
+
+/* Typography hierarchy dibuat konsisten */
+.screen:not(#Campaign) h2{color:var(--ink)}
+.screen:not(#Campaign) .lead{color:var(--gray)}
+
+/* Calculator */
+#home .hero{background:linear-gradient(180deg,#FAFBFD 0%,#FFFFFF 100%);padding:64px 0 68px}
+#home .hero-grid{gap:56px}
+#home .hero-grid>div:first-child{padding-top:6px}
+#home .hero .panel{
+  background:rgba(255,255,255,.96);
+  border:1.5px solid var(--line);
+  box-shadow:var(--shadow-panel);
+  border-radius:20px;
+}
+#home .sec-mist{background:var(--surface-soft)}
+#home .sec-mist .wrap{max-width:760px}
+
+/* Section yang menjelaskan hubungan BBM → EV */
+#home .grid3{gap:18px;margin-top:30px}
+#home .grid3>div{
+  padding:24px 22px 22px;
+  border:1.5px solid var(--line);
+  border-radius:18px;
+  background:var(--surface);
+  box-shadow:var(--shadow-soft);
+}
+#home .action-icon{width:50px;height:50px;border-radius:15px;margin-bottom:18px}
+#home .grid3>div:nth-child(2) .action-icon{background:var(--leaf-tint);color:var(--leaf)}
+#home .grid3>div:nth-child(3) .action-icon{background:var(--brick-tint);color:var(--brick)}
+#home .grid3 h3{font-size:17px;margin-bottom:8px}
+
+/* Result / calculator output */
+#result .wrap{background:var(--surface)}
+#result .big-number{margin-top:2px}
+#result .pair{gap:14px}
+#result .pair>div{border:1.5px solid rgba(227,229,236,.9);box-shadow:var(--shadow-soft)}
+#result .info{background:var(--surface-soft);border:1.5px solid var(--line);border-radius:16px}
+
+/* Report flow */
+#reportCity .wrap.narrow,
+#reportCategoryChoice .wrap.narrow,
+#reportDetail .wrap.narrow,
+#reportConfirm .wrap.narrow,
+#cityDetail .wrap.narrow,
+#about .wrap.narrow,
+#dashboard .wrap.narrow{max-width:720px}
+
+#reportCity .sec,
+#reportCategoryChoice .sec,
+#reportDetail .sec,
+#reportConfirm .sec,
+#dashboard .sec,
+#cityDetail .sec,
+#about .sec{background:linear-gradient(180deg,#FAFBFD 0%,#FFFFFF 32%)}
+
+#reportCity .wrap.narrow>h2,
+#reportCategoryChoice .wrap.narrow>h2,
+#reportDetail .wrap.narrow>h2,
+#reportConfirm .wrap.narrow>h2,
+#dashboard .wrap.narrow>h2,
+#cityDetail .wrap.narrow>h2,
+#about .wrap.narrow>h2{margin-bottom:10px}
+
+.steps{gap:8px;margin-bottom:11px}
+.steps span{height:5px;background:#E5E7EF;border-radius:999px}
+.steps span.on{background:var(--indigo)}
+.step-text{font-size:13.5px;color:var(--gray);margin-bottom:28px}
+
+/* Form controls share the same surface/radius treatment */
+#reportCity .field-box,
+#reportCategoryChoice .choice,
+#reportDetail .field-box,
+#reportConfirm .choice{
+  background:var(--surface);
+  border-color:var(--line);
+  box-shadow:0 5px 18px rgba(27,31,46,.035);
+}
+#reportCategoryChoice .choice{transition:border-color .16s ease,background .16s ease,transform .16s ease,box-shadow .16s ease}
+#reportCategoryChoice .choice:hover{transform:translateY(-1px);box-shadow:var(--shadow-soft)}
+#reportCategoryChoice .choice:has(input:checked){box-shadow:0 8px 24px rgba(58,71,128,.08)}
+#reportDetail .field-box{margin-top:14px}
+
+/* Map feels like part of the same product, not a separate widget */
+#reportDetail .map{border-radius:18px;box-shadow:var(--shadow-soft)}
+#reportDetail .map-tag{background:rgba(255,255,255,.92);border:1px solid rgba(227,229,236,.8)}
+
+/* Dashboard */
+#dashboard .stat-grid{gap:14px;margin-top:26px}
+#dashboard .stat{
+  background:var(--surface);
+  border:1.5px solid var(--line);
+  border-radius:18px;
+  box-shadow:var(--shadow-soft);
+}
+#dashboard .stat-value{color:var(--indigo)}
+#dashboard .filter{background:var(--surface-soft);border:1.5px solid var(--line)}
+#dashboard .filter button.on{border:1px solid var(--line);box-shadow:0 3px 10px rgba(27,31,46,.06)}
+#dashboard .info{background:var(--indigo-tint);border:1px solid #DDE1F3}
+
+/* Report completion follows the same card language */
+#reportDone .sec{background:linear-gradient(180deg,#FAFBFD 0%,#FFFFFF 48%)}
+#reportDone .report-summary-card{background:var(--surface);box-shadow:var(--shadow-soft)}
+#reportDone .report-next{box-shadow:var(--shadow-soft)}
+
+/* Share page: align it with the same indigo / white system */
+#share .share-panel{box-shadow:var(--shadow-panel)}
+#share .share-btn:hover{border-color:#C8CDDA;background:#FBFCFE}
+
+@media(max-width:840px){
+  #home .hero{padding:44px 0 54px}
+  #home .hero-grid{gap:28px}
+  .screen:not(#Campaign) .sec{padding-top:50px;padding-bottom:58px}
+}
+@media(max-width:560px){
+  #home .hero{padding:34px 0 44px}
+  #home .grid3{gap:12px}
+  #home .grid3>div{padding:20px}
+  #reportCity .sec,
+  #reportCategoryChoice .sec,
+  #reportDetail .sec,
+  #reportConfirm .sec,
+  #dashboard .sec,
+  #cityDetail .sec,
+  #about .sec{background:#fff}
+}
+
+
+/* ── Final responsive pass: public pages + report flow + admin ── */
+@media (max-width: 840px){
+  .nav-inner{gap:12px}
+  .logo{min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .hero-grid{min-width:0}
+  .hero-grid > *{min-width:0}
+  .screen#Campaign .hero{background-position:center center;background-size:cover}
+  .screen#Campaign .hero-grid{gap:24px}
+  .screen#Campaign .hero-grid > div:first-child{max-width:100%}
+  .screen#Campaign .hero .panel{max-width:100%}
+  .grid3{grid-template-columns:1fr;gap:14px}
+  .campaign-action-card{padding:22px}
+  .campaign-action-card .small{min-height:0}
+  .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pair{grid-template-columns:1fr}
+  .share-page{padding:48px 0 60px}
+  .share-layout{grid-template-columns:1fr;gap:28px}
+  .share-copy,.share-card-wrap{min-width:0}
+  .share-card{max-width:100%}
+}
+
+@media (max-width: 680px){
+  h1{font-size:clamp(32px,9vw,46px)}
+  h2{font-size:clamp(25px,7vw,32px)}
+  h3{font-size:17px}
+  .hero p.lead,.screen#Campaign .hero p.lead{font-size:16.5px;line-height:1.65}
+  .row{width:100%}
+  .btn{min-height:50px;padding:13px 18px}
+  .screen#Campaign .hero{padding:42px 0 48px;background-position:58% center}
+  .screen#Campaign .hero::before{background:linear-gradient(180deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.88) 45%,rgba(255,255,255,.24) 100%)}
+  .screen#Campaign .hero-grid{gap:20px}
+  .screen#Campaign .hero .panel{padding:20px}
+  .campaign-action-icon{width:48px;height:48px;margin-bottom:15px}
+  .campaign-action-icon svg{width:26px;height:26px}
+  .field-box{padding:16px;margin:14px 0}
+  .segment{gap:5px}
+  .segment label{padding:11px 7px;font-size:14px}
+  .choice{padding:16px;font-size:15.5px}
+  .choice .desc{font-size:14px;margin-left:26px}
+  .map{height:280px}
+  .stat-grid{gap:10px}
+  .stat{padding:16px}
+  .stat-value{font-size:28px}
+  .filter{margin-top:24px}
+  .filter button{flex:1 1 calc(50% - 8px)}
+  .scroll{margin-left:-2px;margin-right:-2px}
+  .scroll table{min-width:520px}
+  .bar-head{align-items:flex-start}
+  .bar-name{min-width:0;overflow-wrap:anywhere}
+  .trend{height:105px;gap:4px}
+  .trend-labels{gap:4px;font-size:10.5px}
+  .report-summary-value{overflow-wrap:anywhere}
+  .report-done-hero h2{font-size:clamp(28px,8vw,36px)}
+  .share-card{min-height:0;padding:24px 22px}
+  .share-card-brand{margin-bottom:30px}
+  .share-card-bottom{flex-direction:column;align-items:flex-start;gap:14px;margin-top:26px}
+  .share-card-amount{font-size:34px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:26px 18px}
+}
+
+@media (max-width: 480px){
+  .wrap{padding-left:16px;padding-right:16px}
+  .nav-inner{padding-left:16px;padding-right:16px}
+  .menu{padding-left:16px;padding-right:16px}
+  .nav-actions .btn{width:100%}
+  .sec{padding:36px 0}
+  .screen:not(#Campaign) .sec{padding-top:38px;padding-bottom:44px}
+  .hero{padding:26px 0 34px}
+  #home .hero{padding:30px 0 38px}
+  .panel{padding:17px;border-radius:15px}
+  .amount{font-size:32px}
+  .big-number{font-size:clamp(44px,15vw,66px)}
+  .pair>div{padding:17px}
+  .pair .value{font-size:25px}
+  .info{padding:15px 16px;font-size:14px}
+  .steps{gap:5px}
+  .step-text{font-size:13px;margin-bottom:20px}
+  .field-box{padding:14px}
+  input[type=text],input[type=number],input[type=password],input[type=email],select,textarea{min-height:48px;padding:12px 13px;font-size:16px}
+  input[type=file]::file-selector-button{display:block;margin:0 0 8px;width:100%}
+  .map{height:250px}
+  .map-empty{padding:18px;font-size:14px}
+  .filter{padding:4px;gap:5px}
+  .filter button{flex:1 1 100%;font-size:14px}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .stat{padding:14px}
+  .stat-value{font-size:25px}
+  .stat-label{font-size:13px}
+  th,td{font-size:14px;padding:12px 7px}
+  .report-done-actions{gap:8px}
+  .share-layout{gap:22px}
+  .share-copy h2{font-size:clamp(30px,9vw,40px)}
+  .share-card{padding:21px 18px;border-radius:18px}
+  .share-card-brand{gap:10px;margin-bottom:24px}
+  .share-card-label{font-size:11px}
+  .share-card-amount{font-size:31px}
+  .share-buttons{gap:8px}
+  .share-btn{padding:11px 12px}
+  .footer-main{padding:38px 0 28px}
+  .footer-grid{grid-template-columns:1fr;gap:24px}
+  .footer-brand{grid-column:1}
+  .footer-bottom-inner{gap:14px}
+  .footer-copy{max-width:34ch}
+}
+
+@media (max-width: 360px){
+  .wrap{padding-left:14px;padding-right:14px}
+  .nav-inner{padding-left:14px;padding-right:14px}
+  .logo{font-size:17px}
+  .btn{font-size:15px}
+  .segment label{font-size:13.5px;padding:10px 5px}
+  .stat-grid{grid-template-columns:1fr}
+  .stat-value{font-size:27px}
+  .campaign-action-card{padding:18px}
+}
+
+/* Prevent long admin controls/content from forcing the viewport wider. */
+@media (max-width: 900px){
+  body.admin-mode main{overflow-x:hidden}
+  .admin-content{width:100%;max-width:100%;overflow:hidden}
+  .admin-topbar{min-width:0}
+  .admin-topbar > *{min-width:0}
+  .admin-table-wrap{overflow-x:auto}
+  .admin-table{min-width:680px}
+  .admin-edit-form,.preview-col{width:100%;max-width:100%;overflow:hidden}
+  .admin-edit-form input,.admin-edit-form select,.admin-edit-form textarea{max-width:100%}
+}
+
 </style>
 </head>
 <body>
@@ -567,15 +974,11 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <a href="#" class="logo" onclick="openScreen('Campaign');return false">EV<em>Campaign</em></a>
     <button class="burger" onclick="toggleMenu()" aria-label="Menu">☰</button>
     <nav class="menu" id="menu">
-      <a href="#" data-screen="home" onclick="openScreen('home');return false"><span data-i18n="navCalc">Hitung BBM-mu</span></a>
-      <a href="#" data-screen="dashboard" onclick="openScreen('dashboard');return false"><span data-i18n="navReports">Lihat laporan</span></a>
-      <a href="#" data-screen="Campaign" onclick="openScreen('Campaign');return false"><span data-i18n="navCampaign">Kampanye</span></a>
+      <a href="#" data-screen="home" onclick="openScreen('home');return false"><span>Hitung BBM-mu</span></a>
+      <a href="#" data-screen="dashboard" onclick="openScreen('dashboard');return false"><span>Lihat laporan</span></a>
+      <a href="#" data-screen="Campaign" onclick="openScreen('Campaign');return false"><span>Kampanye</span></a>
       <div class="nav-actions">
-        <button class="btn btn-fill" style="padding:12px 20px;min-height:44px;font-size:15px" onclick="openScreen('reportCity')"><span data-i18n="navReport">Lapor Rutemu</span></button>
-        <div class="lang-toggle" role="group" aria-label="Language / Bahasa" data-i18n-aria="languageAria">
-          <button type="button" id="langID" class="active" onclick="setLanguage('id')" aria-pressed="true">ID</button>
-          <button type="button" id="langEN" onclick="setLanguage('en')" aria-pressed="false">EN</button>
-        </div>
+        <button class="btn btn-fill" style="padding:12px 20px;min-height:44px;font-size:15px" onclick="openScreen('reportCity')"><span>Lapor Rutemu</span></button>
       </div>
     </nav>
   </div>
@@ -635,10 +1038,25 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 
   <div class="sec sec-mist"><div class="wrap">
     <h2>Yang bisa kamu lakukan</h2>
-    <div class="grid3">
-      <div><div class="num">1</div><h3>Hitung BBM-mu</h3><p class="small">Masukkan pengeluaran dan kebiasaan berkendara untuk melihat perkiraan biaya BBM per bulan dan per tahun.</p><button class="btn-plain" onclick="openScreen('home')">Buka kalkulator →</button></div>
-      <div><div class="num">2</div><h3>Lapor Rutemu</h3><p class="small">Tandai lokasi yang menurutmu perlu SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik.</p><button class="btn-plain" onclick="openScreen('reportCity')">Buat laporan →</button></div>
-      <div><div class="num">3</div><h3>Lihat laporan</h3><p class="small">Lihat laporan yang sudah lolos pengecekan dan bagaimana kebutuhan tersebar di berbagai kota.</p><button class="btn-plain" onclick="openScreen('dashboard')">Lihat data →</button></div>
+    <div class="grid3 campaign-actions">
+      <div class="campaign-action-card">
+        <div class="campaign-action-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" role="img"><rect x="9" y="5" width="30" height="38" rx="5"></rect><line x1="16" y1="13" x2="32" y2="13"></line><line x1="16" y1="20" x2="32" y2="20"></line><line x1="16" y1="27" x2="24" y2="27"></line><line x1="28" y1="27" x2="32" y2="27"></line><circle cx="18" cy="34" r="2"></circle><circle cx="30" cy="34" r="2"></circle></svg>
+        </div>
+        <h3>Hitung BBM-mu</h3><p class="small">Masukkan pengeluaran dan kebiasaan berkendara untuk melihat perkiraan biaya BBM per bulan dan per tahun.</p><button class="btn-plain" onclick="openScreen('home')">Buka kalkulator →</button>
+      </div>
+      <div class="campaign-action-card">
+        <div class="campaign-action-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" role="img"><path d="M24 42s14-13 14-24A14 14 0 1 0 10 18c0 11 14 24 14 24Z"></path><circle cx="24" cy="18" r="4.5"></circle><path d="M34 31h7M37.5 27.5v7"></path></svg>
+        </div>
+        <h3>Lapor Rutemu</h3><p class="small">Tandai lokasi yang menurutmu perlu SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik.</p><button class="btn-plain" onclick="openScreen('reportCity')">Buat laporan →</button>
+      </div>
+      <div class="campaign-action-card">
+        <div class="campaign-action-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" role="img"><line x1="8" y1="40" x2="8" y2="27"></line><line x1="20" y1="40" x2="20" y2="18"></line><line x1="32" y1="40" x2="32" y2="9"></line><line x1="5" y1="40" x2="43" y2="40"></line><path d="m27 13 5-4 5 4"></path><path d="m15 22 5-4 5 4"></path></svg>
+        </div>
+        <h3>Lihat laporan</h3><p class="small">Lihat laporan yang sudah lolos pengecekan dan bagaimana kebutuhan tersebar di berbagai kota.</p><button class="btn-plain" onclick="openScreen('dashboard')">Lihat data →</button>
+      </div>
     </div>
   </div></div>
 
@@ -702,17 +1120,23 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 
     <div class="grid3">
       <div>
-        <div class="num">1</div>
+        <div class="action-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 21a8 8 0 1 0-8-8c0 5 8 10 8 10s8-5 8-10a8 8 0 0 0-8-8Z"/><circle cx="12" cy="13" r="2.5"/></svg>
+        </div>
         <h3>Tandai lokasi yang kamu butuhkan</h3>
         <p class="small">Ada tempat yang menurutmu perlu SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di peta.</p>
       </div>
       <div>
-        <div class="num">2</div>
+        <div class="action-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3v8"/><path d="M8.5 8.5 12 12l3.5-3.5"/><path d="M5 14.5A7 7 0 0 0 12 21a7 7 0 0 0 7-6.5"/><path d="M5 14.5v-4"/><path d="M19 14.5v-4"/></svg>
+        </div>
         <h3>Kami periksa dulu</h3>
         <p class="small">Laporan akan diperiksa sebelum masuk ke data yang ditampilkan.</p>
       </div>
       <div>
-        <div class="num">3</div>
+        <div class="action-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="7" cy="8" r="2.5"/><circle cx="17" cy="8" r="2.5"/><path d="M2.5 18c.5-3 2-4.5 4.5-4.5S11 15 11.5 18"/><path d="M12.5 18c.5-3 2-4.5 4.5-4.5s4 1.5 4.5 4.5"/><path d="M12 4v8"/></svg>
+        </div>
         <h3>Gabungkan dengan laporan lain</h3>
         <p class="small">Laporanmu akan digabungkan dengan laporan orang lain di area yang sama.</p>
       </div>
@@ -844,8 +1268,8 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <input type="text" id="cityInput" placeholder="Contoh: Bekasi" oninput="checkCity()" autocomplete="off">
   </div>
 
-  <button class="btn btn-fill btn-block" id="cityButton" onclick="openScreen('reportCategoryChoice')" disabled style="margin-top:26px">Lanjut</button>
-  <p class="hint" id="cityHint">Masukkan nama kota terlebih dahulu untuk melanjutkan.</p>
+  <button class="btn btn-fill btn-block" id="cityButton" onclick="openScreen('reportCategoryChoice')" style="margin-top:26px">Lanjut</button>
+  <p class="hint" id="cityHint" style="display:none">Masukkan nama kota terlebih dahulu untuk melanjutkan.</p>
 </div></div></section>
 
 <!-- reportCategoryChoice -->
@@ -1012,36 +1436,36 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
     <div class="wrap report-done-wrap">
       <div class="report-done-hero">
         <div class="report-success-mark" aria-hidden="true">✓</div>
-        <p class="report-done-kicker" data-i18n="reportKicker">Laporan berhasil dikirim</p>
-        <h2 id="doneTitleText" data-i18n="doneTitle">Terima kasih sudah ikut berkontribusi!</h2>
-        <p class="small" id="doneSubtitleText" data-i18n="doneSubtitle">Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.</p>
+        <p class="report-done-kicker">Laporan berhasil dikirim</p>
+        <h2 id="doneTitleText">Terima kasih sudah ikut berkontribusi!</h2>
+        <p class="small" id="doneSubtitleText">Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.</p>
       </div>
 
-      <div class="report-summary-card" aria-label="Ringkasan laporan" data-i18n-aria="summaryAria">
+      <div class="report-summary-card" aria-label="Ringkasan laporan">
         <div class="report-summary-item">
-          <p class="report-summary-label" data-i18n="cityLabel">Kota</p>
+          <p class="report-summary-label">Kota</p>
           <p class="report-summary-value" id="doneCity">—</p>
         </div>
         <div class="report-summary-item">
-          <p class="report-summary-label" data-i18n="reportLabel">Laporan</p>
+          <p class="report-summary-label">Laporan</p>
           <p class="report-summary-value" id="doneCategory">—</p>
         </div>
       </div>
 
       <div class="report-next">
-        <p class="report-next-title" data-i18n="nextTitle">Apa selanjutnya?</p>
-        <p class="report-next-copy" data-i18n="nextCopy">Kami akan memeriksa laporanmu terlebih dahulu. Setelah lolos pengecekan, laporan akan ikut membantu memetakan kebutuhan di kotamu.</p>
+        <p class="report-next-title">Apa selanjutnya?</p>
+        <p class="report-next-copy">Kami akan memeriksa laporanmu terlebih dahulu. Setelah lolos pengecekan, laporan akan ikut membantu memetakan kebutuhan di kotamu.</p>
         <div class="report-done-actions">
-          <button class="btn btn-fill" onclick="openScreen('dashboard')"><span data-i18n="viewCityReport">Lihat laporan di kotamu</span> <span aria-hidden="true">→</span></button>
-          <button class="btn btn-outline" onclick="shareReportInvite()"><span data-i18n="inviteOthers">Ajak orang lain ikut</span> <span aria-hidden="true">↗</span></button>
+          <button class="btn btn-fill" onclick="openScreen('dashboard')"><span>Lihat laporan di kotamu</span> <span aria-hidden="true">→</span></button>
+          <button class="btn btn-outline" onclick="shareReportInvite()"><span>Ajak orang lain ikut</span> <span aria-hidden="true">↗</span></button>
         </div>
         <div class="report-share-note">
           <span class="icon" aria-hidden="true">i</span>
-          <span data-i18n="shareNote">Semakin banyak orang melaporkan kebutuhan di kotanya, semakin lengkap gambaran yang bisa kami petakan.</span>
+          <span>Semakin banyak orang melaporkan kebutuhan di kotanya, semakin lengkap gambaran yang bisa kami petakan.</span>
         </div>
       </div>
 
-      <button class="btn-plain" onclick="openScreen('reportCategoryChoice')" style="display:block;margin:16px auto 0" data-i18n="anotherReport">Kirim laporan lain</button>
+      <button class="btn-plain" onclick="openScreen('reportCategoryChoice')" style="display:block;margin:16px auto 0">Kirim laporan lain</button>
     </div>
   </div>
 </section>
@@ -1495,28 +1919,72 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 
 </main>
 
-<footer><div class="wrap">
-  <div>
-    <div style="margin-bottom:14px">
-      <a href="#" onclick="openScreen('about');return false" data-i18n="footerAbout">Tentang</a>
-      <a href="#" onclick="openScreen('about');return false" data-i18n="footerSources">Sumber data</a>
-      <a href="#" onclick="openScreen('about');return false" data-i18n="footerPrivacy">Privasi</a>
-      <a href="#" onclick="openScreen('adminLogin');return false" data-i18n="footerAdmin">Masuk admin</a>
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="footer-brand-mark" onclick="openScreen('Campaign');return false" aria-label="EV Campaign">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M13.2 2.5 5.7 13h5.1l-.9 8.5L18.3 11h-5.1l0-8.5Z" fill="currentColor"/>
+              </svg>
+            </span>
+            EV Campaign
+          </a>
+          <p>Bersama memahami kebutuhan mobilitas listrik di kota dan mendorong infrastruktur yang lebih siap untuk keseharian.</p>
+          <a href="#" id="footerCampaignCta" class="footer-cta" onclick="openScreen('Campaign');return false">
+            Lihat halaman kampanye
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Kampanye</div>
+          <div class="footer-links">
+            <a href="#" onclick="openScreen('Campaign');return false">Tentang kampanye</a>
+            <a href="#" onclick="openScreen('dashboard');return false">Lihat laporan</a>
+            <a href="#" onclick="openScreen('home');return false">Hitung BBM</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Informasi</div>
+          <div class="footer-links">
+            <a href="#" onclick="openScreen('about');return false">Tentang</a>
+            <a href="#" onclick="openScreen('about');return false">Sumber data</a>
+            <a href="#" onclick="openScreen('about');return false">Privasi</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Akses</div>
+          <div class="footer-links">
+            <a href="#" onclick="openScreen('reportCity');return false">Lapor Rutemu</a>
+            <a href="#" onclick="openScreen('adminLogin');return false">Masuk admin</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <p class="tiny" style="margin:0">© 2026 Bahana | Yayasan Komunikasi Pembenahan Indonesia</p>
   </div>
-  <div class="footer-social">
-    <a href="#" onclick="alert('Tautan ke akun X EV Campaign');return false" aria-label="X (Twitter)">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-    </a>
-    <a href="#" onclick="alert('Tautan ke akun Instagram EV Campaign');return false" aria-label="Instagram">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.9 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.9-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.757 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
-    </a>
-    <a href="#" onclick="alert('Tautan ke akun TikTok EV Campaign');return false" aria-label="TikTok">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82c-1.12-1.09-1.67-2.65-1.75-4.17H11.7v14.02c0 1.83-1.48 3.31-3.31 3.31-1.84 0-3.32-1.48-3.32-3.31s1.48-3.32 3.32-3.32c.34 0 .67.06.98.15V8.98a7.05 7.05 0 0 0-.98-.07C4.51 8.91 1.4 12.02 1.4 15.9S4.51 22.9 8.39 22.9s6.99-3.11 6.99-6.99V8.87c1.31.94 2.94 1.49 4.72 1.49v-3.5c-.99 0-1.9-.32-2.65-.87a4.99 4.99 0 0 1-.85-.17z"/></svg>
-    </a>
+
+  <div class="footer-bottom">
+    <div class="wrap footer-bottom-inner">
+      <p class="footer-copy">© 2026 Bahana | Yayasan Komunikasi Pembenahan Indonesia</p>
+      <div class="footer-social" aria-label="Media sosial EV Campaign">
+        <a href="#" onclick="alert('Tautan ke akun X EV Campaign');return false" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+        </a>
+        <a href="#" onclick="alert('Tautan ke akun Instagram EV Campaign');return false" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.9 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.9-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.757 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
+        </a>
+        <a href="#" onclick="alert('Tautan ke akun TikTok EV Campaign');return false" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82c-1.12-1.09-1.67-2.65-1.75-4.17H11.7v14.02c0 1.83-1.48 3.31-3.31 3.31-1.84 0-3.32-1.48-3.32-3.31s1.48-3.32 3.32-3.32c.34 0 .67.06.98.15V8.98a7.05 7.05 0 0 0-.98-.07C4.51 8.91 1.4 12.02 1.4 15.9S4.51 22.9 8.39 22.9s6.99-3.11 6.99-6.99V8.87c1.31.94 2.94 1.49 4.72 1.49v-3.5c-.99 0-1.9-.32-2.65-.87a4.99 4.99 0 0 1-.85-.17z"/></svg>
+        </a>
+      </div>
+    </div>
   </div>
-</div></footer>
+</footer>
 
 <script>
 /* ── report counter block config (Laman kampanye) ── */
@@ -1594,7 +2062,7 @@ function renderCampaignCounter(){
 
 /* ── state ── */
 var pins = [];
-var strictMode = true;           // production-like validation is enabled by default
+var strictMode = false;          // validation sementara dimatikan agar seluruh flow demo bisa dijalankan
 var activeFilter = 'all';
 var activeCity = 'Jakarta';
 
@@ -1660,6 +2128,10 @@ function openScreen(id){
   var isAuth = AUTH_SCREENS.indexOf(id) > -1;
   document.querySelector('header.nav').style.display = (isAdmin || isAuth) ? 'none' : '';
   document.querySelector('footer').style.display = (isAdmin || isAuth) ? 'none' : '';
+  var footerCampaignCta = document.getElementById('footerCampaignCta');
+  if (footerCampaignCta) {
+    footerCampaignCta.style.display = (id === 'Campaign' || isAdmin || isAuth) ? 'none' : 'inline-flex';
+  }
   document.body.classList.toggle('admin-mode', isAdmin);
   if (isAdmin){
     document.querySelectorAll('#adminNav a').forEach(function(a){
@@ -1869,7 +2341,6 @@ var EV_COMPARISON_CONFIG = {
 
 function calculate(){
   if (strictMode && !validateCalcForm()) return;
-  if (!strictMode) validateCalcForm(); // tetap tampilkan pesan error, tapi tidak memblokir mode demo
   var v = calcValues();
   var consented = document.getElementById('calcConsent').checked;
   var record = {
@@ -2229,7 +2700,6 @@ function validateDetail(){
 
 function buildSummary(){
   if (strictMode && !validateDetail()) return;
-  if (!strictMode) validateDetail(); // tetap tampilkan pesan error, tapi tidak memblokir mode demo
 
   var cfg = LAPOR_CONFIG.categories[selectedCategory];
   var rows = '<tr><th>Kategori</th><td>' + cfg.label + '</td></tr>';
@@ -2317,11 +2787,9 @@ function submitReport(){
 }
 
 function shareReportInvite(){
-  var text = CURRENT_LANGUAGE === 'en'
-    ? 'Join us in reporting electric vehicle infrastructure needs in your city at evCampaign.go.id.'
-    : 'Yuk ikut melaporkan kebutuhan fasilitas kendaraan listrik di kotamu di evCampaign.go.id.';
+  var text = 'Yuk ikut melaporkan kebutuhan fasilitas kendaraan listrik di kotamu di evCampaign.go.id.';
   var shareData = {
-    title: CURRENT_LANGUAGE === 'en' ? 'Report Your Route — EV Campaign' : 'Lapor Rutemu — EV Campaign',
+    title: 'Lapor Rutemu — EV Campaign',
     text:text,
     url:window.location.href
   };
@@ -3198,339 +3666,21 @@ function barList(items, total){
   }).join('');
 }
 
-/* ── language + mobile scroll-to-top ── */
+/* ── mobile scroll-to-top ── */
 var CURRENT_LANGUAGE = 'id';
-var REPORT_DONE_TRANSLATIONS = {
-  id: {
-    languageAria: 'Bahasa',
-    navCalc: 'Hitung BBM-mu', navReports: 'Lihat laporan', navCampaign: 'Kampanye', navReport: 'Lapor Rutemu',
-    footerAbout: 'Tentang', footerSources: 'Sumber data', footerPrivacy: 'Privasi', footerAdmin: 'Masuk admin',
-    reportKicker: 'Laporan berhasil dikirim',
-    doneTitle: 'Terima kasih sudah ikut berkontribusi!',
-    doneSubtitle: 'Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.',
-    summaryAria: 'Ringkasan laporan',
-    cityLabel: 'Kota',
-    reportLabel: 'Laporan',
-    nextTitle: 'Apa selanjutnya?',
-    nextCopy: 'Kami akan memeriksa laporanmu terlebih dahulu. Setelah lolos pengecekan, laporan akan ikut membantu memetakan kebutuhan di kotamu.',
-    viewCityReport: 'Lihat laporan di kotamu',
-    inviteOthers: 'Ajak orang lain ikut',
-    shareNote: 'Semakin banyak orang melaporkan kebutuhan di kotanya, semakin lengkap gambaran yang bisa kami petakan.',
-    anotherReport: 'Kirim laporan lain'
-  },
-  en: {
-    languageAria: 'Language',
-    navCalc: 'Calculate fuel cost', navReports: 'View reports', navCampaign: 'Campaign', navReport: 'Report your route',
-    footerAbout: 'About', footerSources: 'Data sources', footerPrivacy: 'Privacy', footerAdmin: 'Admin login',
-    reportKicker: 'Report submitted successfully',
-    doneTitle: 'Thank you for contributing!',
-    doneSubtitle: 'We will review your report before it is displayed publicly.',
-    summaryAria: 'Report summary',
-    cityLabel: 'City',
-    reportLabel: 'Report',
-    nextTitle: 'What happens next?',
-    nextCopy: 'We will review your report first. Once approved, it will help us map infrastructure needs in your city.',
-    viewCityReport: 'View reports in your city',
-    inviteOthers: 'Invite others to join',
-    shareNote: 'The more people report needs in their cities, the clearer the picture we can map.',
-    anotherReport: 'Submit another report'
-  }
-};
 
-function setLanguage(lang){
-  // set ID as default, fallback to EN if not ID/EN
-  lang = lang === 'id' ? 'id' : (lang === 'en' ? 'en' : 'en');
-  CURRENT_LANGUAGE = lang;
-  document.documentElement.lang = lang;
-  document.title = lang === 'en' ? 'EV Campaign — Calculate and Report Needs in Your City' : 'EV Campaign — Hitung dan Laporkan Kebutuhan di Kotamu';
-  var dict = REPORT_DONE_TRANSLATIONS[lang];
-  document.querySelectorAll('[data-i18n]').forEach(function(el){
-    var key = el.getAttribute('data-i18n');
-    if (dict[key] != null) el.textContent = dict[key];
-  });
-  document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
-    var key = el.getAttribute('data-i18n-aria');
-    if (dict[key] != null) el.setAttribute('aria-label', dict[key]);
-  });
+// Bahasa halaman sengaja dikunci ke Bahasa Indonesia untuk versi ini.
+// Tidak ada fitur pergantian bahasa atau penyimpanan preferensi bahasa.
 
-  // Label kategori yang sudah tersimpan di halaman selesai juga ikut berubah.
-  var categoryEl = document.getElementById('doneCategory');
-  if (categoryEl && selectedCategory && LAPOR_CONFIG.categories[selectedCategory]) {
-    var categoryNames = {
-      id: {bbm:'BBM', kondisi:'Kondisi udara', akses:'Akses kendaraan listrik', transum:'Transportasi umum'},
-      en: {bbm:'Fuel', kondisi:'Air quality', akses:'EV access', transum:'Public transport'}
+(function(){
+  var originalOpenScreen = window.openScreen;
+  if(typeof originalOpenScreen === 'function'){
+    window.openScreen = function(id){
+      var result = originalOpenScreen.apply(this, arguments);
+      requestAnimationFrame(function(){ window.scrollTo(0,0); });
+      return result;
     };
-    categoryEl.textContent = (categoryNames[lang] && categoryNames[lang][selectedCategory]) || LAPOR_CONFIG.categories[selectedCategory].label;
   }
-  var idBtn = document.getElementById('langID');
-  var enBtn = document.getElementById('langEN');
-  if (idBtn){ idBtn.classList.toggle('active', lang === 'id'); idBtn.setAttribute('aria-pressed', String(lang === 'id')); }
-  if (enBtn){ enBtn.classList.toggle('active', lang === 'en'); enBtn.setAttribute('aria-pressed', String(lang === 'en')); }
-  try { localStorage.setItem('ev_campaign_language', lang); } catch(e){}
-}
-
-function scrollToTop(){
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-function updateScrollTopButton(){
-  var btn = document.getElementById('scrollTopBtn');
-  if (!btn || window.innerWidth > 840) return;
-  btn.classList.toggle('show', window.scrollY > 300);
-}
-window.addEventListener('scroll', updateScrollTopButton, {passive:true});
-window.addEventListener('resize', updateScrollTopButton);
-
-/* ── init ── */
-(function(){
-  var saved = 'id';
-  try { saved = localStorage.getItem('ev_campaign_language') || 'id'; } catch(e){}
-
-  // Terapkan konfigurasi konten terlebih dahulu. Beberapa fungsi konfigurasi
-  // mengisi ulang teks DOM; bahasa harus diterapkan SETELAH itu agar hasil
-  // translate tidak tertimpa kembali oleh teks default Indonesia.
-  renderFuelSpendPresets();
-  applyCalculatorConfig();
-  applyLaporConfig();
-  setStrictMode();
-  renderDashboard();
-  renderReportCounterBlock();
-  renderCampaignCounter();
-
-  // Language is applied by the full-site language layer below, after the
-  // complete Indonesian DOM has been initialized and captured.
-  updateScrollTopButton();
-})();
-renderDashboard();
-renderReportCounterBlock();
-renderCampaignCounter();
-</script>
-
-
-<script>
-/* ── Full-site language layer ──
-   ID remains the default. EN translates all user-facing public copy,
-   including static HTML, calculator/reporting copy, buttons, labels,
-   placeholders and dynamically rendered text. */
-(function(){
-  var FULL_EN = {
-    'EV Campaign — Hitung dan Laporkan Kebutuhan di Kotamu':'EV Campaign — Calculate and Report Needs in Your City',
-    'Bahasa':'Language',
-    'Hitung BBM-mu':'Calculate fuel cost','Lihat laporan':'View reports','Kampanye':'Campaign','Lapor Rutemu':'Report your route',
-    'Kampanye elektrifikasi transportasi':'Transport electrification campaign',
-    'Kendaraan listrik butuh lebih dari sekadar kendaraan baru.':'Electric vehicles need more than just new vehicles.',
-    'Kamu juga butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) dan transportasi umum yang layak untuk kebutuhan sehari-hari. Di sini, kamu bisa menghitung pengeluaran BBM-mu dan melaporkan lokasi yang perlu mendapat perhatian.':'You also need EV charging stations and reliable public transport for everyday needs. Here, you can calculate your fuel costs and report locations that need attention.',
-    'Kemajuan pelaporan warga':'Community reporting progress',
-    'Tandai lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.':'Mark locations where you think EV charging or electric public transport is needed. Be one of the first people to report in your city.',
-    'Lapor lokasimu →':'Report a location →','Yang bisa kamu lakukan':'What you can do',
-    'Masukkan pengeluaran dan kebiasaan berkendara untuk melihat perkiraan biaya BBM per bulan dan per tahun.':'Enter your spending and driving habits to estimate your monthly and yearly fuel costs.',
-    'Buka kalkulator →':'Open calculator →','Buat laporan →':'Create a report →','Lihat data →':'View data →',
-    'Berapa biaya bensinmu sebulan?':'How much do you spend on fuel each month?',
-    'Masukkan kebiasaan berkendaramu. Lihat kira-kira berapa biaya bensin yang kamu keluarkan.':'Enter your driving habits to estimate how much you spend on fuel.',
-    'Hasilnya bisa dilihat juga dalam hitungan setahun.':'You can also see the estimate for a full year.',
-    'Sekali isi bensin, biasanya berapa rupiah?':'How much do you usually spend each time you refuel?',
-    'Seberapa sering kamu biasanya isi bensin?':'How often do you usually refuel?',
-    'Pilih salah satu':'Choose one','Harian':'Daily','Mingguan':'Weekly','Dua Minggu Sekali':'Every two weeks','Bulanan':'Monthly','Dua mingguan':'Every two weeks',
-    'Dalam sehari, kira-kira berapa kilometer jarak yang kamu tempuh?':'About how many kilometers do you travel each day?',
-    'Simpan hasil perhitungan ini untuk keperluan riset (opsional)':'Save this calculation for research purposes (optional)',
-    'Jika tidak dicentang, kamu tetap bisa melihat hasilnya — datanya saja yang tidak akan disimpan.':'You can still view the result if you leave this unchecked — only the data will not be saved.',
-    'Lihat hasil perhitungan':'View calculation results','Lalu, apa hubungannya dengan kendaraan listrik?':'So, what does this have to do with electric vehicles?',
-    'Biaya bukan satu-satunya pertimbangan. Bagi banyak orang, pertanyaan berikutnya adalah: mau isi daya di mana?':'Cost is not the only consideration. For many people, the next question is: where can I charge?',
-    'Tandai lokasi yang kamu butuhkan':'Mark the location you need',
-    'Ada tempat yang menurutmu perlu SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di peta.':'Is there a place where you think EV charging or electric public transport is needed? Mark it on the map.',
-    'Kami periksa dulu':'We review it first','Laporan akan diperiksa sebelum masuk ke data yang ditampilkan.':'Reports are reviewed before they are added to the public data.',
-    'Gabungkan dengan laporan lain':'Combine it with other reports','Laporanmu akan digabungkan dengan laporan orang lain di area yang sama.':'Your report will be combined with reports from other people in the same area.',
-    'Belum mau menghitung? Tidak masalah.':'Not ready to calculate? No problem.','Kamu bisa langsung melaporkan lokasi yang menurutmu perlu mendapat perhatian.':'You can report a location that you think needs attention right away.',
-    'Perkiraan':'Estimated','pengeluaran bensinmu':'your fuel spending','dalam':'in','setahun':'per year','atau sekitar':'or about','per bulan':'per month',
-    'Kalau pakai kendaraan listrik':'If you used an electric vehicle','Bensin · setahun':'Fuel · per year','Listrik · setahun':'Electricity · per year',
-    'Asumsi perhitungan':'Calculation assumptions',
-    'Perbandingan memakai jarak harian yang kamu isi. Motor bensin: harga Pertalite Rp10.000/liter, konsumsi ±40 km/liter. Motor listrik: konsumsi ±35 Wh/km, tarif listrik PLN Rp1.352/kWh (900VA non-subsidi). Angka riil bisa berbeda tergantung jenis kendaraan dan wilayah.':'The comparison uses the daily distance you entered. Gasoline motorcycle: Pertalite at Rp10,000/liter, consumption of about 40 km/liter. Electric motorcycle: about 35 Wh/km, with the PLN electricity rate of Rp1,352/kWh (900VA non-subsidized). Actual figures may vary by vehicle type and location.',
-    'Laporkan lokasi yang butuh pengisian daya':'Report a location that needs charging','Bagikan hasil':'Share result','Ubah hitungan':'Change calculation',
-    'Hasil perhitunganmu':'Your calculation result','Bagikan hasilmu.':'Share your result.','Tunjukkan berapa biaya bensin yang kamu keluarkan dalam setahun dan ajak orang lain ikut menghitung.':'Show how much you spend on fuel each year and invite others to calculate theirs.',
-    'Hasilmu':'Your result','Biaya bensin saya setahun':'My yearly fuel cost','Per bulan':'Per month','Bagikan ke':'Share to','Pilih platform yang ingin kamu gunakan.':'Choose a platform to share on.',
-    'Bagikan ke postingan':'Share to a post','Bagikan ke Story':'Share to Story','Bagikan hasilmu':'Share your result',
-    'Hasil ini dirancang untuk dibagikan sebagai gambar. Pastikan angka yang tampil sudah sesuai sebelum membagikannya.':'This result is designed to be shared as an image. Make sure the figures are correct before sharing.',
-    '← Kembali ke hitungan':'← Back to calculation',
-    'Ada lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di sini. Laporanmu membantu kami memetakan kebutuhan di kotamu.':'Is there a location where you think EV charging or electric public transport is needed? Mark it here. Your report helps us map needs in your city.',
-    'Langkah 1 dari 4':'Step 1 of 4','Kamu paling sering berkendara di kota mana?':'Which city do you drive in most often?','Pilih kota tempat kamu paling sering berkendara.':'Choose the city where you drive most often.',
-    'Gunakan lokasi saya':'Use my location','Atau masukkan nama kota':'Or enter a city name','Lanjut':'Continue','Masukkan nama kota terlebih dahulu untuk melanjutkan.':'Enter a city name first to continue.',
-    'Langkah 2 dari 4':'Step 2 of 4','Apa yang ingin kamu laporkan?':'What would you like to report?',
-    'Pilih salah satu — pertanyaan berikutnya akan menyesuaikan dengan pilihanmu.':'Choose one — the next questions will adapt to your selection.',
-    'BBM':'Fuel','Kamu akan diarahkan ke halaman Hitung BBM-mu untuk menghitung pengeluaran BBM-mu.':'You will be taken to the fuel cost calculator to calculate your fuel spending.',
-    'Kondisi udara':'Air quality','Tandai lokasinya dan tambahkan foto.':'Mark the location and add a photo.',
-    'Akses kendaraan listrik':'EV access','Apakah motor listrik bisa dibeli atau diservis di sekitar sini? Kamu juga bisa mencantumkan lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat.':'Can an electric motorcycle be purchased or serviced nearby? You can also add the location of the nearest EV charging station if you know it.',
-    'Transportasi umum':'Public transport','Tandai lokasi yang menurutmu perlu rute atau pemberhentian transportasi umum listrik.':'Mark a location where you think an electric public transport route or stop is needed.',
-    'Ganti kota':'Change city','Ganti pilihan':'Change selection',
-    'Langkah 3 dari 4':'Step 3 of 4','Detail laporan':'Report details','Tandai lokasinya di peta.':'Mark the location on the map.',
-    'Klik peta untuk menandai lokasi':'Click the map to mark a location','Peta contoh':'Sample map','Peta ini hanya contoh. Pada versi produksi, lokasi akan disesuaikan dengan kota yang kamu pilih.':'This is only a sample map. In production, the location will be adjusted to the city you selected.',
-    'Belum ada lokasi':'No location selected','Hapus lokasi':'Remove location','Foto di lokasi ini':'Photo at this location',
-    'Waktu pengambilan foto akan dicatat saat laporan dikirim. Foto akan dicek sebelum ditampilkan di data publik.':'The photo timestamp will be recorded when the report is submitted. Photos will be reviewed before being shown in the public data.',
-    'Apakah motor listrik bisa dibeli dan diservis di sekitar sini?':'Can an electric motorcycle be purchased and serviced nearby?','Bisa':'Available','Belum bisa':'Not yet available',
-    'Lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat (jika tahu)':'Nearest EV charging station (if known)',
-    'Ada alasan khusus mengapa lokasi ini penting? (Opsional)':'Is there a particular reason this location is important? (Optional)',
-    'Periksa kembali laporanmu':'Review your report','Saya setuju laporan ini disimpan':'I agree to save this report',
-    'Laporan ini digunakan untuk memetakan kebutuhan fasilitas kendaraan listrik. Kamu dapat meminta laporanmu dihapus kapan saja.':'This report is used to map EV infrastructure needs. You can request that your report be deleted at any time.',
-    'Teks persetujuan final perlu ditinjau kembali sebelum digunakan.':'The final consent text should be reviewed before use.','Kirim':'Submit','Setujui penyimpanan laporan terlebih dahulu untuk melanjutkan.':'Agree to save the report before continuing.','Kembali dan ubah':'Go back and edit',
-    'Laporan berhasil dikirim':'Report submitted successfully','Terima kasih sudah ikut berkontribusi!':'Thank you for contributing!',
-    'Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.':'We will review your report before it is displayed publicly.',
-    'Kota':'City','Laporan':'Report','Apa selanjutnya?':'What happens next?',
-    'Kami akan memeriksa laporanmu terlebih dahulu. Setelah lolos pengecekan, laporan akan ikut membantu memetakan kebutuhan di kotamu.':'We will review your report first. Once approved, it will help us map infrastructure needs in your city.',
-    'Lihat laporan di kotamu':'View reports in your city','Ajak orang lain ikut':'Invite others to join',
-    'Semakin banyak orang melaporkan kebutuhan di kotanya, semakin lengkap gambaran yang bisa kami petakan.':'The more people report needs in their cities, the clearer the picture we can map.',
-    'Kirim laporan lain':'Submit another report','Laporan yang masuk':'Submitted reports',
-    'Angka di bawah berasal dari laporan yang sudah lolos pengecekan.':'The figures below come from reports that have passed review.',
-    'lokasi dilaporkan':'locations reported','kota dengan laporan':'cities with reports','laporan minggu ini':'reports this week',
-    'Semua':'All','Pengisian daya':'Charging','Menampilkan semua laporan.':'Showing all reports.','Kota dengan laporan terbanyak':'Cities with the most reports',
-    'Laporan per minggu':'Reports per week','Delapan minggu terakhir. Minggu terakhir masih berjalan.':'The last eight weeks. The latest week is still in progress.',
-    'Data ini berasal dari laporan sukarela, bukan survei yang mewakili seluruh penduduk. Kota dengan kurang dari 25 laporan digabung sebagai "kota lainnya".':'These data come from voluntary reports, not a survey representing the entire population. Cities with fewer than 25 reports are grouped as "other cities".',
-    'Batas ini dapat diubah setelah data dianalisis.':'This threshold can be changed after the data is analyzed.',
-    '← Kembali ke semua kota':'← Back to all cities','dari seluruh laporan':'of all reports','laporan minggu ini':'reports this week','Kebutuhan yang paling banyak dilaporkan':'Most reported needs','Jenis lokasi':'Location type',
-    'Jumlah laporan di satu kota bisa berubah cukup banyak ketika data masih sedikit. Persentase akan lebih stabil setelah laporan bertambah.':'The number of reports in a city can change significantly when there is little data. Percentages become more stable as more reports are added.',
-    'Tentang EV Campaign':'About EV Campaign','Peralihan ke kendaraan listrik bukan cuma soal ganti kendaraan. Infrastruktur SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) dan transportasi di sekitar kita juga perlu ikut berkembang.':'Switching to electric vehicles is not just about changing vehicles. EV charging infrastructure and the transport around us also need to grow.',
-    'Dari mana angka kalkulator berasal?':'Where do the calculator figures come from?',
-    'Perbandingan motor bensin vs listrik memakai harga Pertalite Rp10.000/liter dan konsumsi rata-rata motor matic ±40 km/liter, dibandingkan dengan motor listrik berkonsumsi ±35 Wh/km dan tarif listrik PLN Rp1.352/kWh (golongan R-1/TR 900VA non-subsidi). Semua angka ini rata-rata umum per September 2026 dan bisa berbeda tergantung jenis kendaraan dan wilayah.':'The gasoline vs. electric motorcycle comparison uses Pertalite at Rp10,000/liter and average automatic motorcycle consumption of about 40 km/liter, compared with an electric motorcycle using about 35 Wh/km and the PLN electricity rate of Rp1,352/kWh (R-1/TR 900VA non-subsidized). These are general averages as of September 2026 and may vary by vehicle type and location.',
-    'Laporan ini digunakan untuk apa?':'What are these reports used for?',
-    'Laporan digunakan untuk memetakan kebutuhan fasilitas kendaraan listrik berdasarkan masukan masyarakat. Setiap laporan akan diperiksa terlebih dahulu sebelum masuk ke data publik.':'Reports are used to map EV infrastructure needs based on community input. Every report is reviewed before being added to public data.',
-    'Masuk admin':'Admin login','Masuk untuk meninjau laporan.':'Log in to review reports.','Username':'Username','Password':'Password','Masuk':'Log in','Kembali ke halaman utama':'Back to home',
-    'Dashboard Analitik':'Analytics dashboard','Ringkasan performa Hitung BBM-mu dan Lapor Rutemu — mulai dari kunjungan, penyelesaian form, hingga sebaran laporan.':'Performance summary for the fuel calculator and route reporting — from visits and form completion to report distribution.',
-    'Alur pengguna per halaman':'User flow by page','Kunjungan, mulai mengisi, hingga selesai — termasuk persentase yang scroll sampai 75% halaman.':'Visits, form starts, and completions — including the percentage that scrolls through 75% of the page.',
-    'Distribusi kategori laporan':'Report category distribution','Kategori mana di Lapor Rutemu yang paling banyak dipakai.':'Which route-reporting category is used most often?',
-    'Sebaran lokasi per kota':'Location distribution by city','Apakah laporan menyebar ke banyak area, atau menumpuk di satu titik saja?':'Are reports spread across many areas, or concentrated in one place?','Riwayat pelapor':'Reporter history',
-    'Periksa laporan sebelum ditampilkan sebagai data publik.':'Review reports before they are displayed as public data.','Status':'Status','Perlu ditinjau':'Needs review','Disetujui':'Approved','Ditolak':'Rejected','Duplikat':'Duplicate','ID':'ID','Kategori':'Category','Waktu':'Time',
-    '← Kembali ke daftar laporan':'← Back to report list','Alasan penolakan (wajib diisi jika laporan ditolak)':'Reason for rejection (required if the report is rejected)','Setujui':'Approve','Tolak':'Reject','Spam':'Spam',
-    'Ekspor laporan':'Export reports','Kota':'City','Semua status':'All statuses','Unduh CSV':'Download CSV','Unduh GeoJSON':'Download GeoJSON',
-    'Kelola Form':'Manage forms','Ubah label, teks bantuan, pilihan, dan pesan yang ditampilkan ke pengunjung di Hitung BBM-mu, Lapor Rutemu, dan halaman Kampanye — tanpa perlu bantuan developer.':'Edit labels, help text, choices, and messages shown to visitors in the fuel calculator, route reporting, and campaign pages — without developer help.',
-    'Hitung BBM-mu':'Calculate fuel cost','Lapor Rutemu':'Report your route','Halaman Kampanye':'Campaign page','Edit':'Edit','Pratinjau':'Preview',
-    'Label & teks bantuan kolom':'Field labels & help text','Label kolom "Pengeluaran sekali beli"':'Label for "One-time fuel spending"','Teks bantuan kolom "Pengeluaran sekali beli"':'Help text for "One-time fuel spending"',
-    'Label kolom "Frekuensi pembelian"':'Label for "Purchase frequency"','Teks bantuan kolom "Frekuensi pembelian"':'Help text for "Purchase frequency"','Label kolom "Rute harian"':'Label for "Daily route"','Teks bantuan kolom "Rute harian"':'Help text for "Daily route"',
-    'Opsi frekuensi & nilai perhitungan':'Frequency options & calculation values','Nilai adalah perkiraan berapa kali isi bensin dalam sebulan. Dipakai untuk: pengeluaran bulanan = sekali beli × nilai ini.':'The value estimates how many times you refuel per month. Used for: monthly spending = one-time spending × this value.',
-    'Opsi':'Option','Label':'Label','Kali per bulan':'Times per month','Persetujuan & tombol':'Consent & button','Teks persetujuan (checkbox)':'Consent text (checkbox)','Keterangan persetujuan':'Consent description','Label tombol kirim':'Submit button label','Label hasil (mis. "pengeluaran bensinmu")':'Result label (e.g. "your fuel spending")','Pesan validasi/kesalahan':'Validation/error messages','Jika pengeluaran belum diisi':'If spending is empty','Jika frekuensi belum dipilih':'If frequency is not selected','Jika rute harian belum diisi':'If daily route is empty','Simpan perubahan':'Save changes','Pratinjau langsung — Hitung BBM-mu':'Live preview — Fuel calculator',
-    'Teks pembuka & langkah kota':'Intro & city step text','Paragraf pembuka (Langkah 1)':'Intro paragraph (Step 1)','Pertanyaan kota':'City question','Teks bantuan kota':'City help text','Label tombol "Gunakan lokasi saya"':'"Use my location" button label','Label kolom nama kota':'City name field label','Label tombol lanjut (kota)':'Continue button label (city)','Pesan bantuan jika kota belum diisi':'Help message when city is empty',
-    'Segmen & pertanyaan kategori (Langkah 2)':'Category section & questions (Step 2)','Pertanyaan kategori (CTA)':'Category question (CTA)','Teks bantuan kategori':'Category help text','Label tombol lanjut (kategori)':'Continue button label (category)','Pilih kategori untuk diedit':'Choose a category to edit','Nama pilihan (label segmen)':'Option name (segment label)','Deskripsi singkat di bawah nama pilihan':'Short description below the option name',
-    'Kategori ini langsung mengarahkan pengunjung ke halaman lain, jadi tidak punya form/detail sendiri (Langkah 3 & 4 dilewati).':'This category sends visitors directly to another page, so it has no separate form/details (Steps 3 & 4 are skipped).','Judul halaman detail (Langkah 3)':'Detail page title (Step 3)','Teks bantuan (tampil di bawah judul, Langkah 3)':'Help text (shown below the title, Step 3)','Instruksi di atas peta':'Instruction above the map','Simpan kategori ini':'Save this category','Konfirmasi, persetujuan & selesai (Langkah 4)':'Confirmation, consent & completion (Step 4)','Judul halaman konfirmasi':'Confirmation page title','Keterangan persetujuan':'Consent description','Pesan jika persetujuan belum dicentang':'Message when consent is unchecked','Judul halaman "Terkirim"':'"Submitted" page title','Subjudul halaman "Terkirim"':'"Submitted" page subtitle','Pratinjau langsung — Lapor Rutemu':'Live preview — Route reporting',
-    'Blok Penghitung Laporan':'Report counter block','Blok ini tampil di halaman Kampanye dan halaman Tentang. Sesuai brief, defaultnya tersembunyi.':'This block appears on the Campaign and About pages. As specified, it is hidden by default.','Tampilkan blok ini di halaman publik':'Show this block on public pages','Kalau tidak dicentang, blok ini tetap tersembunyi walau metrik di bawah sudah diatur.':'If unchecked, this block remains hidden even if the metrics below are configured.','Posisi blok di halaman Kampanye':'Block position on Campaign page','Di panel hero (atas, sebelah judul)':'In the hero panel (top, beside the title)','Full-width, tepat setelah hero':'Full-width, directly after the hero','Full-width, di bawah "Yang bisa kamu lakukan"':'Full-width, below "What you can do"','Judul blok (saat aktif & tampil)':'Block title (when active & visible)','Kalau blok belum aktif / dipindah dari hero':'When the block is inactive / moved from the hero','Teks ini yang tampil di panel hero sebagai gantinya.':'This text appears in the hero panel instead.','Judul pengganti':'Fallback title','Teks ajakan pengganti':'Fallback call-to-action text','Metrik yang ditampilkan':'Displayed metrics','Total lokasi dilaporkan':'Total locations reported','Jumlah kota dengan laporan':'Number of cities with reports','Laporan minggu ini':'Reports this week','Label metrik':'Metric labels','Label untuk total lokasi':'Label for total locations','Label untuk jumlah kota':'Label for number of cities','Label untuk laporan minggu ini':'Label for reports this week','Pratinjau langsung — Halaman Kampanye':'Live preview — Campaign page',
-    'Tentang':'About','Sumber data':'Data sources','Privasi':'Privacy','Masuk admin':'Admin login','Kembali ke atas':'Back to top'
-  };
-
-  var ORIGINAL_TEXT_NODES=[];
-  var ORIGINAL_ATTRS=[];
-  var SNAPSHOT_READY=false;
-
-  function captureOriginalDOM(){
-    if(SNAPSHOT_READY) return;
-    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null);
-    while(walker.nextNode()){
-      var n=walker.currentNode;
-      ORIGINAL_TEXT_NODES.push({node:n,value:n.nodeValue,parent:n.parentNode});
-    }
-    document.querySelectorAll('*').forEach(function(el){
-      ['placeholder','aria-label','title'].forEach(function(a){
-        if(el.hasAttribute(a)) ORIGINAL_ATTRS.push({el:el,attr:a,value:el.getAttribute(a)});
-      });
-    });
-    SNAPSHOT_READY=true;
-  }
-
-  function translateTextNodes(root){
-    var walker=document.createTreeWalker(root||document.body,NodeFilter.SHOW_TEXT,null);
-    var nodes=[];
-    while(walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach(function(n){
-      var raw=n.nodeValue, trimmed=raw.trim();
-      if(!trimmed || !FULL_EN[trimmed]) return;
-      n.nodeValue=raw.replace(trimmed,FULL_EN[trimmed]);
-    });
-  }
-  function translateAttrs(){
-    document.querySelectorAll('input,textarea,button,[aria-label],[title]').forEach(function(el){
-      ['placeholder','aria-label','title'].forEach(function(a){
-        var v=el.getAttribute(a); if(v && FULL_EN[v]) el.setAttribute(a,FULL_EN[v]);
-      });
-    });
-    document.querySelectorAll('option').forEach(function(el){
-      var v=el.textContent.trim(); if(FULL_EN[v]) el.textContent=FULL_EN[v];
-    });
-  }
-  function translatePublic(){
-    if(CURRENT_LANGUAGE!=='en') return;
-    translateTextNodes(document.body);
-    translateAttrs();
-    var done=document.getElementById('doneCategory');
-    if(done && selectedCategory){
-      var names={bbm:'Fuel',kondisi:'Air quality',akses:'EV access',transum:'Public transport'};
-      if(names[selectedCategory]) done.textContent=names[selectedCategory];
-    }
-  }
-
-  function restoreIndonesian(){
-    // Restore text nodes that still exist.
-    ORIGINAL_TEXT_NODES.forEach(function(item){
-      if(item.node && item.node.parentNode) item.node.nodeValue=item.value;
-    });
-    // Some translated elements had their original text node replaced by
-    // textContent. Restore their direct text content safely without replacing
-    // the surrounding DOM structure.
-    ORIGINAL_TEXT_NODES.forEach(function(item){
-      if(!item.parent || !item.parent.isConnected) return;
-      if(item.parent.childNodes.length===1 && item.parent.firstChild.nodeType===3){
-        item.parent.firstChild.nodeValue=item.value;
-      }
-    });
-    ORIGINAL_ATTRS.forEach(function(item){
-      if(item.el && item.el.isConnected) item.el.setAttribute(item.attr,item.value);
-    });
-    // Re-apply CMS/config-generated Indonesian labels after restoration.
-    try{
-      applyCalculatorConfig();
-      applyLaporConfig();
-      renderDashboard();
-      renderReportCounterBlock();
-      renderCampaignCounter();
-    }catch(e){}
-  }
-
-  var originalSetLanguage=window.setLanguage;
-  window.setLanguage=function(lang){
-    lang=(lang==='en')?'en':'id';
-    captureOriginalDOM();
-    CURRENT_LANGUAGE=lang;
-    document.documentElement.lang=lang;
-    document.title=lang==='en'
-      ? FULL_EN['EV Campaign — Hitung dan Laporkan Kebutuhan di Kotamu']
-      : 'EV Campaign — Hitung dan Laporkan Kebutuhan di Kotamu';
-
-    if(lang==='id'){
-      restoreIndonesian();
-    }else{
-      document.querySelectorAll('[data-i18n]').forEach(function(el){
-        var key=el.getAttribute('data-i18n');
-        if(FULL_EN[key]) el.textContent=FULL_EN[key];
-      });
-      document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
-        var key=el.getAttribute('data-i18n-aria');
-        if(FULL_EN[key]) el.setAttribute('aria-label',FULL_EN[key]);
-      });
-      translatePublic();
-    }
-
-    var idBtn=document.getElementById('langID'), enBtn=document.getElementById('langEN');
-    if(idBtn){idBtn.classList.toggle('active',lang==='id');idBtn.setAttribute('aria-pressed',String(lang==='id'));}
-    if(enBtn){enBtn.classList.toggle('active',lang==='en');enBtn.setAttribute('aria-pressed',String(lang==='en'));}
-    try{localStorage.setItem('ev_campaign_language',lang);}catch(e){}
-  };
-
-  var originalOpenScreen=window.openScreen;
-  window.openScreen=function(id){
-    var result=originalOpenScreen.apply(this,arguments);
-    if(CURRENT_LANGUAGE==='en') requestAnimationFrame(function(){translatePublic();});
-    requestAnimationFrame(function(){window.scrollTo(0,0);});
-    return result;
-  };
-
-  var saved='id';
-  try{saved=localStorage.getItem('ev_campaign_language')||'id';}catch(e){}
-  // Important: no reload is ever used for language switching.
-  window.setLanguage(saved);
 })();
 </script>
 
