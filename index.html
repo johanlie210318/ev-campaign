@@ -49,11 +49,11 @@ p{margin:0 0 16px;max-width:62ch}
 .menu a.current{color:var(--indigo);font-weight:600}
 .nav-actions{display:flex;align-items:center;gap:10px;margin-left:0}
 .burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:10px;width:44px;height:42px;font-size:17px;cursor:pointer;color:var(--ink)}
-.scroll-top{display:none;position:fixed;right:16px;bottom:18px;z-index:45;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.95);color:var(--indigo);box-shadow:0 8px 24px rgba(27,31,46,.14);font:800 18px var(--font);cursor:pointer;align-items:center;justify-content:center}
-.scroll-top.show{display:flex}
+.scroll-top{display:none;position:fixed;right:16px;bottom:18px;z-index:9999;width:48px;height:48px;align-items:center;justify-content:center;border:0;border-radius:50%;background:var(--indigo,#4f46e5);color:#fff;font-size:24px;line-height:1;box-shadow:0 4px 14px rgba(0,0,0,.2);cursor:pointer;touch-action:manipulation}
+.scroll-top.show{display:flex!important}
 @media(max-width:840px){
 }
-@media(min-width:841px){.scroll-top.show{display:none!important}}
+
 
 @media(max-width:840px){
   .burger{display:block}
@@ -1025,25 +1025,27 @@ body.admin-mode .admin-sidebar{display:flex}
 
 
 /* Fix admin checkbox alignment */
-.admin-edit-form .choice,
-.admin-edit-form label.choice {
-  display: flex;
-  align-items: flex-start;
-  gap: 11px;
+.admin-edit-form .choice {
+  display: block;
+  box-sizing: border-box;
 }
 
 .admin-edit-form .choice input[type="checkbox"],
 .admin-edit-form .choice input[type="radio"] {
-  flex: 0 0 auto;
-  width: auto;
+  width: 16px;
+  height: 16px;
   min-width: 16px;
   min-height: 16px;
-  margin: 2px 0 0;
+  margin: 2px 8px 0 0;
+  vertical-align: top;
+  accent-color: var(--indigo);
 }
 
 .admin-edit-form .choice .desc {
-  flex: 1;
-  min-width: 0;
+  display: block;
+  margin: 6px 0 0 27px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 </style>
@@ -3777,6 +3779,48 @@ var CURRENT_LANGUAGE = 'id';
   }
 })();
 </script>
+
+
+<script>
+(() => {
+  function initScrollTop() {
+    const button = document.querySelector('.scroll-top');
+    if (!button) return;
+
+    const isMobile = () => window.matchMedia('(max-width: 840px)').matches;
+
+    const update = () => {
+      const mobile = isMobile();
+      button.style.display = mobile && window.scrollY > 180 ? 'flex' : 'none';
+      button.setAttribute('aria-hidden', mobile && window.scrollY <= 180 ? 'true' : 'false');
+    };
+
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollTop);
+  } else {
+    initScrollTop();
+  }
+})();
+</script>
+
+
+<button
+  class="scroll-top"
+  type="button"
+  aria-label="Kembali ke atas"
+  aria-hidden="true">
+  <span aria-hidden="true">↑</span>
+</button>
 
 </body>
 </html>
