@@ -47,15 +47,15 @@ p{margin:0 0 16px;max-width:62ch}
 .menu a{color:var(--gray);text-decoration:none;font-size:15px;font-weight:500}
 .menu a:hover{color:var(--ink)}
 .menu a.current{color:var(--indigo);font-weight:600}
+.nav-actions{display:flex;align-items:center;gap:10px;margin-left:0}
 .burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:10px;width:44px;height:42px;font-size:17px;cursor:pointer;color:var(--ink)}
-.lang-toggle{display:inline-flex;align-items:center;gap:2px;margin-left:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--white);box-shadow:0 1px 2px rgba(27,31,46,.04)}
+.lang-toggle{display:inline-flex;align-items:center;gap:2px;margin-left:0;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--white);box-shadow:0 1px 2px rgba(27,31,46,.04)}
 .lang-toggle button{border:0;background:transparent;color:var(--gray);font:600 12px var(--font);padding:6px 9px;border-radius:999px;cursor:pointer;line-height:1}
 .lang-toggle button.active{background:var(--indigo);color:#fff}
 .lang-toggle button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 .scroll-top{display:none;position:fixed;right:16px;bottom:18px;z-index:45;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.95);color:var(--indigo);box-shadow:0 8px 24px rgba(27,31,46,.14);font:800 18px var(--font);cursor:pointer;align-items:center;justify-content:center}
 .scroll-top.show{display:flex}
 @media(max-width:840px){
-  .lang-toggle{margin-left:auto;margin-right:8px}
   .lang-toggle button{padding:7px 9px}
 }
 @media(min-width:841px){.scroll-top.show{display:none!important}}
@@ -66,6 +66,12 @@ p{margin:0 0 16px;max-width:62ch}
   .menu.open{display:flex}
   .menu a{padding:15px 0;border-bottom:1px solid var(--line);font-size:16px}
   .menu .btn{margin-top:14px}
+  .nav-actions{display:flex;align-items:center;gap:10px;margin-top:14px}
+  .nav-actions .btn{margin-top:0;flex:1}
+  .nav-actions .lang-toggle{flex:0 0 auto}
+}
+@media(min-width:841px){
+  .nav-actions{margin-left:0}
 }
 
 /* buttons */
@@ -559,16 +565,18 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 <header class="nav">
   <div class="nav-inner">
     <a href="#" class="logo" onclick="openScreen('Campaign');return false">EV<em>Campaign</em></a>
-    <div class="lang-toggle" role="group" aria-label="Language / Bahasa" data-i18n-aria="languageAria">
-      <button type="button" id="langID" class="active" onclick="setLanguage('id')" aria-pressed="true">ID</button>
-      <button type="button" id="langEN" onclick="setLanguage('en')" aria-pressed="false">EN</button>
-    </div>
     <button class="burger" onclick="toggleMenu()" aria-label="Menu">☰</button>
     <nav class="menu" id="menu">
       <a href="#" data-screen="home" onclick="openScreen('home');return false"><span data-i18n="navCalc">Hitung BBM-mu</span></a>
       <a href="#" data-screen="dashboard" onclick="openScreen('dashboard');return false"><span data-i18n="navReports">Lihat laporan</span></a>
       <a href="#" data-screen="Campaign" onclick="openScreen('Campaign');return false"><span data-i18n="navCampaign">Kampanye</span></a>
-      <button class="btn btn-fill" style="padding:12px 20px;min-height:44px;font-size:15px" onclick="openScreen('reportCity')"><span data-i18n="navReport">Lapor Rutemu</span></button>
+      <div class="nav-actions">
+        <button class="btn btn-fill" style="padding:12px 20px;min-height:44px;font-size:15px" onclick="openScreen('reportCity')"><span data-i18n="navReport">Lapor Rutemu</span></button>
+        <div class="lang-toggle" role="group" aria-label="Language / Bahasa" data-i18n-aria="languageAria">
+          <button type="button" id="langID" class="active" onclick="setLanguage('id')" aria-pressed="true">ID</button>
+          <button type="button" id="langEN" onclick="setLanguage('en')" aria-pressed="false">EN</button>
+        </div>
+      </div>
     </nav>
   </div>
 </header>
@@ -3288,12 +3296,241 @@ window.addEventListener('resize', updateScrollTopButton);
   renderReportCounterBlock();
   renderCampaignCounter();
 
-  setLanguage(saved);
+  // Language is applied by the full-site language layer below, after the
+  // complete Indonesian DOM has been initialized and captured.
   updateScrollTopButton();
 })();
 renderDashboard();
 renderReportCounterBlock();
 renderCampaignCounter();
+</script>
+
+
+<script>
+/* ── Full-site language layer ──
+   ID remains the default. EN translates all user-facing public copy,
+   including static HTML, calculator/reporting copy, buttons, labels,
+   placeholders and dynamically rendered text. */
+(function(){
+  var FULL_EN = {
+    'EV Campaign — Hitung dan Laporkan Kebutuhan di Kotamu':'EV Campaign — Calculate and Report Needs in Your City',
+    'Bahasa':'Language',
+    'Hitung BBM-mu':'Calculate fuel cost','Lihat laporan':'View reports','Kampanye':'Campaign','Lapor Rutemu':'Report your route',
+    'Kampanye elektrifikasi transportasi':'Transport electrification campaign',
+    'Kendaraan listrik butuh lebih dari sekadar kendaraan baru.':'Electric vehicles need more than just new vehicles.',
+    'Kamu juga butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) dan transportasi umum yang layak untuk kebutuhan sehari-hari. Di sini, kamu bisa menghitung pengeluaran BBM-mu dan melaporkan lokasi yang perlu mendapat perhatian.':'You also need EV charging stations and reliable public transport for everyday needs. Here, you can calculate your fuel costs and report locations that need attention.',
+    'Kemajuan pelaporan warga':'Community reporting progress',
+    'Tandai lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik. Jadilah salah satu pelapor pertama di kotamu.':'Mark locations where you think EV charging or electric public transport is needed. Be one of the first people to report in your city.',
+    'Lapor lokasimu →':'Report a location →','Yang bisa kamu lakukan':'What you can do',
+    'Masukkan pengeluaran dan kebiasaan berkendara untuk melihat perkiraan biaya BBM per bulan dan per tahun.':'Enter your spending and driving habits to estimate your monthly and yearly fuel costs.',
+    'Buka kalkulator →':'Open calculator →','Buat laporan →':'Create a report →','Lihat data →':'View data →',
+    'Berapa biaya bensinmu sebulan?':'How much do you spend on fuel each month?',
+    'Masukkan kebiasaan berkendaramu. Lihat kira-kira berapa biaya bensin yang kamu keluarkan.':'Enter your driving habits to estimate how much you spend on fuel.',
+    'Hasilnya bisa dilihat juga dalam hitungan setahun.':'You can also see the estimate for a full year.',
+    'Sekali isi bensin, biasanya berapa rupiah?':'How much do you usually spend each time you refuel?',
+    'Seberapa sering kamu biasanya isi bensin?':'How often do you usually refuel?',
+    'Pilih salah satu':'Choose one','Harian':'Daily','Mingguan':'Weekly','Dua Minggu Sekali':'Every two weeks','Bulanan':'Monthly','Dua mingguan':'Every two weeks',
+    'Dalam sehari, kira-kira berapa kilometer jarak yang kamu tempuh?':'About how many kilometers do you travel each day?',
+    'Simpan hasil perhitungan ini untuk keperluan riset (opsional)':'Save this calculation for research purposes (optional)',
+    'Jika tidak dicentang, kamu tetap bisa melihat hasilnya — datanya saja yang tidak akan disimpan.':'You can still view the result if you leave this unchecked — only the data will not be saved.',
+    'Lihat hasil perhitungan':'View calculation results','Lalu, apa hubungannya dengan kendaraan listrik?':'So, what does this have to do with electric vehicles?',
+    'Biaya bukan satu-satunya pertimbangan. Bagi banyak orang, pertanyaan berikutnya adalah: mau isi daya di mana?':'Cost is not the only consideration. For many people, the next question is: where can I charge?',
+    'Tandai lokasi yang kamu butuhkan':'Mark the location you need',
+    'Ada tempat yang menurutmu perlu SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di peta.':'Is there a place where you think EV charging or electric public transport is needed? Mark it on the map.',
+    'Kami periksa dulu':'We review it first','Laporan akan diperiksa sebelum masuk ke data yang ditampilkan.':'Reports are reviewed before they are added to the public data.',
+    'Gabungkan dengan laporan lain':'Combine it with other reports','Laporanmu akan digabungkan dengan laporan orang lain di area yang sama.':'Your report will be combined with reports from other people in the same area.',
+    'Belum mau menghitung? Tidak masalah.':'Not ready to calculate? No problem.','Kamu bisa langsung melaporkan lokasi yang menurutmu perlu mendapat perhatian.':'You can report a location that you think needs attention right away.',
+    'Perkiraan':'Estimated','pengeluaran bensinmu':'your fuel spending','dalam':'in','setahun':'per year','atau sekitar':'or about','per bulan':'per month',
+    'Kalau pakai kendaraan listrik':'If you used an electric vehicle','Bensin · setahun':'Fuel · per year','Listrik · setahun':'Electricity · per year',
+    'Asumsi perhitungan':'Calculation assumptions',
+    'Perbandingan memakai jarak harian yang kamu isi. Motor bensin: harga Pertalite Rp10.000/liter, konsumsi ±40 km/liter. Motor listrik: konsumsi ±35 Wh/km, tarif listrik PLN Rp1.352/kWh (900VA non-subsidi). Angka riil bisa berbeda tergantung jenis kendaraan dan wilayah.':'The comparison uses the daily distance you entered. Gasoline motorcycle: Pertalite at Rp10,000/liter, consumption of about 40 km/liter. Electric motorcycle: about 35 Wh/km, with the PLN electricity rate of Rp1,352/kWh (900VA non-subsidized). Actual figures may vary by vehicle type and location.',
+    'Laporkan lokasi yang butuh pengisian daya':'Report a location that needs charging','Bagikan hasil':'Share result','Ubah hitungan':'Change calculation',
+    'Hasil perhitunganmu':'Your calculation result','Bagikan hasilmu.':'Share your result.','Tunjukkan berapa biaya bensin yang kamu keluarkan dalam setahun dan ajak orang lain ikut menghitung.':'Show how much you spend on fuel each year and invite others to calculate theirs.',
+    'Hasilmu':'Your result','Biaya bensin saya setahun':'My yearly fuel cost','Per bulan':'Per month','Bagikan ke':'Share to','Pilih platform yang ingin kamu gunakan.':'Choose a platform to share on.',
+    'Bagikan ke postingan':'Share to a post','Bagikan ke Story':'Share to Story','Bagikan hasilmu':'Share your result',
+    'Hasil ini dirancang untuk dibagikan sebagai gambar. Pastikan angka yang tampil sudah sesuai sebelum membagikannya.':'This result is designed to be shared as an image. Make sure the figures are correct before sharing.',
+    '← Kembali ke hitungan':'← Back to calculation',
+    'Ada lokasi yang menurutmu butuh SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) atau transportasi umum listrik? Tandai di sini. Laporanmu membantu kami memetakan kebutuhan di kotamu.':'Is there a location where you think EV charging or electric public transport is needed? Mark it here. Your report helps us map needs in your city.',
+    'Langkah 1 dari 4':'Step 1 of 4','Kamu paling sering berkendara di kota mana?':'Which city do you drive in most often?','Pilih kota tempat kamu paling sering berkendara.':'Choose the city where you drive most often.',
+    'Gunakan lokasi saya':'Use my location','Atau masukkan nama kota':'Or enter a city name','Lanjut':'Continue','Masukkan nama kota terlebih dahulu untuk melanjutkan.':'Enter a city name first to continue.',
+    'Langkah 2 dari 4':'Step 2 of 4','Apa yang ingin kamu laporkan?':'What would you like to report?',
+    'Pilih salah satu — pertanyaan berikutnya akan menyesuaikan dengan pilihanmu.':'Choose one — the next questions will adapt to your selection.',
+    'BBM':'Fuel','Kamu akan diarahkan ke halaman Hitung BBM-mu untuk menghitung pengeluaran BBM-mu.':'You will be taken to the fuel cost calculator to calculate your fuel spending.',
+    'Kondisi udara':'Air quality','Tandai lokasinya dan tambahkan foto.':'Mark the location and add a photo.',
+    'Akses kendaraan listrik':'EV access','Apakah motor listrik bisa dibeli atau diservis di sekitar sini? Kamu juga bisa mencantumkan lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat.':'Can an electric motorcycle be purchased or serviced nearby? You can also add the location of the nearest EV charging station if you know it.',
+    'Transportasi umum':'Public transport','Tandai lokasi yang menurutmu perlu rute atau pemberhentian transportasi umum listrik.':'Mark a location where you think an electric public transport route or stop is needed.',
+    'Ganti kota':'Change city','Ganti pilihan':'Change selection',
+    'Langkah 3 dari 4':'Step 3 of 4','Detail laporan':'Report details','Tandai lokasinya di peta.':'Mark the location on the map.',
+    'Klik peta untuk menandai lokasi':'Click the map to mark a location','Peta contoh':'Sample map','Peta ini hanya contoh. Pada versi produksi, lokasi akan disesuaikan dengan kota yang kamu pilih.':'This is only a sample map. In production, the location will be adjusted to the city you selected.',
+    'Belum ada lokasi':'No location selected','Hapus lokasi':'Remove location','Foto di lokasi ini':'Photo at this location',
+    'Waktu pengambilan foto akan dicatat saat laporan dikirim. Foto akan dicek sebelum ditampilkan di data publik.':'The photo timestamp will be recorded when the report is submitted. Photos will be reviewed before being shown in the public data.',
+    'Apakah motor listrik bisa dibeli dan diservis di sekitar sini?':'Can an electric motorcycle be purchased and serviced nearby?','Bisa':'Available','Belum bisa':'Not yet available',
+    'Lokasi SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) terdekat (jika tahu)':'Nearest EV charging station (if known)',
+    'Ada alasan khusus mengapa lokasi ini penting? (Opsional)':'Is there a particular reason this location is important? (Optional)',
+    'Periksa kembali laporanmu':'Review your report','Saya setuju laporan ini disimpan':'I agree to save this report',
+    'Laporan ini digunakan untuk memetakan kebutuhan fasilitas kendaraan listrik. Kamu dapat meminta laporanmu dihapus kapan saja.':'This report is used to map EV infrastructure needs. You can request that your report be deleted at any time.',
+    'Teks persetujuan final perlu ditinjau kembali sebelum digunakan.':'The final consent text should be reviewed before use.','Kirim':'Submit','Setujui penyimpanan laporan terlebih dahulu untuk melanjutkan.':'Agree to save the report before continuing.','Kembali dan ubah':'Go back and edit',
+    'Laporan berhasil dikirim':'Report submitted successfully','Terima kasih sudah ikut berkontribusi!':'Thank you for contributing!',
+    'Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.':'We will review your report before it is displayed publicly.',
+    'Kota':'City','Laporan':'Report','Apa selanjutnya?':'What happens next?',
+    'Kami akan memeriksa laporanmu terlebih dahulu. Setelah lolos pengecekan, laporan akan ikut membantu memetakan kebutuhan di kotamu.':'We will review your report first. Once approved, it will help us map infrastructure needs in your city.',
+    'Lihat laporan di kotamu':'View reports in your city','Ajak orang lain ikut':'Invite others to join',
+    'Semakin banyak orang melaporkan kebutuhan di kotanya, semakin lengkap gambaran yang bisa kami petakan.':'The more people report needs in their cities, the clearer the picture we can map.',
+    'Kirim laporan lain':'Submit another report','Laporan yang masuk':'Submitted reports',
+    'Angka di bawah berasal dari laporan yang sudah lolos pengecekan.':'The figures below come from reports that have passed review.',
+    'lokasi dilaporkan':'locations reported','kota dengan laporan':'cities with reports','laporan minggu ini':'reports this week',
+    'Semua':'All','Pengisian daya':'Charging','Menampilkan semua laporan.':'Showing all reports.','Kota dengan laporan terbanyak':'Cities with the most reports',
+    'Laporan per minggu':'Reports per week','Delapan minggu terakhir. Minggu terakhir masih berjalan.':'The last eight weeks. The latest week is still in progress.',
+    'Data ini berasal dari laporan sukarela, bukan survei yang mewakili seluruh penduduk. Kota dengan kurang dari 25 laporan digabung sebagai "kota lainnya".':'These data come from voluntary reports, not a survey representing the entire population. Cities with fewer than 25 reports are grouped as "other cities".',
+    'Batas ini dapat diubah setelah data dianalisis.':'This threshold can be changed after the data is analyzed.',
+    '← Kembali ke semua kota':'← Back to all cities','dari seluruh laporan':'of all reports','laporan minggu ini':'reports this week','Kebutuhan yang paling banyak dilaporkan':'Most reported needs','Jenis lokasi':'Location type',
+    'Jumlah laporan di satu kota bisa berubah cukup banyak ketika data masih sedikit. Persentase akan lebih stabil setelah laporan bertambah.':'The number of reports in a city can change significantly when there is little data. Percentages become more stable as more reports are added.',
+    'Tentang EV Campaign':'About EV Campaign','Peralihan ke kendaraan listrik bukan cuma soal ganti kendaraan. Infrastruktur SPKLU (Stasiun Pengisian Kendaraan Listrik Umum) dan transportasi di sekitar kita juga perlu ikut berkembang.':'Switching to electric vehicles is not just about changing vehicles. EV charging infrastructure and the transport around us also need to grow.',
+    'Dari mana angka kalkulator berasal?':'Where do the calculator figures come from?',
+    'Perbandingan motor bensin vs listrik memakai harga Pertalite Rp10.000/liter dan konsumsi rata-rata motor matic ±40 km/liter, dibandingkan dengan motor listrik berkonsumsi ±35 Wh/km dan tarif listrik PLN Rp1.352/kWh (golongan R-1/TR 900VA non-subsidi). Semua angka ini rata-rata umum per September 2026 dan bisa berbeda tergantung jenis kendaraan dan wilayah.':'The gasoline vs. electric motorcycle comparison uses Pertalite at Rp10,000/liter and average automatic motorcycle consumption of about 40 km/liter, compared with an electric motorcycle using about 35 Wh/km and the PLN electricity rate of Rp1,352/kWh (R-1/TR 900VA non-subsidized). These are general averages as of September 2026 and may vary by vehicle type and location.',
+    'Laporan ini digunakan untuk apa?':'What are these reports used for?',
+    'Laporan digunakan untuk memetakan kebutuhan fasilitas kendaraan listrik berdasarkan masukan masyarakat. Setiap laporan akan diperiksa terlebih dahulu sebelum masuk ke data publik.':'Reports are used to map EV infrastructure needs based on community input. Every report is reviewed before being added to public data.',
+    'Masuk admin':'Admin login','Masuk untuk meninjau laporan.':'Log in to review reports.','Username':'Username','Password':'Password','Masuk':'Log in','Kembali ke halaman utama':'Back to home',
+    'Dashboard Analitik':'Analytics dashboard','Ringkasan performa Hitung BBM-mu dan Lapor Rutemu — mulai dari kunjungan, penyelesaian form, hingga sebaran laporan.':'Performance summary for the fuel calculator and route reporting — from visits and form completion to report distribution.',
+    'Alur pengguna per halaman':'User flow by page','Kunjungan, mulai mengisi, hingga selesai — termasuk persentase yang scroll sampai 75% halaman.':'Visits, form starts, and completions — including the percentage that scrolls through 75% of the page.',
+    'Distribusi kategori laporan':'Report category distribution','Kategori mana di Lapor Rutemu yang paling banyak dipakai.':'Which route-reporting category is used most often?',
+    'Sebaran lokasi per kota':'Location distribution by city','Apakah laporan menyebar ke banyak area, atau menumpuk di satu titik saja?':'Are reports spread across many areas, or concentrated in one place?','Riwayat pelapor':'Reporter history',
+    'Periksa laporan sebelum ditampilkan sebagai data publik.':'Review reports before they are displayed as public data.','Status':'Status','Perlu ditinjau':'Needs review','Disetujui':'Approved','Ditolak':'Rejected','Duplikat':'Duplicate','ID':'ID','Kategori':'Category','Waktu':'Time',
+    '← Kembali ke daftar laporan':'← Back to report list','Alasan penolakan (wajib diisi jika laporan ditolak)':'Reason for rejection (required if the report is rejected)','Setujui':'Approve','Tolak':'Reject','Spam':'Spam',
+    'Ekspor laporan':'Export reports','Kota':'City','Semua status':'All statuses','Unduh CSV':'Download CSV','Unduh GeoJSON':'Download GeoJSON',
+    'Kelola Form':'Manage forms','Ubah label, teks bantuan, pilihan, dan pesan yang ditampilkan ke pengunjung di Hitung BBM-mu, Lapor Rutemu, dan halaman Kampanye — tanpa perlu bantuan developer.':'Edit labels, help text, choices, and messages shown to visitors in the fuel calculator, route reporting, and campaign pages — without developer help.',
+    'Hitung BBM-mu':'Calculate fuel cost','Lapor Rutemu':'Report your route','Halaman Kampanye':'Campaign page','Edit':'Edit','Pratinjau':'Preview',
+    'Label & teks bantuan kolom':'Field labels & help text','Label kolom "Pengeluaran sekali beli"':'Label for "One-time fuel spending"','Teks bantuan kolom "Pengeluaran sekali beli"':'Help text for "One-time fuel spending"',
+    'Label kolom "Frekuensi pembelian"':'Label for "Purchase frequency"','Teks bantuan kolom "Frekuensi pembelian"':'Help text for "Purchase frequency"','Label kolom "Rute harian"':'Label for "Daily route"','Teks bantuan kolom "Rute harian"':'Help text for "Daily route"',
+    'Opsi frekuensi & nilai perhitungan':'Frequency options & calculation values','Nilai adalah perkiraan berapa kali isi bensin dalam sebulan. Dipakai untuk: pengeluaran bulanan = sekali beli × nilai ini.':'The value estimates how many times you refuel per month. Used for: monthly spending = one-time spending × this value.',
+    'Opsi':'Option','Label':'Label','Kali per bulan':'Times per month','Persetujuan & tombol':'Consent & button','Teks persetujuan (checkbox)':'Consent text (checkbox)','Keterangan persetujuan':'Consent description','Label tombol kirim':'Submit button label','Label hasil (mis. "pengeluaran bensinmu")':'Result label (e.g. "your fuel spending")','Pesan validasi/kesalahan':'Validation/error messages','Jika pengeluaran belum diisi':'If spending is empty','Jika frekuensi belum dipilih':'If frequency is not selected','Jika rute harian belum diisi':'If daily route is empty','Simpan perubahan':'Save changes','Pratinjau langsung — Hitung BBM-mu':'Live preview — Fuel calculator',
+    'Teks pembuka & langkah kota':'Intro & city step text','Paragraf pembuka (Langkah 1)':'Intro paragraph (Step 1)','Pertanyaan kota':'City question','Teks bantuan kota':'City help text','Label tombol "Gunakan lokasi saya"':'"Use my location" button label','Label kolom nama kota':'City name field label','Label tombol lanjut (kota)':'Continue button label (city)','Pesan bantuan jika kota belum diisi':'Help message when city is empty',
+    'Segmen & pertanyaan kategori (Langkah 2)':'Category section & questions (Step 2)','Pertanyaan kategori (CTA)':'Category question (CTA)','Teks bantuan kategori':'Category help text','Label tombol lanjut (kategori)':'Continue button label (category)','Pilih kategori untuk diedit':'Choose a category to edit','Nama pilihan (label segmen)':'Option name (segment label)','Deskripsi singkat di bawah nama pilihan':'Short description below the option name',
+    'Kategori ini langsung mengarahkan pengunjung ke halaman lain, jadi tidak punya form/detail sendiri (Langkah 3 & 4 dilewati).':'This category sends visitors directly to another page, so it has no separate form/details (Steps 3 & 4 are skipped).','Judul halaman detail (Langkah 3)':'Detail page title (Step 3)','Teks bantuan (tampil di bawah judul, Langkah 3)':'Help text (shown below the title, Step 3)','Instruksi di atas peta':'Instruction above the map','Simpan kategori ini':'Save this category','Konfirmasi, persetujuan & selesai (Langkah 4)':'Confirmation, consent & completion (Step 4)','Judul halaman konfirmasi':'Confirmation page title','Keterangan persetujuan':'Consent description','Pesan jika persetujuan belum dicentang':'Message when consent is unchecked','Judul halaman "Terkirim"':'"Submitted" page title','Subjudul halaman "Terkirim"':'"Submitted" page subtitle','Pratinjau langsung — Lapor Rutemu':'Live preview — Route reporting',
+    'Blok Penghitung Laporan':'Report counter block','Blok ini tampil di halaman Kampanye dan halaman Tentang. Sesuai brief, defaultnya tersembunyi.':'This block appears on the Campaign and About pages. As specified, it is hidden by default.','Tampilkan blok ini di halaman publik':'Show this block on public pages','Kalau tidak dicentang, blok ini tetap tersembunyi walau metrik di bawah sudah diatur.':'If unchecked, this block remains hidden even if the metrics below are configured.','Posisi blok di halaman Kampanye':'Block position on Campaign page','Di panel hero (atas, sebelah judul)':'In the hero panel (top, beside the title)','Full-width, tepat setelah hero':'Full-width, directly after the hero','Full-width, di bawah "Yang bisa kamu lakukan"':'Full-width, below "What you can do"','Judul blok (saat aktif & tampil)':'Block title (when active & visible)','Kalau blok belum aktif / dipindah dari hero':'When the block is inactive / moved from the hero','Teks ini yang tampil di panel hero sebagai gantinya.':'This text appears in the hero panel instead.','Judul pengganti':'Fallback title','Teks ajakan pengganti':'Fallback call-to-action text','Metrik yang ditampilkan':'Displayed metrics','Total lokasi dilaporkan':'Total locations reported','Jumlah kota dengan laporan':'Number of cities with reports','Laporan minggu ini':'Reports this week','Label metrik':'Metric labels','Label untuk total lokasi':'Label for total locations','Label untuk jumlah kota':'Label for number of cities','Label untuk laporan minggu ini':'Label for reports this week','Pratinjau langsung — Halaman Kampanye':'Live preview — Campaign page',
+    'Tentang':'About','Sumber data':'Data sources','Privasi':'Privacy','Masuk admin':'Admin login','Kembali ke atas':'Back to top'
+  };
+
+  var ORIGINAL_TEXT_NODES=[];
+  var ORIGINAL_ATTRS=[];
+  var SNAPSHOT_READY=false;
+
+  function captureOriginalDOM(){
+    if(SNAPSHOT_READY) return;
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null);
+    while(walker.nextNode()){
+      var n=walker.currentNode;
+      ORIGINAL_TEXT_NODES.push({node:n,value:n.nodeValue,parent:n.parentNode});
+    }
+    document.querySelectorAll('*').forEach(function(el){
+      ['placeholder','aria-label','title'].forEach(function(a){
+        if(el.hasAttribute(a)) ORIGINAL_ATTRS.push({el:el,attr:a,value:el.getAttribute(a)});
+      });
+    });
+    SNAPSHOT_READY=true;
+  }
+
+  function translateTextNodes(root){
+    var walker=document.createTreeWalker(root||document.body,NodeFilter.SHOW_TEXT,null);
+    var nodes=[];
+    while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function(n){
+      var raw=n.nodeValue, trimmed=raw.trim();
+      if(!trimmed || !FULL_EN[trimmed]) return;
+      n.nodeValue=raw.replace(trimmed,FULL_EN[trimmed]);
+    });
+  }
+  function translateAttrs(){
+    document.querySelectorAll('input,textarea,button,[aria-label],[title]').forEach(function(el){
+      ['placeholder','aria-label','title'].forEach(function(a){
+        var v=el.getAttribute(a); if(v && FULL_EN[v]) el.setAttribute(a,FULL_EN[v]);
+      });
+    });
+    document.querySelectorAll('option').forEach(function(el){
+      var v=el.textContent.trim(); if(FULL_EN[v]) el.textContent=FULL_EN[v];
+    });
+  }
+  function translatePublic(){
+    if(CURRENT_LANGUAGE!=='en') return;
+    translateTextNodes(document.body);
+    translateAttrs();
+    var done=document.getElementById('doneCategory');
+    if(done && selectedCategory){
+      var names={bbm:'Fuel',kondisi:'Air quality',akses:'EV access',transum:'Public transport'};
+      if(names[selectedCategory]) done.textContent=names[selectedCategory];
+    }
+  }
+
+  function restoreIndonesian(){
+    // Restore text nodes that still exist.
+    ORIGINAL_TEXT_NODES.forEach(function(item){
+      if(item.node && item.node.parentNode) item.node.nodeValue=item.value;
+    });
+    // Some translated elements had their original text node replaced by
+    // textContent. Restore their direct text content safely without replacing
+    // the surrounding DOM structure.
+    ORIGINAL_TEXT_NODES.forEach(function(item){
+      if(!item.parent || !item.parent.isConnected) return;
+      if(item.parent.childNodes.length===1 && item.parent.firstChild.nodeType===3){
+        item.parent.firstChild.nodeValue=item.value;
+      }
+    });
+    ORIGINAL_ATTRS.forEach(function(item){
+      if(item.el && item.el.isConnected) item.el.setAttribute(item.attr,item.value);
+    });
+    // Re-apply CMS/config-generated Indonesian labels after restoration.
+    try{
+      applyCalculatorConfig();
+      applyLaporConfig();
+      renderDashboard();
+      renderReportCounterBlock();
+      renderCampaignCounter();
+    }catch(e){}
+  }
+
+  var originalSetLanguage=window.setLanguage;
+  window.setLanguage=function(lang){
+    lang=(lang==='en')?'en':'id';
+    captureOriginalDOM();
+    CURRENT_LANGUAGE=lang;
+    document.documentElement.lang=lang;
+    document.title=lang==='en'
+      ? FULL_EN['EV Campaign — Hitung dan Laporkan Kebutuhan di Kotamu']
+      : 'EV Campaign — Hitung dan Laporkan Kebutuhan di Kotamu';
+
+    if(lang==='id'){
+      restoreIndonesian();
+    }else{
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        var key=el.getAttribute('data-i18n');
+        if(FULL_EN[key]) el.textContent=FULL_EN[key];
+      });
+      document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+        var key=el.getAttribute('data-i18n-aria');
+        if(FULL_EN[key]) el.setAttribute('aria-label',FULL_EN[key]);
+      });
+      translatePublic();
+    }
+
+    var idBtn=document.getElementById('langID'), enBtn=document.getElementById('langEN');
+    if(idBtn){idBtn.classList.toggle('active',lang==='id');idBtn.setAttribute('aria-pressed',String(lang==='id'));}
+    if(enBtn){enBtn.classList.toggle('active',lang==='en');enBtn.setAttribute('aria-pressed',String(lang==='en'));}
+    try{localStorage.setItem('ev_campaign_language',lang);}catch(e){}
+  };
+
+  var originalOpenScreen=window.openScreen;
+  window.openScreen=function(id){
+    var result=originalOpenScreen.apply(this,arguments);
+    if(CURRENT_LANGUAGE==='en') requestAnimationFrame(function(){translatePublic();});
+    requestAnimationFrame(function(){window.scrollTo(0,0);});
+    return result;
+  };
+
+  var saved='id';
+  try{saved=localStorage.getItem('ev_campaign_language')||'id';}catch(e){}
+  // Important: no reload is ever used for language switching.
+  window.setLanguage(saved);
+})();
 </script>
 
 </body>
