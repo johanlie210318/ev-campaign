@@ -559,16 +559,16 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 <header class="nav">
   <div class="nav-inner">
     <a href="#" class="logo" onclick="openScreen('Campaign');return false">EV<em>Campaign</em></a>
-    <div class="lang-toggle" role="group" aria-label="Language / Bahasa">
+    <div class="lang-toggle" role="group" aria-label="Language / Bahasa" data-i18n-aria="languageAria">
       <button type="button" id="langID" class="active" onclick="setLanguage('id')" aria-pressed="true">ID</button>
       <button type="button" id="langEN" onclick="setLanguage('en')" aria-pressed="false">EN</button>
     </div>
     <button class="burger" onclick="toggleMenu()" aria-label="Menu">☰</button>
     <nav class="menu" id="menu">
-      <a href="#" data-screen="home" onclick="openScreen('home');return false">Hitung BBM-mu</a>
-      <a href="#" data-screen="dashboard" onclick="openScreen('dashboard');return false">Lihat laporan</a>
-      <a href="#" data-screen="Campaign" onclick="openScreen('Campaign');return false">Kampanye</a>
-      <button class="btn btn-fill" style="padding:12px 20px;min-height:44px;font-size:15px" onclick="openScreen('reportCity')">Lapor Rutemu</button>
+      <a href="#" data-screen="home" onclick="openScreen('home');return false"><span data-i18n="navCalc">Hitung BBM-mu</span></a>
+      <a href="#" data-screen="dashboard" onclick="openScreen('dashboard');return false"><span data-i18n="navReports">Lihat laporan</span></a>
+      <a href="#" data-screen="Campaign" onclick="openScreen('Campaign');return false"><span data-i18n="navCampaign">Kampanye</span></a>
+      <button class="btn btn-fill" style="padding:12px 20px;min-height:44px;font-size:15px" onclick="openScreen('reportCity')"><span data-i18n="navReport">Lapor Rutemu</span></button>
     </nav>
   </div>
 </header>
@@ -1490,10 +1490,10 @@ body.admin-mode main{margin-left:240px;min-height:100vh;padding:28px}
 <footer><div class="wrap">
   <div>
     <div style="margin-bottom:14px">
-      <a href="#" onclick="openScreen('about');return false">Tentang</a>
-      <a href="#" onclick="openScreen('about');return false">Sumber data</a>
-      <a href="#" onclick="openScreen('about');return false">Privasi</a>
-      <a href="#" onclick="openScreen('adminLogin');return false">Masuk admin</a>
+      <a href="#" onclick="openScreen('about');return false" data-i18n="footerAbout">Tentang</a>
+      <a href="#" onclick="openScreen('about');return false" data-i18n="footerSources">Sumber data</a>
+      <a href="#" onclick="openScreen('about');return false" data-i18n="footerPrivacy">Privasi</a>
+      <a href="#" onclick="openScreen('adminLogin');return false" data-i18n="footerAdmin">Masuk admin</a>
     </div>
     <p class="tiny" style="margin:0">© 2026 Bahana | Yayasan Komunikasi Pembenahan Indonesia</p>
   </div>
@@ -3194,6 +3194,9 @@ function barList(items, total){
 var CURRENT_LANGUAGE = 'id';
 var REPORT_DONE_TRANSLATIONS = {
   id: {
+    languageAria: 'Bahasa',
+    navCalc: 'Hitung BBM-mu', navReports: 'Lihat laporan', navCampaign: 'Kampanye', navReport: 'Lapor Rutemu',
+    footerAbout: 'Tentang', footerSources: 'Sumber data', footerPrivacy: 'Privasi', footerAdmin: 'Masuk admin',
     reportKicker: 'Laporan berhasil dikirim',
     doneTitle: 'Terima kasih sudah ikut berkontribusi!',
     doneSubtitle: 'Laporanmu akan kami periksa terlebih dahulu sebelum ditampilkan ke publik.',
@@ -3208,6 +3211,9 @@ var REPORT_DONE_TRANSLATIONS = {
     anotherReport: 'Kirim laporan lain'
   },
   en: {
+    languageAria: 'Language',
+    navCalc: 'Calculate fuel cost', navReports: 'View reports', navCampaign: 'Campaign', navReport: 'Report your route',
+    footerAbout: 'About', footerSources: 'Data sources', footerPrivacy: 'Privacy', footerAdmin: 'Admin login',
     reportKicker: 'Report submitted successfully',
     doneTitle: 'Thank you for contributing!',
     doneSubtitle: 'We will review your report before it is displayed publicly.',
@@ -3237,6 +3243,16 @@ function setLanguage(lang){
     var key = el.getAttribute('data-i18n-aria');
     if (dict[key] != null) el.setAttribute('aria-label', dict[key]);
   });
+
+  // Label kategori yang sudah tersimpan di halaman selesai juga ikut berubah.
+  var categoryEl = document.getElementById('doneCategory');
+  if (categoryEl && selectedCategory && LAPOR_CONFIG.categories[selectedCategory]) {
+    var categoryNames = {
+      id: {bbm:'BBM', kondisi:'Kondisi udara', akses:'Akses kendaraan listrik', transum:'Transportasi umum'},
+      en: {bbm:'Fuel', kondisi:'Air quality', akses:'EV access', transum:'Public transport'}
+    };
+    categoryEl.textContent = (categoryNames[lang] && categoryNames[lang][selectedCategory]) || LAPOR_CONFIG.categories[selectedCategory].label;
+  }
   var idBtn = document.getElementById('langID');
   var enBtn = document.getElementById('langEN');
   if (idBtn){ idBtn.classList.toggle('active', lang === 'id'); idBtn.setAttribute('aria-pressed', String(lang === 'id')); }
@@ -3260,14 +3276,21 @@ window.addEventListener('resize', updateScrollTopButton);
 (function(){
   var saved = 'id';
   try { saved = localStorage.getItem('ev_campaign_language') || 'id'; } catch(e){}
+
+  // Terapkan konfigurasi konten terlebih dahulu. Beberapa fungsi konfigurasi
+  // mengisi ulang teks DOM; bahasa harus diterapkan SETELAH itu agar hasil
+  // translate tidak tertimpa kembali oleh teks default Indonesia.
+  renderFuelSpendPresets();
+  applyCalculatorConfig();
+  applyLaporConfig();
+  setStrictMode();
+  renderDashboard();
+  renderReportCounterBlock();
+  renderCampaignCounter();
+
   setLanguage(saved);
   updateScrollTopButton();
 })();
-
-renderFuelSpendPresets();
-applyCalculatorConfig();
-applyLaporConfig();
-setStrictMode();
 renderDashboard();
 renderReportCounterBlock();
 renderCampaignCounter();
