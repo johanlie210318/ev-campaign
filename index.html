@@ -1048,6 +1048,26 @@ body.admin-mode .admin-sidebar{display:flex}
   overflow-wrap: anywhere;
 }
 
+
+/* City picker — additive only; existing form styles remain untouched. */
+.city-picker-box select{
+  width:100%;
+  box-sizing:border-box;
+  min-height:50px;
+  padding:0 14px;
+  border:1px solid var(--line,#d9deea);
+  border-radius:12px;
+  background:#fff;
+  color:var(--ink,#14213d);
+  font:inherit;
+  cursor:pointer;
+}
+.city-picker-box select:focus{
+  outline:none;
+  border-color:var(--indigo,#3f4f91);
+  box-shadow:0 0 0 3px rgba(63,79,145,.12);
+}
+
 </style>
 </head>
 <body>
@@ -1347,9 +1367,36 @@ body.admin-mode .admin-sidebar{display:flex}
 
   <button class="btn btn-outline btn-block" id="useLocationBtn" onclick="alert('Izinkan akses lokasi untuk menemukan kota secara otomatis. Kamu tetap bisa memilih kota secara manual jika tidak memberikan izin.')" style="margin-top:20px">Gunakan lokasi saya</button>
 
+  <div class="field-box city-picker-box">
+    <label for="citySelect">Pilih kota</label>
+    <select id="citySelect" onchange="selectCity()">
+      <option value="">Pilih kota tempat kamu paling sering berkendara</option>
+      <option>Jakarta</option>
+      <option>Surabaya</option>
+      <option>Bandung</option>
+      <option>Medan</option>
+      <option>Semarang</option>
+      <option>Makassar</option>
+      <option>Palembang</option>
+      <option>Depok</option>
+      <option>Tangerang</option>
+      <option>Bekasi</option>
+      <option>Bogor</option>
+      <option>Yogyakarta</option>
+      <option>Denpasar</option>
+      <option>Malang</option>
+      <option>Bandar Lampung</option>
+      <option>Padang</option>
+      <option>Pekanbaru</option>
+      <option>Balikpapan</option>
+      <option>Samarinda</option>
+      <option>Banjarmasin</option>
+    </select>
+  </div>
+
   <div class="field-box">
     <label for="cityInput" id="cityInputLabelText">Atau masukkan nama kota</label>
-    <input type="text" id="cityInput" placeholder="Contoh: Bekasi" oninput="checkCity()" autocomplete="off">
+    <input type="text" id="cityInput" placeholder="Contoh: Cirebon" oninput="manualCityInput()" autocomplete="off">
   </div>
 
   <button class="btn btn-fill btn-block" id="cityButton" onclick="openScreen('reportCategoryChoice')" style="margin-top:26px">Lanjut</button>
@@ -2601,12 +2648,38 @@ function applyLaporConfig(){
 }
 
 var formStarted = false;
+
+function getReportCity(){
+  var input = document.getElementById('cityInput');
+  return input ? input.value.trim() : '';
+}
+
+function selectCity(){
+  var select = document.getElementById('citySelect');
+  var input = document.getElementById('cityInput');
+
+  if (select && input && select.value){
+    input.value = select.value;
+  }
+
+  checkCity();
+}
+
+function manualCityInput(){
+  var select = document.getElementById('citySelect');
+  if (select) select.value = '';
+  checkCity();
+}
+
 function checkCity(){
-  if (!formStarted && document.getElementById('cityInput').value.trim().length > 0){
+  var city = getReportCity();
+
+  if (!formStarted && city.length > 0){
     formStarted = true;
     trackEvent('form_dimulai');
   }
-  var ready = document.getElementById('cityInput').value.trim().length >= 3;
+
+  var ready = city.length >= 3;
   document.getElementById('cityButton').disabled = strictMode && !ready;
   document.getElementById('cityHint').style.display = (strictMode && !ready) ? 'block' : 'none';
 }
@@ -2865,7 +2938,7 @@ function submitReport(){
   var reporterId = getReporterId();
   var priorCount = getReporterPriorSubmissionCount();
   var totalAfterThis = bumpReporterSubmissionCount();
-  var reportCity = document.getElementById('cityInput').value || 'Kotamu';
+  var reportCity = getReportCity() || 'Kotamu';
   var categoryLabel = (LAPOR_CONFIG.categories[selectedCategory] || {}).label || selectedCategory || 'Laporan';
   var doneCity = document.getElementById('doneCity');
   var doneCategory = document.getElementById('doneCategory');
